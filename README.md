@@ -1,2 +1,2 @@
-# williwaw
-Project for advanced graphics and interaction (AGI19)
+# Williwaw
+Project for Advanced Graphics and Interaction (AGI19)
