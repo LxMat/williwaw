@@ -70,11 +70,11 @@ Material:
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 0.5
+    - _Speed: 100
     - _SrcBlend: 1
-    - _Steepness: 1
+    - _Steepness: 0.828
     - _UVSec: 0
-    - _Wavelength: 5
+    - _Wavelength: 10
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -82,5 +82,5 @@ Material:
     - _DepthGradientShallow: {r: 0.325, g: 0.807, b: 0.971, a: 0.725}
     - _Direction: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 1, g: 0.995283, b: 0.995283, a: 1}
     - _WaterColor: {r: 1, g: 1, b: 1, a: 1}

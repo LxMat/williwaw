@@ -15,11 +15,15 @@ public class WaterPlane : MonoBehaviour
 
   public Material material;
   private GameObject meshObject;
+  public GameObject micObject;
+   private float steepness;
+
+
   void Start()
   {
     Mesh mesh = generateGrid();
 
-
+    
     meshObject = new GameObject("Water");
     meshObject.name = "waterWaves";
     meshObject.AddComponent<MeshFilter>();
@@ -97,6 +101,10 @@ public class WaterPlane : MonoBehaviour
   void Update()
 
   {
+
+
+    steepness = micObject.GetComponent<MicrophoneInput>().force;
+    meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
     if (Input.GetKeyDown(KeyCode.LeftArrow))
     {
       meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(-1f, 0f, 0, 0));
