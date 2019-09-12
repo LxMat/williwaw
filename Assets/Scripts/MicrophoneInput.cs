@@ -22,7 +22,7 @@ public class MicrophoneInput : MonoBehaviour
 
     public float loudness = 0.0f;
     public float force = 0.0f;
-    private float threshold = 0.1f;
+    private float threshold = 0.01f;
     private AudioSource audioSource;
 
     public AudioMixerGroup audioMixMic;
