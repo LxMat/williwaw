@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterPlane : MonoBehaviour
 {
-
+  public bool displayDebugLog = false;
   public bool createGrid = false;
   public int boundsX;
   public int boundsZ;
@@ -13,29 +13,33 @@ public class WaterPlane : MonoBehaviour
   public int width = 100;
   public int depth = 100;
 
+
+
+  [Range(0f, 0.9f)]
+  public float Steepness;
+  public float WaveLength = 10;
+
   public Material material;
   private GameObject meshObject;
   public GameObject micObject;
-   private float steepness;
-
-
+  private Canvas canvas;
+  public Vector2 WaveDirection;
   void Start()
   {
     Mesh mesh = generateGrid();
-
-    
+    MeshCollider meshcol = gameObject.AddComponent<MeshCollider>();
     meshObject = new GameObject("Water");
     meshObject.name = "waterWaves";
+
     meshObject.AddComponent<MeshFilter>();
     meshObject.AddComponent<MeshRenderer>();
     meshObject.AddComponent<MeshCollider>();
     meshObject.GetComponent<Renderer>().material = material;
     meshObject.GetComponent<MeshFilter>().mesh = mesh;
 
+
+    meshcol.sharedMesh = mesh;
     meshObject.transform.position = this.transform.position;
-
-
-
 
   }
 
@@ -97,14 +101,95 @@ public class WaterPlane : MonoBehaviour
 
   }
 
+  void updateVerts()
+  {
 
+    float scaleX = boundsX / resolutionX;
+    float scaleZ = boundsZ / resolutionY;
+    float u = 1.0f / resolutionX;
+    float v = 1.0f / resolutionY;
+
+    int sizeX = resolutionX + 1;
+    int sizeY = resolutionY + 1;
+
+    Vector3[] verts = new Vector3[sizeX * sizeY];
+    for (int x = 0; x < sizeX; x++)
+    {
+      float posX = x * scaleX;
+      for (int z = 0; z < sizeY; z++)
+      {
+        Vector3 vertexPos = gertsnerOffset(new Vector3(posX, 0, z * scaleZ));
+        verts[x + z * sizeX] = vertexPos;
+      }
+    }
+    meshObject.GetComponent<MeshFilter>().mesh.vertices = verts;
+    meshObject.GetComponent<MeshCollider>().sharedMesh = meshObject.GetComponent<MeshFilter>().mesh;
+
+
+  }
+
+
+  Vector3 gertsnerOffset(Vector3 p)
+  {
+
+
+    float wavel = 10;
+    //error handling
+    if (WaveLength > 0)
+    {
+      wavel = WaveLength;
+    }
+
+    float steepness = Steepness;
+
+    Vector2 dir = WaveDirection;
+    float k = 2 * Mathf.PI / wavel;
+    float c = Mathf.Sqrt(9.8f / k);
+    Vector2 d = dir.normalized;
+    float a = steepness / k;
+    float f = k * (Vector2.Dot(d, new Vector2(p.x, p.z)) - c * Time.time);
+
+    p.x += d.x * ((steepness / k) * Mathf.Cos(f));
+    p.y += (steepness / k) * Mathf.Sin(f);
+    p.z += d.y * ((steepness / k) * Mathf.Cos(f));
+    return p;
+  }
+
+  /*
+   * HLSL code... delete comment whenever
+   * 
+   		half3 p = v.vertex;
+
+		//Gerstner Wave offset
+		float k = 2 * UNITY_PI / _Wavelength;
+		float c = sqrt(9.8 / k);
+		float2 d = normalize(_Direction);
+		float f = k * (dot(d, p.xz) - c * _Time.y);
+		float a = _Steepness / k;
+
+		p.x += d.x * ((_Steepness / k) * cos(f));
+		p.y += (_Steepness / k) * sin(f);
+		p.z += d.y * ((_Steepness / k) * cos(f));
+     
+     */
   void Update()
 
   {
 
+    updateVerts();
 
-    steepness = micObject.GetComponent<MicrophoneInput>().force;
-    meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
+    Steepness = micObject.GetComponent<MicrophoneInput>().force;
+    //meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
+
+
+    if (displayDebugLog)
+    {
+      Mesh smesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+      Vector3[] verts = smesh.vertices;
+      Debug.Log(verts[20].y);
+    }
+
+
     if (Input.GetKeyDown(KeyCode.LeftArrow))
     {
       meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(-1f, 0f, 0, 0));
