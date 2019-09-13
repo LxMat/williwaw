@@ -77,7 +77,7 @@
 		p.y += (_Steepness / k) * sin(f);
 		p.z += d.y * ((_Steepness / k) * cos(f));
 
-		v.vertex.xyz = p;
+		//v.vertex.xyz = p;
 
 
 		o.color = clamp(((p.y + 1) / 2)*v.color, 0.3, 1);
