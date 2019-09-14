@@ -10,6 +10,10 @@ public class GyroscopeInput : MonoBehaviour
     Compass m_Comp;
     public float rotation;
 
+    private float shakeThreshold = 0.1f;
+    public float shakeAmount; 
+
+
     void Start()
     {
         //Set up and enable the gyroscope (check your device has one)
@@ -23,7 +27,20 @@ public class GyroscopeInput : MonoBehaviour
     //This is a legacy function, check out the UI section for other ways to create your UI
     void Update()
     {
-        rotation =Input.compass.magneticHeading * Mathf.Deg2Rad;
+        rotation = m_Gyro.rotationRate.z;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
+        if (m_Gyro.userAcceleration.x >= shakeThreshold)
+        {
+            shakeAmount += m_Gyro.userAcceleration.x *Time.deltaTime;
+        }
+        shakeAmount = shakeAmount - shakeAmount * 0.01f*Time.deltaTime;
+        if (shakeAmount > 1.0f)
+        {
+            shakeAmount = 1.0f;
+        }
+        if (shakeAmount <= 0.1f)
+        {
+            shakeAmount = 0.1f;
+        }
     }
     void OnGUI()
     {
@@ -32,7 +49,7 @@ public class GyroscopeInput : MonoBehaviour
         GUI.Label(new Rect(500, 250, 300, 40), "Compass "+ Quaternion.Euler(0, -Input.compass.magneticHeading, 0));
         //Output the rotation rate, attitude and the enabled state of the gyroscope as a Label
         GUI.Label(new Rect(500, 300, 300, 40), "Gyro rotation rate " + m_Gyro.rotationRate);
-        GUI.Label(new Rect(500, 350, 300, 40), "Gyro attitude" + m_Gyro.attitude);
+        GUI.Label(new Rect(500, 350, 300, 40), "Acceleration" + m_Gyro.userAcceleration.x);
         GUI.Label(new Rect(500, 400, 300, 40), "Rotation : " + rotation);
     }
 }

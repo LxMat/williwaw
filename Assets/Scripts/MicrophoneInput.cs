@@ -81,7 +81,7 @@ public class MicrophoneInput : MonoBehaviour
             }
         }
         loudness = s* 10;
-        force += 0.5f*loudness*Time.deltaTime;
+        force += loudness*10*Time.deltaTime;
         force = force - force*0.003f;
         if (force > 1.0f)
         {

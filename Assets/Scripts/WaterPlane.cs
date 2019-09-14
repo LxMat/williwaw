@@ -35,7 +35,7 @@ public class WaterPlane : MonoBehaviour
         meshObject.AddComponent<MeshCollider>();
         meshObject.GetComponent<Renderer>().material = material;
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
-
+        meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(1f, 0, 0, 0));
         meshObject.transform.position = this.transform.position;
 
 
@@ -96,8 +96,9 @@ public class WaterPlane : MonoBehaviour
         mesh.normals = normals;
         mesh.triangles = indices;
         mesh.tangents = tangents;
-
+        
         return mesh;
+        
 
     }
 
@@ -107,10 +108,10 @@ public class WaterPlane : MonoBehaviour
     {
 
 
-        steepness = micObject.GetComponent<MicrophoneInput>().force;
+        steepness = gyroObject.GetComponent<GyroscopeInput>().shakeAmount;
         rad = gyroObject.GetComponent<GyroscopeInput>().rotation;
         meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
-        meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(Mathf.Sin(rad), Mathf.Cos(rad), 0, 0));
+        //meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(Mathf.Sin(rad), Mathf.Cos(rad), 0, 0));
         //if (Input.GetKeyDown(KeyCode.LeftArrow))
         //{
         //  meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(-1f, 0f, 0, 0));
