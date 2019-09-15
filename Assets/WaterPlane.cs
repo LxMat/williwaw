@@ -4,160 +4,167 @@ using UnityEngine;
 
 public class WaterPlane : MonoBehaviour
 {
-  public bool displayDebugLog = false;
-  public bool createGrid = false;
-  public int boundsX;
-  public int boundsZ;
-  public int resolutionX = 1;
-  public int resolutionY = 1;
-  public int width = 100;
-  public int depth = 100;
+    public bool displayDebugLog = false;
+    public bool createGrid = false;
+    public int boundsX;
+    public int boundsZ;
+    public int resolutionX = 1;
+    public int resolutionY = 1;
+    public int width = 100;
+    public int depth = 100;
 
 
 
-  [Range(0f, 0.9f)]
-  public float Steepness;
-  public float WaveLength = 10;
+    [Range(0f, 0.9f)]
+    public float Steepness;
+    public float WaveLength = 10;
 
-  public Material material;
-  private GameObject meshObject;
-  public GameObject micObject;
-  private Canvas canvas;
-  public Vector2 WaveDirection;
-  void Start()
-  {
-    Mesh mesh = generateGrid();
-    MeshCollider meshcol = gameObject.AddComponent<MeshCollider>();
-    meshObject = new GameObject("Water");
-    meshObject.name = "waterWaves";
-
-    meshObject.AddComponent<MeshFilter>();
-    meshObject.AddComponent<MeshRenderer>();
-    meshObject.AddComponent<MeshCollider>();
-    meshObject.GetComponent<Renderer>().material = material;
-    meshObject.GetComponent<MeshFilter>().mesh = mesh;
-
-
-    meshcol.sharedMesh = mesh;
-    meshObject.transform.position = this.transform.position;
-
-  }
-
-
-  Mesh generateGrid()
-  {
-    float scaleX = boundsX / resolutionX;
-    float scaleZ = boundsZ / resolutionY;
-    float u = 1.0f / resolutionX;
-    float v = 1.0f / resolutionY;
-
-    int sizeX = resolutionX + 1;
-    int sizeY = resolutionY + 1;
-
-    Vector3[] verts = new Vector3[sizeX * sizeY];
-    Vector3[] normals = new Vector3[sizeX * sizeY];
-    Vector4[] tangents = new Vector4[sizeX * sizeY];
-    Vector2[] texcoords = new Vector2[sizeX * sizeY];
-
-    for (int x = 0; x < sizeX; x++)
+    public Material material;
+    private GameObject meshObject;
+    public GameObject micObject;
+    public GameObject gyroObject;
+    private Canvas canvas;
+    public Vector2 WaveDirection;
+    void Start()
     {
-      float posX = x * scaleX;
-      for (int z = 0; z < sizeY; z++)
-      {
-        normals[x + z * sizeX] = new Vector3(0, 1, 0);
-        tangents[x + z * sizeX] = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-        Vector3 vertexPos = new Vector3(posX, 0.0f, z * scaleZ);
-        verts[x + z * sizeX] = vertexPos;
-        texcoords[x + z * sizeX] = new Vector2(x * u, z * v);
-      }
+        Mesh mesh = generateGrid();
+        MeshCollider meshcol = gameObject.AddComponent<MeshCollider>();
+        meshObject = new GameObject("Water");
+        meshObject.name = "waterWaves";
+
+        meshObject.AddComponent<MeshFilter>();
+        meshObject.AddComponent<MeshRenderer>();
+        meshObject.AddComponent<MeshCollider>();
+        meshObject.GetComponent<Renderer>().material = material;
+
+        
+
+        meshObject.GetComponent<MeshFilter>().mesh = mesh;
+
+
+        
+        meshcol.sharedMesh = mesh;
+        meshObject.transform.position = this.transform.position;
+
     }
 
-    int[] indices = new int[sizeX * sizeY * 6];
 
-    int num = 0;
-    for (int x = 0; x < sizeX - 1; x++)
+    Mesh generateGrid()
     {
-      for (int y = 0; y < sizeY - 1; y++)
-      {
-        indices[num + 0] = x + y * sizeX;
-        indices[num + 1] = x + (y + 1) * sizeX;
-        indices[num + 2] = (x + 1) + y * sizeX;
-        indices[num + 3] = x + (y + 1) * sizeX;
-        indices[num + 4] = (x + 1) + (y + 1) * sizeX;
-        indices[num + 5] = (x + 1) + y * sizeX;
-        num += 6;
-      }
+        float scaleX = boundsX / resolutionX;
+        float scaleZ = boundsZ / resolutionY;
+        float u = 1.0f / resolutionX;
+        float v = 1.0f / resolutionY;
+
+        int sizeX = resolutionX + 1;
+        int sizeY = resolutionY + 1;
+
+        Vector3[] verts = new Vector3[sizeX * sizeY];
+        Vector3[] normals = new Vector3[sizeX * sizeY];
+        Vector4[] tangents = new Vector4[sizeX * sizeY];
+        Vector2[] texcoords = new Vector2[sizeX * sizeY];
+
+        for (int x = 0; x < sizeX; x++)
+        {
+            float posX = x * scaleX;
+            for (int z = 0; z < sizeY; z++)
+            {
+            normals[x + z * sizeX] = new Vector3(0, 1, 0);
+            tangents[x + z * sizeX] = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+            Vector3 vertexPos = new Vector3(posX, 0.0f, z * scaleZ);
+            verts[x + z * sizeX] = vertexPos;
+            texcoords[x + z * sizeX] = new Vector2(x * u, z * v);
+            }
+        }
+
+        int[] indices = new int[sizeX * sizeY * 6];
+
+        int num = 0;
+        for (int x = 0; x < sizeX - 1; x++)
+        {
+            for (int y = 0; y < sizeY - 1; y++)
+            {
+            indices[num + 0] = x + y * sizeX;
+            indices[num + 1] = x + (y + 1) * sizeX;
+            indices[num + 2] = (x + 1) + y * sizeX;
+            indices[num + 3] = x + (y + 1) * sizeX;
+            indices[num + 4] = (x + 1) + (y + 1) * sizeX;
+            indices[num + 5] = (x + 1) + y * sizeX;
+            num += 6;
+            }
+        }
+
+        Mesh mesh = new Mesh();
+        
+        mesh.vertices = verts;
+        mesh.uv = texcoords;
+        mesh.normals = normals;
+        mesh.triangles = indices;
+        mesh.tangents = tangents;
+
+        mesh.RecalculateNormals();
+
+        return mesh;
+
     }
 
-    Mesh mesh = new Mesh();
-
-    mesh.vertices = verts;
-    mesh.uv = texcoords;
-    mesh.normals = normals;
-    mesh.triangles = indices;
-    mesh.tangents = tangents;
-
-    return mesh;
-
-  }
-
-  void updateVerts()
-  {
-
-    float scaleX = boundsX / resolutionX;
-    float scaleZ = boundsZ / resolutionY;
-    float u = 1.0f / resolutionX;
-    float v = 1.0f / resolutionY;
-
-    int sizeX = resolutionX + 1;
-    int sizeY = resolutionY + 1;
-
-    Vector3[] verts = new Vector3[sizeX * sizeY];
-    for (int x = 0; x < sizeX; x++)
+    void updateVerts()
     {
-      float posX = x * scaleX;
-      for (int z = 0; z < sizeY; z++)
-      {
-        Vector3 vertexPos = gertsnerOffset(new Vector3(posX, 0, z * scaleZ));
-        verts[x + z * sizeX] = vertexPos;
-      }
-    }
-    meshObject.GetComponent<MeshFilter>().mesh.vertices = verts;
-    meshObject.GetComponent<MeshCollider>().sharedMesh = meshObject.GetComponent<MeshFilter>().mesh;
 
+        float scaleX = boundsX / resolutionX;
+        float scaleZ = boundsZ / resolutionY;
+        float u = 1.0f / resolutionX;
+        float v = 1.0f / resolutionY;
 
-  }
+        int sizeX = resolutionX + 1;
+        int sizeY = resolutionY + 1;
 
+        Vector3[] verts = new Vector3[sizeX * sizeY];
+        for (int x = 0; x < sizeX; x++)
+        {
+            float posX = x * scaleX;
+            for (int z = 0; z < sizeY; z++)
+            {
+            Vector3 vertexPos = gertsnerOffset(new Vector3(posX, 0, z * scaleZ));
+            verts[x + z * sizeX] = vertexPos;
+            }
+        }
+        meshObject.GetComponent<MeshFilter>().mesh.vertices = verts;
+        meshObject.GetComponent<MeshCollider>().sharedMesh = meshObject.GetComponent<MeshFilter>().mesh;
+        meshObject.GetComponent<MeshFilter>().mesh.RecalculateNormals();
 
-  Vector3 gertsnerOffset(Vector3 p)
-  {
-
-
-    float wavel = 10;
-    //error handling
-    if (WaveLength > 0)
-    {
-      wavel = WaveLength;
     }
 
-    float steepness = Steepness;
 
-    Vector2 dir = WaveDirection;
-    float k = 2 * Mathf.PI / wavel;
-    float c = Mathf.Sqrt(9.8f / k);
-    Vector2 d = dir.normalized;
-    float a = steepness / k;
-    float f = k * (Vector2.Dot(d, new Vector2(p.x, p.z)) - c * Time.time);
+    Vector3 gertsnerOffset(Vector3 p)
+    {
 
-    p.x += d.x * ((steepness / k) * Mathf.Cos(f));
-    p.y += (steepness / k) * Mathf.Sin(f);
-    p.z += d.y * ((steepness / k) * Mathf.Cos(f));
-    return p;
-  }
 
-  /*
-   * HLSL code... delete comment whenever
-   * 
+        float wavel = 10;
+        //error handling
+        if (WaveLength > 0)
+        {
+            wavel = WaveLength;
+        }
+
+        float steepness = Steepness;
+
+        Vector2 dir = WaveDirection;
+        float k = 2 * Mathf.PI / wavel;
+        float c = Mathf.Sqrt(9.8f / k);
+        Vector2 d = dir.normalized;
+        float a = steepness / k;
+        float f = k * (Vector2.Dot(d, new Vector2(p.x, p.z)) - c * Time.time);
+
+        p.x += d.x * ((steepness / k) * Mathf.Cos(f));
+        p.y += (steepness / k) * Mathf.Sin(f);
+        p.z += d.y * ((steepness / k) * Mathf.Cos(f));
+        return p;
+    }
+
+    /*
+    * HLSL code... delete comment whenever
+    * 
    		half3 p = v.vertex;
 
 		//Gerstner Wave offset
@@ -171,40 +178,40 @@ public class WaterPlane : MonoBehaviour
 		p.y += (_Steepness / k) * sin(f);
 		p.z += d.y * ((_Steepness / k) * cos(f));
      
-     */
-  void Update()
+        */
+    void Update()
 
-  {
-
-    updateVerts();
-
-    Steepness = micObject.GetComponent<MicrophoneInput>().force;
-    //meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
-
-
-    if (displayDebugLog)
     {
-      Mesh smesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
-      Vector3[] verts = smesh.vertices;
-      Debug.Log(verts[20].y);
-    }
+
+        updateVerts();
+
+        Steepness = gyroObject.GetComponent<GyroscopeInput>().shakeAmount;
+        //meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
 
 
-    if (Input.GetKeyDown(KeyCode.LeftArrow))
-    {
-      meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(-1f, 0f, 0, 0));
+        if (displayDebugLog)
+        {
+            Mesh smesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+            Vector3[] verts = smesh.vertices;
+            Debug.Log(verts[20].y);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(-1f, 0f, 0, 0));
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, 1f, 0, 0));
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(1f, 0f, 0, 0));
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, -1f, 0, 0));
+        }
     }
-    if (Input.GetKeyDown(KeyCode.UpArrow))
-    {
-      meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, 1f, 0, 0));
-    }
-    if (Input.GetKeyDown(KeyCode.RightArrow))
-    {
-      meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(1f, 0f, 0, 0));
-    }
-    if (Input.GetKeyDown(KeyCode.DownArrow))
-    {
-      meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, -1f, 0, 0));
-    }
-  }
 }

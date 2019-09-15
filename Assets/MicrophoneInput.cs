@@ -22,7 +22,7 @@ public class MicrophoneInput : MonoBehaviour
 
     public float loudness = 0.0f;
     public float force = 0.0f;
-    private float threshold = 0.1f;
+    private float threshold = 0.01f;
     private AudioSource audioSource;
 
     public AudioMixerGroup audioMixMic;
@@ -59,13 +59,13 @@ public class MicrophoneInput : MonoBehaviour
 
         audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
-        for (int i = 1; i < spectrum.Length - 1; i++)
-        {
-            Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
-            Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
-            Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
-            Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
-        }
+        //for (int i = 1; i < spectrum.Length - 1; i++)
+        //{
+        //    Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
+        //    Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
+        //    Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
+        //    Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
+        //}
 
         float s = 0.0f;
         int k = 0;
@@ -81,7 +81,7 @@ public class MicrophoneInput : MonoBehaviour
             }
         }
         loudness = s* 10;
-        force += 0.5f*loudness*Time.deltaTime;
+        force += loudness*10*Time.deltaTime;
         force = force - force*0.003f;
         if (force > 1.0f)
         {
