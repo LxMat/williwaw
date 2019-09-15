@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class WaterPlane : MonoBehaviour
 {
-    public bool displayDebugLog = false;
-    public bool createGrid = false;
+    public bool debugOnComputer = false;
     public int boundsX;
     public int boundsZ;
     public int resolutionX = 1;
@@ -25,6 +24,9 @@ public class WaterPlane : MonoBehaviour
     public GameObject gyroObject;
     private Canvas canvas;
     public Vector2 WaveDirection;
+
+
+  private Mesh _mesh;
     void Start()
     {
         Mesh mesh = generateGrid();
@@ -40,6 +42,7 @@ public class WaterPlane : MonoBehaviour
         
 
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
+        _mesh = mesh;
 
 
         
@@ -130,7 +133,7 @@ public class WaterPlane : MonoBehaviour
             }
         }
         meshObject.GetComponent<MeshFilter>().mesh.vertices = verts;
-        meshObject.GetComponent<MeshCollider>().sharedMesh = meshObject.GetComponent<MeshFilter>().mesh;
+        meshObject.GetComponent<MeshCollider>().sharedMesh = _mesh = meshObject.GetComponent<MeshFilter>().mesh;
         meshObject.GetComponent<MeshFilter>().mesh.RecalculateNormals();
 
     }
@@ -162,23 +165,38 @@ public class WaterPlane : MonoBehaviour
         return p;
     }
 
-    /*
-    * HLSL code... delete comment whenever
-    * 
-   		half3 p = v.vertex;
+  /*
+  * HLSL code... delete comment whenever
+  * 
+    half3 p = v.vertex;
 
-		//Gerstner Wave offset
-		float k = 2 * UNITY_PI / _Wavelength;
-		float c = sqrt(9.8 / k);
-		float2 d = normalize(_Direction);
-		float f = k * (dot(d, p.xz) - c * _Time.y);
-		float a = _Steepness / k;
+  //Gerstner Wave offset
+  float k = 2 * UNITY_PI / _Wavelength;
+  float c = sqrt(9.8 / k);
+  float2 d = normalize(_Direction);
+  float f = k * (dot(d, p.xz) - c * _Time.y);
+  float a = _Steepness / k;
 
-		p.x += d.x * ((_Steepness / k) * cos(f));
-		p.y += (_Steepness / k) * sin(f);
-		p.z += d.y * ((_Steepness / k) * cos(f));
-     
-        */
+  p.x += d.x * ((_Steepness / k) * cos(f));
+  p.y += (_Steepness / k) * sin(f);
+  p.z += d.y * ((_Steepness / k) * cos(f));
+
+      */
+
+
+
+    //Displays the 100 first vertices and normals;
+  void OnDrawGizmos()
+  {
+    
+    for (int i = 0; i<100; i++)
+    {
+      var vert = _mesh.vertices[i];
+      var normal = _mesh.normals[i];
+      Gizmos.DrawSphere(vert, 0.1f);
+      Gizmos.DrawLine(vert, vert + normal);
+    }
+  }
     void Update()
 
     {
@@ -186,11 +204,11 @@ public class WaterPlane : MonoBehaviour
         updateVerts();
 
         Steepness = gyroObject.GetComponent<GyroscopeInput>().shakeAmount;
-        //meshObject.GetComponent<Renderer>().material.SetFloat("_Steepness", steepness);
 
 
-        if (displayDebugLog)
+      if (debugOnComputer)
         {
+            Steepness = 0.6f;
             Mesh smesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
             Vector3[] verts = smesh.vertices;
             Debug.Log(verts[20].y);
