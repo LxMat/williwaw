@@ -6,23 +6,23 @@ using UnityEngine.Networking;
 [System.Obsolete]
 public class Boat : NetworkBehaviour
 {
-
-    Rigidbody boat;
+    private Rigidbody boat;
     public GameObject micObject;
     public GameObject gyroObject;
     private float force;
     private float rotation;
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         boat = GetComponent<Rigidbody>();
         direction = new Vector3();
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         if (this.isLocalPlayer)
         {
