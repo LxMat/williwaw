@@ -26,8 +26,9 @@ public class WaterPlane : MonoBehaviour
     public Vector2 WaveDirection;
 
 
-  private Mesh _mesh;
-    void Start()
+    private Mesh _mesh;
+
+    private void Start()
     {
         Mesh mesh = generateGrid();
         MeshCollider meshcol = gameObject.AddComponent<MeshCollider>();
@@ -39,20 +40,19 @@ public class WaterPlane : MonoBehaviour
         meshObject.AddComponent<MeshCollider>();
         meshObject.GetComponent<Renderer>().material = material;
 
-        
+
 
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
         _mesh = mesh;
 
 
-        
+
         meshcol.sharedMesh = mesh;
         meshObject.transform.position = this.transform.position;
 
     }
 
-
-    Mesh generateGrid()
+    private Mesh generateGrid()
     {
         float scaleX = boundsX / resolutionX;
         float scaleZ = boundsZ / resolutionY;
@@ -72,11 +72,11 @@ public class WaterPlane : MonoBehaviour
             float posX = x * scaleX;
             for (int z = 0; z < sizeY; z++)
             {
-            normals[x + z * sizeX] = new Vector3(0, 1, 0);
-            tangents[x + z * sizeX] = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-            Vector3 vertexPos = new Vector3(posX, 0.0f, z * scaleZ);
-            verts[x + z * sizeX] = vertexPos;
-            texcoords[x + z * sizeX] = new Vector2(x * u, z * v);
+                normals[x + z * sizeX] = new Vector3(0, 1, 0);
+                tangents[x + z * sizeX] = new Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+                Vector3 vertexPos = new Vector3(posX, 0.0f, z * scaleZ);
+                verts[x + z * sizeX] = vertexPos;
+                texcoords[x + z * sizeX] = new Vector2(x * u, z * v);
             }
         }
 
@@ -87,18 +87,18 @@ public class WaterPlane : MonoBehaviour
         {
             for (int y = 0; y < sizeY - 1; y++)
             {
-            indices[num + 0] = x + y * sizeX;
-            indices[num + 1] = x + (y + 1) * sizeX;
-            indices[num + 2] = (x + 1) + y * sizeX;
-            indices[num + 3] = x + (y + 1) * sizeX;
-            indices[num + 4] = (x + 1) + (y + 1) * sizeX;
-            indices[num + 5] = (x + 1) + y * sizeX;
-            num += 6;
+                indices[num + 0] = x + y * sizeX;
+                indices[num + 1] = x + (y + 1) * sizeX;
+                indices[num + 2] = (x + 1) + y * sizeX;
+                indices[num + 3] = x + (y + 1) * sizeX;
+                indices[num + 4] = (x + 1) + (y + 1) * sizeX;
+                indices[num + 5] = (x + 1) + y * sizeX;
+                num += 6;
             }
         }
 
         Mesh mesh = new Mesh();
-        
+
         mesh.vertices = verts;
         mesh.uv = texcoords;
         mesh.normals = normals;
@@ -111,7 +111,7 @@ public class WaterPlane : MonoBehaviour
 
     }
 
-    void updateVerts()
+    private void updateVerts()
     {
 
         float scaleX = boundsX / resolutionX;
@@ -128,8 +128,8 @@ public class WaterPlane : MonoBehaviour
             float posX = x * scaleX;
             for (int z = 0; z < sizeY; z++)
             {
-            Vector3 vertexPos = gertsnerOffset(new Vector3(posX, 0, z * scaleZ));
-            verts[x + z * sizeX] = vertexPos;
+                Vector3 vertexPos = gertsnerOffset(new Vector3(posX, 0, z * scaleZ));
+                verts[x + z * sizeX] = vertexPos;
             }
         }
         meshObject.GetComponent<MeshFilter>().mesh.vertices = verts;
@@ -138,8 +138,7 @@ public class WaterPlane : MonoBehaviour
 
     }
 
-
-    Vector3 gertsnerOffset(Vector3 p)
+    private Vector3 gertsnerOffset(Vector3 p)
     {
 
 
@@ -165,39 +164,40 @@ public class WaterPlane : MonoBehaviour
         return p;
     }
 
-  /*
-  * HLSL code... delete comment whenever
-  * 
-    half3 p = v.vertex;
+    /*
+    * HLSL code... delete comment whenever
+    * 
+      half3 p = v.vertex;
 
-  //Gerstner Wave offset
-  float k = 2 * UNITY_PI / _Wavelength;
-  float c = sqrt(9.8 / k);
-  float2 d = normalize(_Direction);
-  float f = k * (dot(d, p.xz) - c * _Time.y);
-  float a = _Steepness / k;
+    //Gerstner Wave offset
+    float k = 2 * UNITY_PI / _Wavelength;
+    float c = sqrt(9.8 / k);
+    float2 d = normalize(_Direction);
+    float f = k * (dot(d, p.xz) - c * _Time.y);
+    float a = _Steepness / k;
 
-  p.x += d.x * ((_Steepness / k) * cos(f));
-  p.y += (_Steepness / k) * sin(f);
-  p.z += d.y * ((_Steepness / k) * cos(f));
+    p.x += d.x * ((_Steepness / k) * cos(f));
+    p.y += (_Steepness / k) * sin(f);
+    p.z += d.y * ((_Steepness / k) * cos(f));
 
-      */
+        */
 
 
 
     //Displays the 100 first vertices and normals;
-  void OnDrawGizmos()
-  {
-    
-    for (int i = 0; i<100; i++)
+    private void OnDrawGizmos()
     {
-      var vert = _mesh.vertices[i];
-      var normal = _mesh.normals[i];
-      Gizmos.DrawSphere(vert, 0.1f);
-      Gizmos.DrawLine(vert, vert + normal);
+
+        for (int i = 0; i < 100; i++)
+        {
+            var vert = _mesh.vertices[i];
+            var normal = _mesh.normals[i];
+            Gizmos.DrawSphere(vert, 0.1f);
+            Gizmos.DrawLine(vert, vert + normal);
+        }
     }
-  }
-    void Update()
+
+    private void Update()
 
     {
 
@@ -206,7 +206,7 @@ public class WaterPlane : MonoBehaviour
         Steepness = micObject.GetComponent<MicrophoneInput>().waves;
 
 
-      if (debugOnComputer)
+        if (debugOnComputer)
         {
             Steepness = 0.6f;
             Mesh smesh = meshObject.GetComponent<MeshFilter>().sharedMesh;

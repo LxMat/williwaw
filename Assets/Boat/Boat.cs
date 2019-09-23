@@ -25,7 +25,7 @@ public class Boat : NetworkBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (this.isLocalPlayer)
+        if (isLocalPlayer)
         {
             force = micObject.GetComponent<MicrophoneInput>().force;
             rotation = -gyroObject.GetComponent<GyroscopeInput>().rotation;

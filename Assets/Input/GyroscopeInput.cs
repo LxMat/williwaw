@@ -6,15 +6,14 @@ using UnityEngine.UI;
 public class GyroscopeInput : MonoBehaviour
 {
     // Start is called before the first frame update
-    Gyroscope m_Gyro;
-    Compass m_Comp;
+    private Gyroscope m_Gyro;
+    private Compass m_Comp;
     public float rotation;
 
     private float shakeThreshold = 0.1f;
-    public float shakeAmount; 
+    public float shakeAmount;
 
-
-    void Start()
+    private void Start()
     {
         //Set up and enable the gyroscope (check your device has one)
         m_Gyro = Input.gyro;
@@ -25,14 +24,14 @@ public class GyroscopeInput : MonoBehaviour
     }
 
     //This is a legacy function, check out the UI section for other ways to create your UI
-    void Update()
+    private void Update()
     {
         rotation = m_Gyro.attitude.x;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
         if (m_Gyro.userAcceleration.x >= shakeThreshold)
         {
-            shakeAmount += m_Gyro.userAcceleration.x *Time.deltaTime;
+            shakeAmount += m_Gyro.userAcceleration.x * Time.deltaTime;
         }
-        shakeAmount = shakeAmount - shakeAmount * 0.01f*Time.deltaTime;
+        shakeAmount = shakeAmount - shakeAmount * 0.01f * Time.deltaTime;
         if (shakeAmount > 1.0f)
         {
             shakeAmount = 1.0f;
@@ -42,7 +41,8 @@ public class GyroscopeInput : MonoBehaviour
             shakeAmount = 0.1f;
         }
     }
-    void OnGUI()
+
+    private void OnGUI()
     {
         GUI.skin.label.fontSize = 28;
         GUI.contentColor = Color.red;

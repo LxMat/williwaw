@@ -215,8 +215,10 @@ GameObject:
   m_Component:
   - component: {fileID: 231421456350451752}
   - component: {fileID: 7555206991448584400}
+  - component: {fileID: 8638283525697633726}
+  - component: {fileID: 1007233163656516443}
   m_Layer: 0
-  m_Name: skp_camera_Last_Saved_SketchUp_View
+  m_Name: Boat Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,6 +281,39 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &8638283525697633726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4461522295290084774}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c51217cdc0dd14c8bef4f94ddd7fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offsetPosition: {x: 100, y: 10, z: 10}
+  offsetPositionSpace: 1
+  lookAt: 0
+--- !u!114 &1007233163656516443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4461522295290084774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76806479d916a64aa03f8e3eba7912f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  distance: 10
+  height: 5
+  rotationDamping: 2
+  heightDamping: 0
 --- !u!1 &6666219149575221201
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6666219149575221201}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 50.11, y: 3, z: 50}
+  m_LocalPosition: {x: 50, y: 3, z: 50}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 2318441197383438904}
@@ -408,9 +443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331fad08973434612bcde7ce04444a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  micObject: {fileID: 2508083008942307491, guid: 21ed1e74b09cb394c95d456b5dcf8d9d,
+  micObject: {fileID: 1585532086650240105, guid: 21ed1e74b09cb394c95d456b5dcf8d9d,
     type: 3}
-  gyroObject: {fileID: 1751209068812991336, guid: 7df56e9d5f891c94fbd397ccfe2d9073,
+  gyroObject: {fileID: 8081437802821684877, guid: 7df56e9d5f891c94fbd397ccfe2d9073,
     type: 3}
 --- !u!114 &4970412510583084674
 MonoBehaviour:
