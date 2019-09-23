@@ -13,7 +13,6 @@ public class WaterPlane : MonoBehaviour
     public int depth = 100;
 
 
-
     [Range(0f, 0.9f)]
     public float Steepness;
     public float WaveLength = 10;
@@ -23,10 +22,11 @@ public class WaterPlane : MonoBehaviour
     public GameObject micObject;
     public GameObject gyroObject;
     private Canvas canvas;
-    public Vector2 WaveDirection;
+    public Vector2 WaveDirection; 
+    private Mesh _mesh;
 
+    private Vector4[] Waves2Shader;
 
-  private Mesh _mesh;
     void Start()
     {
         Mesh mesh = generateGrid();
@@ -37,6 +37,21 @@ public class WaterPlane : MonoBehaviour
         meshObject.AddComponent<MeshFilter>();
         meshObject.AddComponent<MeshRenderer>();
         meshObject.AddComponent<MeshCollider>();
+
+        //update shader properties
+        Waves2Shader = new Vector4[4];
+        Waves2Shader[0] = new Vector4(Wave1.direction.x, Wave1.direction.y, Wave1.Steepness, Wave1.WaveLength);
+        Waves2Shader[1] = new Vector4(Wave2.direction.x, Wave2.direction.y, Wave2.Steepness, Wave2.WaveLength);
+        Waves2Shader[2] = new Vector4(Wave3.direction.x, Wave3.direction.y, Wave3.Steepness, Wave3.WaveLength);
+        Waves2Shader[3] = new Vector4(Wave4.direction.x, Wave4.direction.y, Wave4.Steepness, Wave4.WaveLength);
+
+        material.SetVector("_Wave1", Waves2Shader[0]);
+        material.SetVector("_Wave2", Waves2Shader[1]);
+        material.SetVector("_Wave3", Waves2Shader[2]);
+        material.SetVector("_Wave4", Waves2Shader[3]);
+
+
+
         meshObject.GetComponent<Renderer>().material = material;
 
         
@@ -105,8 +120,7 @@ public class WaterPlane : MonoBehaviour
         mesh.triangles = indices;
         mesh.tangents = tangents;
 
-        mesh.RecalculateNormals();
-
+        
         return mesh;
 
     }
@@ -201,7 +215,7 @@ public class WaterPlane : MonoBehaviour
 
     {
 
-        updateVerts();
+        //updateVerts();
 
         Steepness = micObject.GetComponent<MicrophoneInput>().waves;
 
@@ -232,4 +246,18 @@ public class WaterPlane : MonoBehaviour
             meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, -1f, 0, 0));
         }
     }
+
+
+    [System.Serializable]
+    public struct WaveProperty
+    {
+        public Vector2 direction;
+        public float Steepness;
+        public float WaveLength;
+    }
+    public WaveProperty Wave1;
+    public WaveProperty Wave2;
+    public WaveProperty Wave3;
+    public WaveProperty Wave4;
+
 }
