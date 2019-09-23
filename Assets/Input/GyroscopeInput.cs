@@ -44,12 +44,12 @@ public class GyroscopeInput : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.skin.label.fontSize = 28;
-        GUI.contentColor = Color.red;
+        // GUI.skin.label.fontSize = 28;
+        // GUI.contentColor = Color.red;
         //GUI.Label(new Rect(500, 250, 300, 40), "Compass "+ Quaternion.Euler(0, -Input.compass.magneticHeading, 0));
         ////Output the rotation rate, attitude and the enabled state of the gyroscope as a Label
         //GUI.Label(new Rect(500, 300, 300, 40), "Gyro rotation rate " + m_Gyro.rotationRate);
         //GUI.Label(new Rect(500, 350, 300, 40), "Acceleration" + m_Gyro.userAcceleration.x);
-        GUI.Label(new Rect(500, 400, 300, 40), "Rotation : " + rotation);
+        //GUI.Label(new Rect(500, 400, 300, 40), "Rotation : " + rotation);
     }
 }
