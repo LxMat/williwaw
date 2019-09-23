@@ -28,7 +28,7 @@ public class MicrophoneInput : MonoBehaviour
 
     public AudioMixerGroup audioMixMic;
 
-    void Start()
+    private void Start()
     {
 
 
@@ -53,7 +53,7 @@ public class MicrophoneInput : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
         float fundamentalFrequency = 0.0f;
         float[] spectrum = new float[256];
@@ -81,11 +81,11 @@ public class MicrophoneInput : MonoBehaviour
                 }
             }
         }
-        loudness = s* 10;
-        force += loudness*Time.deltaTime;
-        force = force - force*0.003f;
+        loudness = s * 10;
+        force += loudness * Time.deltaTime;
+        force = force - force * 0.003f;
         waves += loudness * Time.deltaTime * 0.1f;
-        waves = waves- waves * 0.0002f;
+        waves = waves - waves * 0.0002f;
         if (force > 1.0f)
         {
             force = 1.0f;
@@ -107,119 +107,119 @@ public class MicrophoneInput : MonoBehaviour
         if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
     }
 
-    void ForceInc()
+    private void ForceInc()
     {
-        
-    
-      
+
+
+
     }
 
 
-        //{
+    //{
 
 
-        //    //get components you'll need
-        //    audioSource = GetComponent<AudioSource>();
+    //    //get components you'll need
+    //    audioSource = GetComponent<AudioSource>();
 
-        //    // get all available microphones
-        //    foreach (string device in Microphone.devices)
-        //    {
-        //        if (microphone == null)
-        //        {
-        //            //set default mic to first mic found.
-        //            microphone = device;
-        //        }
-        //        options.Add(device);
-        //    }
+    //    // get all available microphones
+    //    foreach (string device in Microphone.devices)
+    //    {
+    //        if (microphone == null)
+    //        {
+    //            //set default mic to first mic found.
+    //            microphone = device;
+    //        }
+    //        options.Add(device);
+    //    }
 
-        //    minThreshold = 0.2f;
+    //    minThreshold = 0.2f;
 
-        //    //add mics to dropdown
-        //    micDropdown.AddOptions(options);
-        //    micDropdown.onValueChanged.AddListener(delegate {
-        //        micDropdownValueChangedHandler(micDropdown);
-        //    });
+    //    //add mics to dropdown
+    //    micDropdown.AddOptions(options);
+    //    micDropdown.onValueChanged.AddListener(delegate {
+    //        micDropdownValueChangedHandler(micDropdown);
+    //    });
 
-        //    thresholdSlider.onValueChanged.AddListener(delegate {
-        //        thresholdValueChangedHandler(thresholdSlider);
-        //    });
-        //    //initialize input with default mic
-        //    UpdateMicrophone();
-        //}
+    //    thresholdSlider.onValueChanged.AddListener(delegate {
+    //        thresholdValueChangedHandler(thresholdSlider);
+    //    });
+    //    //initialize input with default mic
+    //    UpdateMicrophone();
+    //}
 
-        //void UpdateMicrophone()
-        //{
-        //    audioSource.Stop();
-        //    //Start recording to audioclip from the mic
-        //    audioSource.clip = Microphone.Start(microphone, true, 10, audioSampleRate);
-        //    audioSource.loop = true;
-        //    // Mute the sound with an Audio Mixer group becuase we don't want the player to hear it
-        //    Debug.Log(Microphone.IsRecording(microphone).ToString());
+    //void UpdateMicrophone()
+    //{
+    //    audioSource.Stop();
+    //    //Start recording to audioclip from the mic
+    //    audioSource.clip = Microphone.Start(microphone, true, 10, audioSampleRate);
+    //    audioSource.loop = true;
+    //    // Mute the sound with an Audio Mixer group becuase we don't want the player to hear it
+    //    Debug.Log(Microphone.IsRecording(microphone).ToString());
 
-        //    if (Microphone.IsRecording(microphone))
-        //    { //check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
-        //        while (!(Microphone.GetPosition(microphone) > 0))
-        //        {
-        //        } // Wait until the recording has started. 
+    //    if (Microphone.IsRecording(microphone))
+    //    { //check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
+    //        while (!(Microphone.GetPosition(microphone) > 0))
+    //        {
+    //        } // Wait until the recording has started. 
 
-        //        Debug.Log("recording started with " + microphone);
+    //        Debug.Log("recording started with " + microphone);
 
-        //        // Start playing the audio source
-        //        audioSource.Play();
-        //    }
-        //    else
-        //    {
-        //        //microphone doesn't work for some reason
+    //        // Start playing the audio source
+    //        audioSource.Play();
+    //    }
+    //    else
+    //    {
+    //        //microphone doesn't work for some reason
 
-        //        Debug.Log(microphone + " doesn't work!");
-        //    }
-        //}
+    //        Debug.Log(microphone + " doesn't work!");
+    //    }
+    //}
 
 
-        //public void micDropdownValueChangedHandler(Dropdown mic)
-        //{
-        //    microphone = options[mic.value];
-        //    UpdateMicrophone();
-        //}
+    //public void micDropdownValueChangedHandler(Dropdown mic)
+    //{
+    //    microphone = options[mic.value];
+    //    UpdateMicrophone();
+    //}
 
-        //public void thresholdValueChangedHandler(Slider thresholdSlider)
-        //{
-        //    minThreshold = thresholdSlider.value;
-        //}
+    //public void thresholdValueChangedHandler(Slider thresholdSlider)
+    //{
+    //    minThreshold = thresholdSlider.value;
+    //}
 
-        //public float GetAveragedVolume()
-        //{
-        //    float[] data = new float[256];
-        //    float a = 0;
-        //    audioSource.GetOutputData(data, 0);
-        //    foreach (float s in data)
-        //    {
-        //        a += Mathf.Abs(s);
-        //    }
-        //    return a / 256;
-        //}
+    //public float GetAveragedVolume()
+    //{
+    //    float[] data = new float[256];
+    //    float a = 0;
+    //    audioSource.GetOutputData(data, 0);
+    //    foreach (float s in data)
+    //    {
+    //        a += Mathf.Abs(s);
+    //    }
+    //    return a / 256;
+    //}
 
-        //public float GetFundamentalFrequency()
-        //{
-        //    float fundamentalFrequency = 0.0f;
-        //    int samples = 256;
-        //    float[] data = new float[samples];
-        //    audioSource.GetSpectrumData(data, 0, FFTWindow.Rectangular);
-        //    float s = 0.0f;
-        //    int i = 0;
-        //    for (int j = 1; j < samples; j++)
-        //    {
-        //        if (data[j] > minThreshold) // volumn must meet minimum threshold
-        //        {
-        //            if (s < data[j])
-        //            {
-        //                s = data[j];
-        //                i = j;
-        //            }
-        //        }
-        //    }
-        //    fundamentalFrequency = i * audioSampleRate / samples;
-        //    frequency = fundamentalFrequency;
-        //    return fundamentalFrequency;
-        //}
-    }
+    //public float GetFundamentalFrequency()
+    //{
+    //    float fundamentalFrequency = 0.0f;
+    //    int samples = 256;
+    //    float[] data = new float[samples];
+    //    audioSource.GetSpectrumData(data, 0, FFTWindow.Rectangular);
+    //    float s = 0.0f;
+    //    int i = 0;
+    //    for (int j = 1; j < samples; j++)
+    //    {
+    //        if (data[j] > minThreshold) // volumn must meet minimum threshold
+    //        {
+    //            if (s < data[j])
+    //            {
+    //                s = data[j];
+    //                i = j;
+    //            }
+    //        }
+    //    }
+    //    fundamentalFrequency = i * audioSampleRate / samples;
+    //    frequency = fundamentalFrequency;
+    //    return fundamentalFrequency;
+    //}
+}
