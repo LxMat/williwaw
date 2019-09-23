@@ -203,7 +203,7 @@ public class WaterPlane : MonoBehaviour
 
         updateVerts();
 
-        Steepness = gyroObject.GetComponent<GyroscopeInput>().shakeAmount;
+        Steepness = micObject.GetComponent<MicrophoneInput>().waves;
 
 
       if (debugOnComputer)
