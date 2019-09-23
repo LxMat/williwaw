@@ -24,7 +24,8 @@ public class WaterPlane : MonoBehaviour
     private Canvas canvas;
     public Vector2 WaveDirection; 
     private Mesh _mesh;
-
+    
+    private WaveProperty[] waveProps;
     private Vector4[] Waves2Shader;
 
     void Start()
@@ -50,20 +51,22 @@ public class WaterPlane : MonoBehaviour
         material.SetVector("_Wave3", Waves2Shader[2]);
         material.SetVector("_Wave4", Waves2Shader[3]);
 
-
-
         meshObject.GetComponent<Renderer>().material = material;
+        
+        //the array is used for updating waveHeight
+        waveProps = new WaveProperty[4];
+        waveProps[0] = Wave1;
+        waveProps[1] = Wave2;
+        waveProps[2] = Wave3;
+        waveProps[3] = Wave4;
+
 
         
 
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
         _mesh = mesh;
-
-
-        
         meshcol.sharedMesh = mesh;
         meshObject.transform.position = this.transform.position;
-
     }
 
 
@@ -124,6 +127,31 @@ public class WaterPlane : MonoBehaviour
         return mesh;
 
     }
+    public float getHeight(Vector3 pos)
+    {
+        float ypos = 0f;
+        Vector4 time = Shader.GetGlobalVector("_Time");
+        Vector3 posXZ = new Vector3(pos.x, 0, pos.z);
+
+        foreach (WaveProperty wave in waveProps){
+            float k = 2 * Mathf.PI / wave.WaveLength;
+            float c = Mathf.Sqrt(9.8f / k);
+            Vector2 d = new Vector2(wave.direction.x, wave.direction.y).normalized;
+            float a = wave.Steepness / k;
+            float f = k * (Vector2.Dot(d, new Vector2(pos.x, pos.z)) - c * time.y);
+            ypos += (wave.Steepness / k) * Mathf.Sin(f);
+
+            Vector3 newPos = new Vector3(pos.x, 0, pos.z);
+            newPos += new Vector3(d.x * (a * Mathf.Cos(f)),
+                                a * Mathf.Sin(f),
+                    d.y * (a * Mathf.Cos(f))
+                                );
+
+        }
+        return ypos;
+    }
+    
+
 
     void updateVerts()
     {

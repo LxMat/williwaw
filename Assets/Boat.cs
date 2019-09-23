@@ -13,6 +13,8 @@ public class Boat : MonoBehaviour
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
     private bool development;
+
+    private WaterPlane waves;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,11 @@ public class Boat : MonoBehaviour
         development = false;
         
     }
-
+    //Awake is called after all objects are initialized.
+    void Awake()
+    {
+        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -35,12 +41,17 @@ public class Boat : MonoBehaviour
         {
             boat.AddRelativeForce(forceVector);
         }
-          
+
+        Vector3 currentRot = transform.rotation.eulerAngles;
+        Vector3 currentPos = transform.position;
+        Vector3 newPos = new Vector3(currentPos.x, waves.getHeight(currentPos), currentPos.z);
+        transform.position = newPos;
+        transform.rotation = Quaternion.Euler(new Vector3(-90, currentRot.y, currentRot.z)); // stops boat from flipping around.
 
         //boat.AddTorque(direction);
 
         //transform.Rotate(direction, Space.Self);
-
+        
         if (Input.GetKey(KeyCode.O))
         {
             development = !development;

@@ -750,15 +750,15 @@ MonoBehaviour:
   WaveDirection: {x: 1, y: 0}
   Wave1:
     direction: {x: 1, y: 0}
-    Steepness: 0.6
+    Steepness: 0.3
     WaveLength: 30
   Wave2:
     direction: {x: 1, y: 1}
-    Steepness: 0.4
+    Steepness: 0.2
     WaveLength: 40
   Wave3:
     direction: {x: 0.5, y: 0.7}
-    Steepness: 0.6
+    Steepness: 0.5
     WaveLength: 13
   Wave4:
     direction: {x: 0.707, y: 0.707}
