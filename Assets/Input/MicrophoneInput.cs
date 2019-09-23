@@ -22,6 +22,7 @@ public class MicrophoneInput : MonoBehaviour
 
     public float loudness = 0.0f;
     public float force = 0.0f;
+    public float waves = 0.1f;
     private float threshold = 0.01f;
     private AudioSource audioSource;
 
@@ -81,8 +82,10 @@ public class MicrophoneInput : MonoBehaviour
             }
         }
         loudness = s* 10;
-        force += loudness*10*Time.deltaTime;
+        force += loudness*Time.deltaTime;
         force = force - force*0.003f;
+        waves += loudness * Time.deltaTime * 0.1f;
+        waves = waves- waves * 0.0002f;
         if (force > 1.0f)
         {
             force = 1.0f;
@@ -90,6 +93,14 @@ public class MicrophoneInput : MonoBehaviour
         if (force <= 0.1f)
         {
             force = 0.1f;
+        }
+        if (waves > 1.0f)
+        {
+            waves = 1.0f;
+        }
+        if (waves <= 0.1f)
+        {
+            waves = 0.1f;
         }
 
         fundamentalFrequency = k * audioSampleRate / 256;
