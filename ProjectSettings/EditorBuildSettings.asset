@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Boat Scene.unity
+    guid: d741db83eeb13e047b28a44de0c4fd24
   m_configObjects: {}
