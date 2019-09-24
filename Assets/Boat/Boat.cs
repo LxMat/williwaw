@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityStandardAssets.Utility;
 
 [System.Obsolete]
 public class Boat : NetworkBehaviour
@@ -7,6 +8,7 @@ public class Boat : NetworkBehaviour
 
 
     private Rigidbody boat;
+    public GameObject follow;
     public GameObject micObject;
     public GameObject gyroObject;
     private float force;
@@ -23,6 +25,11 @@ public class Boat : NetworkBehaviour
         direction = new Vector3();
         development = false;
 
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        Camera.main.GetComponent<SmoothFollow>().target = follow.transform;
     }
 
     //Awake is called after all objects are initialized.
