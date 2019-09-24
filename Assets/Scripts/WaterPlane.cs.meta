@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b9fc50707d1ba3248a36b4dd5e677dc3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - material: {fileID: 2100000, guid: 5cabf7eb0f70282439c93b5e5c161470, type: 2}
+  - micObject: {instanceID: 0}
+  - gyroObject: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
