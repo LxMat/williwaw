@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityStandardAssets.Utility;
 
 [System.Obsolete]
 public class Boat : NetworkBehaviour
 {
     private Rigidbody boat;
+    public GameObject follow;
     public GameObject micObject;
     public GameObject gyroObject;
     private float force;
@@ -24,7 +26,7 @@ public class Boat : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
-        CameraFollow.target = transform;
+        Camera.main.GetComponent<SmoothFollow>().target = follow.transform;
     }
 
     // Update is called once per frame

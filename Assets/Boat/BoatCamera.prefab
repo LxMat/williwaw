@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3926844941770644135}
   - component: {fileID: 4826016488428776845}
   - component: {fileID: 2564403448866279628}
-  - component: {fileID: 5100347038475891615}
   m_Layer: 0
   m_Name: BoatCamera
   m_TagString: MainCamera
@@ -97,24 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76806479d916a64aa03f8e3eba7912f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 7421591373906836324}
-  distance: 25
-  height: 10
-  rotationDamping: 2
-  heightDamping: 0
---- !u!114 &5100347038475891615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3027320507896714662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c51217cdc0dd14c8bef4f94ddd7fda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   target: {fileID: 0}
-  offsetPosition: {x: 50, y: 10, z: 10}
-  offsetPositionSpace: 1
-  lookAt: 1
+  distance: 17
+  height: 5
+  rotationDamping: 3
+  heightDamping: 3
