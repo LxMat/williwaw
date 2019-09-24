@@ -13,7 +13,6 @@ public class WaterPlane : MonoBehaviour
     public int depth = 100;
 
 
-
     [Range(0f, 0.9f)]
     public float Steepness;
     public float WaveLength = 10;
@@ -23,11 +22,13 @@ public class WaterPlane : MonoBehaviour
     public GameObject micObject;
     public GameObject gyroObject;
     private Canvas canvas;
-    public Vector2 WaveDirection;
-
-
+    public Vector2 WaveDirection; 
     private Mesh _mesh;
+    
+    private WaveProperty[] waveProps;
+    private Vector4[] Waves2Shader;
 
+    
     private void Start()
     {
         Mesh mesh = generateGrid();
@@ -38,18 +39,36 @@ public class WaterPlane : MonoBehaviour
         meshObject.AddComponent<MeshFilter>();
         meshObject.AddComponent<MeshRenderer>();
         meshObject.AddComponent<MeshCollider>();
+
+        //update shader properties
+        Waves2Shader = new Vector4[4];
+        Waves2Shader[0] = new Vector4(Wave1.direction.x, Wave1.direction.y, Wave1.Steepness, Wave1.WaveLength);
+        Waves2Shader[1] = new Vector4(Wave2.direction.x, Wave2.direction.y, Wave2.Steepness, Wave2.WaveLength);
+        Waves2Shader[2] = new Vector4(Wave3.direction.x, Wave3.direction.y, Wave3.Steepness, Wave3.WaveLength);
+        Waves2Shader[3] = new Vector4(Wave4.direction.x, Wave4.direction.y, Wave4.Steepness, Wave4.WaveLength);
+
+        material.SetVector("_Wave1", Waves2Shader[0]);
+        material.SetVector("_Wave2", Waves2Shader[1]);
+        material.SetVector("_Wave3", Waves2Shader[2]);
+        material.SetVector("_Wave4", Waves2Shader[3]);
+
         meshObject.GetComponent<Renderer>().material = material;
+        
+        //the array is used for updating waveHeight
+        waveProps = new WaveProperty[4];
+        waveProps[0] = Wave1;
+        waveProps[1] = Wave2;
+        waveProps[2] = Wave3;
+        waveProps[3] = Wave4;
+
 
 
 
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
         _mesh = mesh;
 
-
-
         meshcol.sharedMesh = mesh;
         meshObject.transform.position = this.transform.position;
-
     }
 
     private Mesh generateGrid()
@@ -105,11 +124,35 @@ public class WaterPlane : MonoBehaviour
         mesh.triangles = indices;
         mesh.tangents = tangents;
 
-        mesh.RecalculateNormals();
-
+        
         return mesh;
 
     }
+    public float getHeight(Vector3 pos)
+    {
+        float ypos = 0f;
+        Vector4 time = Shader.GetGlobalVector("_Time");
+        Vector3 posXZ = new Vector3(pos.x, 0, pos.z);
+
+        foreach (WaveProperty wave in waveProps){
+            float k = 2 * Mathf.PI / wave.WaveLength;
+            float c = Mathf.Sqrt(9.8f / k);
+            Vector2 d = new Vector2(wave.direction.x, wave.direction.y).normalized;
+            float a = wave.Steepness / k;
+            float f = k * (Vector2.Dot(d, new Vector2(pos.x, pos.z)) - c * time.y);
+            ypos += (wave.Steepness / k) * Mathf.Sin(f);
+
+            Vector3 newPos = new Vector3(pos.x, 0, pos.z);
+            newPos += new Vector3(d.x * (a * Mathf.Cos(f)),
+                                a * Mathf.Sin(f),
+                    d.y * (a * Mathf.Cos(f))
+                                );
+
+        }
+        return ypos;
+    }
+    
+
 
     private void updateVerts()
     {
@@ -187,6 +230,11 @@ public class WaterPlane : MonoBehaviour
     //Displays the 100 first vertices and normals;
     private void OnDrawGizmos()
     {
+        //run only when app is running
+        if (!Application.isPlaying)
+        {
+            return;
+        }
 
         for (int i = 0; i < 100; i++)
         {
@@ -201,7 +249,7 @@ public class WaterPlane : MonoBehaviour
 
     {
 
-        updateVerts();
+        //updateVerts();
 
         Steepness = micObject.GetComponent<MicrophoneInput>().waves;
 
@@ -232,4 +280,18 @@ public class WaterPlane : MonoBehaviour
             meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, -1f, 0, 0));
         }
     }
+
+
+    [System.Serializable]
+    public struct WaveProperty
+    {
+        public Vector2 direction;
+        public float Steepness;
+        public float WaveLength;
+    }
+    public WaveProperty Wave1;
+    public WaveProperty Wave2;
+    public WaveProperty Wave3;
+    public WaveProperty Wave4;
+
 }

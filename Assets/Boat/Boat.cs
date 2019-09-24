@@ -5,6 +5,8 @@ using UnityStandardAssets.Utility;
 [System.Obsolete]
 public class Boat : NetworkBehaviour
 {
+
+
     private Rigidbody boat;
     public GameObject follow;
     public GameObject micObject;
@@ -14,6 +16,7 @@ public class Boat : NetworkBehaviour
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
     private bool development;
+    private WaterPlane waves;
 
     // Start is called before the first frame update
     private void Start()
@@ -29,11 +32,26 @@ public class Boat : NetworkBehaviour
         Camera.main.GetComponent<SmoothFollow>().target = follow.transform;
     }
 
+    //Awake is called after all objects are initialized.
+    void Awake()
+    {
+        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
+    }
+
+
     // Update is called once per frame
     private void Update()
     {
         if (isLocalPlayer)
         {
+
+            Vector3 currentRot = transform.rotation.eulerAngles;
+            Vector3 currentPos = transform.position;
+            Vector3 newPos = new Vector3(currentPos.x, waves.getHeight(currentPos), currentPos.z);
+            transform.position = newPos;
+            transform.rotation = Quaternion.Euler(new Vector3(-90, currentRot.y, currentRot.z)); // stops boat from flipping around.
+
+
             force = micObject.GetComponent<MicrophoneInput>().force;
             rotation = -gyroObject.GetComponent<GyroscopeInput>().rotation;
             direction.z = -rotation;//Mathf.Sin(rotation);
