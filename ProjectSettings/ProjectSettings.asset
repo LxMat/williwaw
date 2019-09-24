@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: KTH
   productName: Williwaw
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -733,10 +733,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: bc1047a6-5c9f-44e7-a500-f152815c9443
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: Williwaw
-  organizationId: heikinaho
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
