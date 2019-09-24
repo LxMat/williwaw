@@ -2,8 +2,7 @@
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField]
-    private Transform target;
+    static public Transform target;
 
     [SerializeField]
     private Vector3 offsetPosition;
@@ -14,7 +13,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private bool lookAt = true;
 
-    private void Update()
+    private void FixedUpdate()
     {
         Refresh();
     }
@@ -23,8 +22,6 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.LogWarning("Missing target ref !", this);
-
             return;
         }
 

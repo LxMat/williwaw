@@ -22,6 +22,11 @@ public class Boat : NetworkBehaviour
 
     }
 
+    public override void OnStartLocalPlayer()
+    {
+        CameraFollow.target = transform;
+    }
+
     // Update is called once per frame
     private void Update()
     {
