@@ -8,9 +8,7 @@ public class WaterPlane : MonoBehaviour
     public int boundsX = 100;
     public int boundsZ = 100;
     public int resolutionX = 100;
-    public int resolutionY = 100;
-    public int width = 100;
-    public int depth = 100;
+    public int resolutionZ = 100;
 
 
     [Range(0f, 0.9f)]
@@ -28,9 +26,14 @@ public class WaterPlane : MonoBehaviour
     private WaveProperty[] waveProps;
     private Vector4[] Waves2Shader;
 
-    
+    private float scaleX;
+    private float scaleZ;
+
     private void Start()
     {
+        scaleX = boundsX / resolutionX;
+        scaleZ = boundsZ / resolutionZ;
+
         Mesh mesh = generateGrid();
         MeshCollider meshcol = gameObject.AddComponent<MeshCollider>();
         meshObject = new GameObject("Water");
@@ -74,12 +77,12 @@ public class WaterPlane : MonoBehaviour
     private Mesh generateGrid()
     {
         float scaleX = boundsX / resolutionX;
-        float scaleZ = boundsZ / resolutionY;
+        float scaleZ = boundsZ / resolutionZ;
         float u = 1.0f / resolutionX;
-        float v = 1.0f / resolutionY;
+        float v = 1.0f / resolutionZ;
 
         int sizeX = resolutionX + 1;
-        int sizeY = resolutionY + 1;
+        int sizeY = resolutionZ + 1;
 
         Vector3[] verts = new Vector3[sizeX * sizeY];
         Vector3[] normals = new Vector3[sizeX * sizeY];
@@ -132,21 +135,21 @@ public class WaterPlane : MonoBehaviour
     {
         float ypos = 0f;
         Vector4 time = Shader.GetGlobalVector("_Time");
-        Vector3 posXZ = new Vector3(pos.x, 0, pos.z);
+        Vector2 posXZ = new Vector3(pos.x, pos.z);
 
         foreach (WaveProperty wave in waveProps){
             float k = 2 * Mathf.PI / wave.WaveLength;
             float c = Mathf.Sqrt(9.8f / k);
-            Vector2 d = new Vector2(wave.direction.x, wave.direction.y).normalized;
+            Vector2 d = wave.direction.normalized;
             float a = wave.Steepness / k;
-            float f = k * (Vector2.Dot(d, new Vector2(pos.x, pos.z)) - c * time.y);
-            ypos += (wave.Steepness / k) * Mathf.Sin(f);
+            float f = k * (Vector2.Dot(d, posXZ) - c * time.y);
+            ypos += a * Mathf.Sin(f);
 
-            Vector3 newPos = new Vector3(pos.x, 0, pos.z);
-            newPos += new Vector3(d.x * (a * Mathf.Cos(f)),
-                                a * Mathf.Sin(f),
-                    d.y * (a * Mathf.Cos(f))
-                                );
+            //Vector3 newPos = new Vector3(pos.x, 0, pos.z);
+            //newPos += new Vector3(d.x * (a * Mathf.Cos(f)),
+            //                    a * Mathf.Sin(f),
+            //        d.y * (a * Mathf.Cos(f))
+            //                    );
 
         }
         return ypos;
@@ -158,12 +161,12 @@ public class WaterPlane : MonoBehaviour
     {
 
         float scaleX = boundsX / resolutionX;
-        float scaleZ = boundsZ / resolutionY;
+        float scaleZ = boundsZ / resolutionZ;
         float u = 1.0f / resolutionX;
-        float v = 1.0f / resolutionY;
+        float v = 1.0f / resolutionZ;
 
         int sizeX = resolutionX + 1;
-        int sizeY = resolutionY + 1;
+        int sizeY = resolutionZ + 1;
 
         Vector3[] verts = new Vector3[sizeX * sizeY];
         for (int x = 0; x < sizeX; x++)
