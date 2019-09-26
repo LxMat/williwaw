@@ -83,6 +83,8 @@
 		p += GerstnerWave(_Wave4, gridPoint, tangent, binormal);
 
 		vertexdata.vertex.y = p.y;
+		tangent = normalize(tangent);
+		binormal = normalize(binormal);
 		float3 normal = normalize(cross(binormal, tangent));
 		vertexdata.normal = normal;
 	}
