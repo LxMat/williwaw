@@ -15,7 +15,7 @@ public class Boat : NetworkBehaviour
     private float rotation;
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
-    private bool development;
+    private bool development = false;
     private WaterPlane waves;
 
     // Start is called before the first frame update
@@ -36,6 +36,8 @@ public class Boat : NetworkBehaviour
     void Awake()
     {
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
+        micObject = GameObject.Find("Microphone");
+        gyroObject = GameObject.Find("Gyroscope");
     }
 
 
@@ -56,7 +58,7 @@ public class Boat : NetworkBehaviour
             rotation = -gyroObject.GetComponent<GyroscopeInput>().rotation;
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
-            forceVector.y = force * 1.5f;
+            forceVector = Vector3.up * force * 2.0f;
 
             if (boat.velocity.magnitude < 5)
             {
@@ -103,11 +105,11 @@ public class Boat : NetworkBehaviour
             {
                 if (rotation < -0.2f)
                 {
-                    transform.Rotate(-Vector3.forward);
+                    transform.Rotate(Vector3.forward);
                 }
                 if (rotation > 0.2f)
                 {
-                    transform.Rotate(Vector3.forward);
+                    transform.Rotate(-Vector3.forward);
                 }
             }
         }

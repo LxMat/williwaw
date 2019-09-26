@@ -26,7 +26,7 @@ public class GyroscopeInput : MonoBehaviour
     //This is a legacy function, check out the UI section for other ways to create your UI
     private void Update()
     {
-        rotation = m_Gyro.attitude.x;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
+        rotation = m_Gyro.attitude.y;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
         if (m_Gyro.userAcceleration.x >= shakeThreshold)
         {
             shakeAmount += m_Gyro.userAcceleration.x * Time.deltaTime;
