@@ -95,11 +95,6 @@ public class Boat : NetworkBehaviour
                 {
                     boat.AddRelativeForce(-Vector3.up);
                 }
-
-                if (Input.GetKey(KeyCode.Space))
-                {
-                    boat.AddRelativeForce(Vector3.forward);
-                }
             }
             else
             {
