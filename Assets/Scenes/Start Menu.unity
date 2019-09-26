@@ -326,9 +326,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1598914384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f1d86b781593f415cb538ae4f9c09125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSampleRate: 44100
+  loudness: 0
+  force: 0
+  waves: 0.1
+  audioMixMic: {fileID: 0}
 --- !u!82 &1598914386
 AudioSource:
   m_ObjectHideFlags: 0
