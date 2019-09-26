@@ -84,7 +84,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _WaterColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Wave1: {r: 1, g: 0, b: 0.2, a: 100}
-    - _Wave2: {r: 1, g: 1, b: 0.3, a: 50}
-    - _Wave3: {r: 0.707, g: 0.303, b: 0.2, a: 73}
-    - _Wave4: {r: -1, g: 0.5, b: 0.2, a: 67}
+    - _Wave1: {r: 1, g: 0, b: 0.2, a: 50}
+    - _Wave2: {r: 1, g: 1, b: 0.3, a: 25}
+    - _Wave3: {r: 0.707, g: 0.303, b: 0.2, a: 37}
+    - _Wave4: {r: -1, g: 0.5, b: 0.2, a: 28}
