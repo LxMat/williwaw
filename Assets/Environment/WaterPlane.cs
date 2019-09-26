@@ -5,10 +5,10 @@ using UnityEngine;
 public class WaterPlane : MonoBehaviour
 {
     public bool debugOnComputer = false;
-    public int boundsX;
-    public int boundsZ;
-    public int resolutionX = 1;
-    public int resolutionY = 1;
+    public int boundsX = 100;
+    public int boundsZ = 100;
+    public int resolutionX = 100;
+    public int resolutionY = 100;
     public int width = 100;
     public int depth = 100;
 
