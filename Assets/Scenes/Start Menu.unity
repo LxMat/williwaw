@@ -326,15 +326,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1598914384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89061591df018de4cb36a0710ee3f2f1, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSampleRate: 44100
-  loudness: 0
-  force: 0
-  waves: 0.1
-  audioMixMic: {fileID: 3889658610879256321, guid: 16b60fddd4bf3b64ca43e24157aa7474,
-    type: 2}
 --- !u!82 &1598914386
 AudioSource:
   m_ObjectHideFlags: 0
@@ -534,5 +528,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
