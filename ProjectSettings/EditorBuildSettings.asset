@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Start Menu.unity
     guid: da6f0766c114ea3449322d36983b3012
+  - enabled: 1
+    path: Assets/Scenes/Game Scene.unity
+    guid: 1ce5f783db84bdf46a92f01e422a4a51
   - enabled: 0
     path: Assets/Scenes/Boat Scene.unity
     guid: d741db83eeb13e047b28a44de0c4fd24
