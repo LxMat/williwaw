@@ -57,7 +57,7 @@ public class Boat : NetworkBehaviour
 
 
             force = micObject.GetComponent<MicrophoneInput>().force;
-            rotation = -gyroObject.GetComponent<GyroscopeInput>().rotation;
+            rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
             forceVector = Vector3.up * force * 2.0f;
@@ -80,7 +80,7 @@ public class Boat : NetworkBehaviour
             {
                 if (Input.GetKey(KeyCode.W))
                 {
-                    if (boat.velocity.magnitude < 5)
+                    if (boat.velocity.magnitude < 50)
                     {
                         boat.AddRelativeForce(Vector3.up * 2);
                     }
@@ -100,14 +100,14 @@ public class Boat : NetworkBehaviour
             }
             else
             {
-                if (rotation < -0.2f)
+                if (Mathf.Abs(rotation) >0.5f)
                 {
-                    transform.Rotate(Vector3.forward);
+                    transform.Rotate(0,0, rotation);
                 }
-                if (rotation > 0.2f)
-                {
-                    transform.Rotate(-Vector3.forward);
-                }
+                //if (rotation > 0.2f)
+                //{
+                //    transform.Rotate(-Vector3.forward);
+                //}
             }
         }
     }
