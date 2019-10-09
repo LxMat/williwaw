@@ -13,6 +13,9 @@ public class GyroscopeInput : MonoBehaviour
     private float shakeThreshold = 0.1f;
     public float shakeAmount;
 
+    private Vector3 north;
+    private Vector3 down;
+
     private void Start()
     {
         //Set up and enable the gyroscope (check your device has one)
@@ -21,11 +24,19 @@ public class GyroscopeInput : MonoBehaviour
         m_Comp.enabled = true;
         m_Gyro.enabled = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-    }
 
-    //This is a legacy function, check out the UI section for other ways to create your UI
+        //get north right now
+        north = new Vector3(Mathf.Cos(m_Comp.magneticHeading), 0f, Mathf.Sin(m_Comp.magneticHeading));
+        //get down right now
+        down = m_Gyro.gravity;
+
+
+
+        //This is a legacy function, check out the UI section for other ways to create your UI
+    }
     private void Update()
     {
+        //Quaternion.LookRotation(m_Gyro.gravity, new Vector3(Mathf.Cos(m_Comp.magneticHeading), 0f, Mathf.Sin(m_Comp.magneticHeading))) * Quaternion.FromToRotation(Vector3.forward, Vector3.up);
         rotation = m_Gyro.attitude.y;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
         if (m_Gyro.userAcceleration.x >= shakeThreshold)
         {
