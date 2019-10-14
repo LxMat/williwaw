@@ -104,7 +104,7 @@ public class MicrophoneInput : MonoBehaviour
         }
 
         fundamentalFrequency = k * audioSampleRate / 256;
-        if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
+        //if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
     }
 
     private void ForceInc()

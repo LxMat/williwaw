@@ -61,7 +61,7 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
             forceVector = Vector3.up * force * 2.0f;
-            Debug.Log(force);
+        
             if (boat.velocity.magnitude < 50)
             {
                 boat.AddRelativeForce(forceVector);
