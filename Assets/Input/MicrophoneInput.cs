@@ -2,6 +2,10 @@
 using UnityEngine.UI; //for accessing Sliders and Dropdown
 using UnityEngine.Audio;
 using System.Collections.Generic; // So we can use List<>
+using System.Diagnostics;
+using System;
+
+//using Pitch;
 
 [RequireComponent(typeof(AudioSource))]
 public class MicrophoneInput : MonoBehaviour
@@ -23,10 +27,21 @@ public class MicrophoneInput : MonoBehaviour
     public float loudness = 0.0f;
     public float force = 0.0f;
     public float waves = 0.1f;
-    private float threshold = 0.1f;
+    public float threshold = 0.1f;
     private AudioSource audioSource;
 
     public AudioMixerGroup audioMixMic;
+
+    //private PitchTracker pitchTracker;
+    //public PitchTracker.PitchRecord pitch;
+
+
+
+    private float timer = 0.0f;
+    private float waitTime = 5.0f;
+
+    private int n = 1;
+    private float accu = 0.0f;
 
     private void Start()
     {
@@ -35,12 +50,14 @@ public class MicrophoneInput : MonoBehaviour
 
         foreach (var device in Microphone.devices)
         {
-            Debug.Log("Name: " + device);
+            UnityEngine.Debug.Log("Name: " + device);
         }
         mic = Microphone.devices[0];
 
         audioSource = GetComponent<AudioSource>();
-
+        //pitchTracker = new PitchTracker();
+        //pitchTracker.SampleRate = 44100.0;
+        
 
         audioSource.clip = Microphone.Start(mic, true, 10, 44100);
         audioSource.outputAudioMixerGroup = audioMixMic;
@@ -48,13 +65,20 @@ public class MicrophoneInput : MonoBehaviour
         while (!(Microphone.GetPosition(null) > 0)) { }
         audioSource.Play();
 
-        InvokeRepeating("ForceInc", 1f, 1f);
+
 
 
     }
 
     private void Update()
     {
+
+
+        timer += Time.deltaTime;
+
+       
+
+
         float fundamentalFrequency = 0.0f;
         float[] spectrum = new float[256];
 
@@ -68,6 +92,10 @@ public class MicrophoneInput : MonoBehaviour
         //    Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
         //}
 
+        //pitchTracker.ProcessBuffer(spectrum);
+        //pitch = pitchTracker.CurrentPitchRecord;
+        //Debug.Log(pitch.ToString());
+        
         float s = 0.0f;
         int k = 0;
         for (int j = 1; j < 256; j++)
@@ -81,6 +109,21 @@ public class MicrophoneInput : MonoBehaviour
                 }
             }
         }
+
+        if (timer < waitTime)
+        {
+            accu += s;
+            n += 1;
+
+            if (timer + Time.deltaTime > waitTime) ;
+            {
+                threshold = accu / n;
+            }
+
+        }
+        
+
+
         loudness = s * 10;
         force += loudness * Time.deltaTime;
         force = force - force * 0.003f;
@@ -107,13 +150,8 @@ public class MicrophoneInput : MonoBehaviour
         //if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
     }
 
-    private void ForceInc()
-    {
-
-
-
-    }
-
+ 
+    
 
     //{
 
