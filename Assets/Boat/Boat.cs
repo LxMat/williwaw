@@ -11,6 +11,8 @@ public class Boat : NetworkBehaviour
     public GameObject follow;
     public GameObject micObject;
     public GameObject gyroObject;
+    public GameObject CannonBallPrefab;
+    public float CannonBallSpeed;
     private float force;
     private float rotation;
     private Vector3 forceVector = Vector3.up;
@@ -21,6 +23,9 @@ public class Boat : NetworkBehaviour
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
+    private int health = 1;
+    private float cooldown = 2f;
+    private float nextAttack;
     // Start is called before the first frame update
     private void Start()
     {
@@ -36,8 +41,43 @@ public class Boat : NetworkBehaviour
     {
         Camera.main.GetComponent<SmoothFollow>().target = follow.transform;
         cameraDistanceInit = currentCameraDistance = Camera.main.GetComponent<SmoothFollow>().distance;
-        
-        
+
+
+    }
+
+    private void KillPlayer()
+    {
+        Destroy(gameObject);
+        Debug.Log("You are dead");
+    }
+
+    private void ShootLaser()
+    {
+        nextAttack = Time.time + cooldown;
+        CmdShoot();
+        Debug.Log("BOOM");
+    }
+
+    [Command] void CmdShoot()
+    {
+        GameObject cannonBall = Instantiate(CannonBallPrefab, transform.position + transform.right * -10, transform.rotation);
+        cannonBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(-CannonBallSpeed, 75, 0));
+        NetworkServer.Spawn(cannonBall);
+        Debug.Log("BOOM");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            health--;
+            Debug.Log("Health left: " + health);
+            if (health == 0)
+            {
+                KillPlayer();
+            }
+        }
     }
 
     //Awake is called after all objects are initialized.
@@ -85,7 +125,6 @@ public class Boat : NetworkBehaviour
 
             if (boat.velocity.magnitude < 50)
             {
-                
                 boat.AddRelativeForce(forceVector);
             }
 
@@ -93,25 +132,32 @@ public class Boat : NetworkBehaviour
 
             //if the boat speeds up the camera moves further away and as is slows down the camera gets closer.
 
-            Debug.Log(boat.velocity.magnitude);
-            if (boat.velocity.magnitude > 50 && currentCameraDistance < (cameraDistanceSpeedUp)) 
+            // Debug.Log(boat.velocity.magnitude);
+            if (boat.velocity.magnitude > 50 && currentCameraDistance < (cameraDistanceSpeedUp))
             {
-                
+
                 //boatCamera.distance = Mathf.Lerp(cameraDistanceInit, cameraDistanceSpeedUp, Time.deltaTime / 10);
-                boatCamera.distance = Mathf.Lerp(boatCamera.distance,200f,Time.deltaTime/10);
+                boatCamera.distance = Mathf.Lerp(boatCamera.distance, 200f, Time.deltaTime / 10);
                 currentCameraDistance = Camera.main.GetComponent<SmoothFollow>().distance;
-            }else if (boat.velocity.magnitude <= 50 && currentCameraDistance != cameraDistanceInit)
+            }
+            else if (boat.velocity.magnitude <= 50 && currentCameraDistance != cameraDistanceInit)
             {
                 //boatCamera.distance = currentCameraDistance = cameraDistanceInit;
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance, cameraDistanceInit, Time.deltaTime);
                 currentCameraDistance = boatCamera.distance;
             }
 
-                    //boat.AddTorque(direction);
+            //boat.AddTorque(direction);
 
-                    //transform.Rotate(direction, Space.Self);
+            //transform.Rotate(direction, Space.Self);
 
-                    if (Input.GetKey(KeyCode.O))
+            if (Input.GetKey(KeyCode.Space) && nextAttack < Time.time)
+            {
+                ShootLaser();
+            }
+
+
+            if (Input.GetKey(KeyCode.O))
             {
                 development = !development;
             }
@@ -119,25 +165,24 @@ public class Boat : NetworkBehaviour
             {
                 if (Input.GetKey(KeyCode.W))
                 {
-                        boat.AddRelativeForce(-Vector3.right);
-                    
+                    boat.AddRelativeForce(-Vector3.right);
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
                     transform.Rotate(-Vector3.up);
                 }
-               if (Input.GetKey(KeyCode.D))
+                if (Input.GetKey(KeyCode.D))
                 {
                     transform.Rotate(Vector3.up);
                 }
-               if (Input.GetKey(KeyCode.S))
+                if (Input.GetKey(KeyCode.S))
                 {
                     boat.AddRelativeForce(Vector3.right);
                 }
-               
-               
-                    boat.velocity = boat.velocity * 0.995f;
-               
+
+
+                boat.velocity = boat.velocity * 0.995f;
+
             }
             //else
             //{

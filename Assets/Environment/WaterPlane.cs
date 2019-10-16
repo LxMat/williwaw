@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.Networking;
 using UnityEngine;
 
-public class WaterPlane : MonoBehaviour
+[System.Obsolete]
+public class WaterPlane : NetworkBehaviour
 {
     public bool debugOnComputer = false;
     public int boundsX = 100;
@@ -262,7 +262,7 @@ public class WaterPlane : MonoBehaviour
             Steepness = 0.6f;
             Mesh smesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
             Vector3[] verts = smesh.vertices;
-            Debug.Log(verts[20].y);
+            // Debug.Log(verts[20].y);
         }
 
 

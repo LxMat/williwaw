@@ -350,6 +350,7 @@ GameObject:
   - component: {fileID: -3729118433988783000}
   - component: {fileID: 7142517078616903119}
   - component: {fileID: 1123638093256771249}
+  - component: {fileID: 1213382163254501772}
   m_Layer: 0
   m_Name: PirateShip 1
   m_TagString: Untagged
@@ -366,7 +367,7 @@ Transform:
   m_GameObject: {fileID: 7351761154885657863}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 210.72675, y: 243.80823, z: 454.87564}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 5879907260494907865}
   - {fileID: 7266187122460269577}
@@ -392,8 +393,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!114 &-3712095649316754419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +445,9 @@ MonoBehaviour:
     type: 3}
   gyroObject: {fileID: 8081437802821684877, guid: 7df56e9d5f891c94fbd397ccfe2d9073,
     type: 3}
+  CannonBallPrefab: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
+    type: 3}
+  CannonBallSpeed: 300
 --- !u!114 &7142517078616903119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,6 +482,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2879309a03b6a784b94519af3bd0605b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1213382163254501772
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351761154885657863}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.215881, y: 2.0497742, z: 6}
+  m_Center: {x: -0.16574097, y: 1.779892, z: 0.03918457}
 --- !u!1 &7653058350565933302
 GameObject:
   m_ObjectHideFlags: 0
