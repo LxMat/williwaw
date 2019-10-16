@@ -81,7 +81,7 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
-            forceVector = Vector3.up * force * 2.0f;
+            forceVector = -Vector3.right * force * 2.0f;
 
             if (boat.velocity.magnitude < 50)
             {   
@@ -110,7 +110,7 @@ public class Boat : NetworkBehaviour
             {
                 development = !development;
             }
-            if (true)
+            if (development)
             {
                 if (Input.GetKey(KeyCode.W))
                 {
@@ -131,20 +131,18 @@ public class Boat : NetworkBehaviour
                 }
                
                
-                    boat.velocity = boat.velocity * 0.995f;
-               
             }
-            //else
-            //{
-            //    if (rotation < -0.2f)
-            //    {
-            //        transform.Rotate(Vector3.forward);
-            //    }
-            //    if (rotation > 0.2f)
-            //    {
-            //        transform.Rotate(-Vector3.forward);
-            //    }
-            //}
+            else
+            {
+                if (rotation < -0.2f)
+                {
+                    transform.Rotate(-Vector3.up);
+                }
+                if (rotation > 0.2f)
+                {
+                    transform.Rotate(Vector3.up);
+                }
+            }
         }
     }
 }
