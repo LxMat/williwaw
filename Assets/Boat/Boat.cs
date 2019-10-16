@@ -17,10 +17,13 @@ public class Boat : NetworkBehaviour
     private Vector3 direction;
     private bool development = false;
     private WaterPlane waves;
-    private float cameraDistanceInit;
+
+    //variables used for the camera
+    private float cameraDistanceInit,cameraHeightInit;
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
+    private float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
     private void Start()
     {
@@ -36,8 +39,10 @@ public class Boat : NetworkBehaviour
     {
         Camera.main.GetComponent<SmoothFollow>().target = follow.transform;
         cameraDistanceInit = currentCameraDistance = Camera.main.GetComponent<SmoothFollow>().distance;
-        
-        
+        cameraHeightInit = Camera.main.GetComponent<SmoothFollow>().height;
+        Debug.Log("height: "+ cameraHeightInit);
+
+
     }
 
     //Awake is called after all objects are initialized.
@@ -57,7 +62,6 @@ public class Boat : NetworkBehaviour
 
     private void setHeight(Transform gameObj)
     {
-
         Vector3 current = gameObj.position;
         gameObj.position = new Vector3(current.x, waves.getHeight(gameObj.position), current.z);
     }
@@ -71,10 +75,6 @@ public class Boat : NetworkBehaviour
 
             Vector3 currentRot = transform.rotation.eulerAngles;
             Vector3 currentPos = transform.position;
-            //Vector3 newPos = new Vector3(currentPos.x, waves.getHeight(currentPos), currentPos.z);
-            //transform.position = newPos;
-            //            transform.rotation = Quaternion.Euler(new Vector3(-90, currentRot.y, currentRot.z)); // stops boat from flipping around.
-
             setHeight(transform);
             force = micObject.GetComponent<MicrophoneInput>().force;
             rotation = -gyroObject.GetComponent<GyroscopeInput>().rotation;
@@ -84,27 +84,22 @@ public class Boat : NetworkBehaviour
             forceVector = Vector3.up * force * 2.0f;
 
             if (boat.velocity.magnitude < 50)
-            {
-                
+            {   
                 boat.AddRelativeForce(forceVector);
             }
 
 
 
             //if the boat speeds up the camera moves further away and as is slows down the camera gets closer.
-
-            Debug.Log(boat.velocity.magnitude);
-            if (boat.velocity.magnitude > 50 && currentCameraDistance < (cameraDistanceSpeedUp)) 
+            if (boat.velocity.magnitude > cameraSpeedThreshold && boatCamera.distance < (cameraDistanceSpeedUp)) 
             {
-                
-                //boatCamera.distance = Mathf.Lerp(cameraDistanceInit, cameraDistanceSpeedUp, Time.deltaTime / 10);
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance,200f,Time.deltaTime/10);
-                currentCameraDistance = Camera.main.GetComponent<SmoothFollow>().distance;
-            }else if (boat.velocity.magnitude <= 50 && currentCameraDistance != cameraDistanceInit)
+                boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit + 5, Time.deltaTime);
+            }
+            else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit)
             {
-                //boatCamera.distance = currentCameraDistance = cameraDistanceInit;
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance, cameraDistanceInit, Time.deltaTime);
-                currentCameraDistance = boatCamera.distance;
+                boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit, Time.deltaTime);
             }
 
                     //boat.AddTorque(direction);

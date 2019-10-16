@@ -350,6 +350,8 @@ GameObject:
   - component: {fileID: -3729118433988783000}
   - component: {fileID: 7142517078616903119}
   - component: {fileID: 1123638093256771249}
+  - component: {fileID: -671063160420319901}
+  - component: {fileID: 4495798016201911735}
   m_Layer: 0
   m_Name: PirateShip 1
   m_TagString: Untagged
@@ -478,6 +480,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2879309a03b6a784b94519af3bd0605b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-671063160420319901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351761154885657863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0842116f6c7a1d2479c3c00b9d081d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &4495798016201911735
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351761154885657863}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea568ad2b1974e14eb064dcfa127ebb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7653058350565933302
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +670,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0307df93a7a763f4aa664fc459c3041d, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 9500000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 302432e767323f94699e2d6fc116514e, type: 2}
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
 --- !u!4 &5879907260494907865 stripped
 Transform:
