@@ -384,7 +384,7 @@ PrefabInstance:
     - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
@@ -1707,6 +1707,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1585532086650240104, guid: 21ed1e74b09cb394c95d456b5dcf8d9d,
+        type: 3}
+      propertyPath: audioMixMic
+      value: 
+      objectReference: {fileID: 3889658610879256321, guid: 16b60fddd4bf3b64ca43e24157aa7474,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ed1e74b09cb394c95d456b5dcf8d9d, type: 3}
 --- !u!1001 &8081437801829612903

@@ -8,25 +8,61 @@ public class GyroscopeInput : MonoBehaviour
     // Start is called before the first frame update
     private Gyroscope m_Gyro;
     private Compass m_Comp;
+   
     public float rotation;
 
     private float shakeThreshold = 0.1f;
     public float shakeAmount;
+
+    private Vector3 north;
+    private Vector3 down;
+
+
+    public float smooth = 0.2f;
+    public Text inputValue;
+    public float newRotation;
+    public float sensitivity = 6;
+    private Vector3 currentAcceleration, initialAcceleration;
+
+
 
     private void Start()
     {
         //Set up and enable the gyroscope (check your device has one)
         m_Gyro = Input.gyro;
         m_Comp = Input.compass;
+
+
+        initialAcceleration = Input.acceleration;
+        currentAcceleration = Vector3.zero;
+
         m_Comp.enabled = true;
         m_Gyro.enabled = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-    }
 
-    //This is a legacy function, check out the UI section for other ways to create your UI
+        //get north right now
+        north = new Vector3(Mathf.Cos(m_Comp.magneticHeading), 0f, Mathf.Sin(m_Comp.magneticHeading));
+        //get down right now
+        down = m_Gyro.gravity;
+
+
+
+        //This is a legacy function, check out the UI section for other ways to create your UI
+    }
     private void Update()
     {
-        rotation = m_Gyro.attitude.y;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
+        //Quaternion.LookRotation(m_Gyro.gravity, new Vector3(Mathf.Cos(m_Comp.magneticHeading), 0f, Mathf.Sin(m_Comp.magneticHeading))) * Quaternion.FromToRotation(Vector3.forward, Vector3.up);
+        //north = new Vector3(Mathf.Cos(m_Comp.magneticHeading), 0f, Mathf.Sin(m_Comp.magneticHeading));
+        //transform.rotation = Quaternion.LookRotation(north, -m_Gyro.gravity);
+        //rotation = m_Gyro.attitude.y;//Mathf.Round(m_Comp.magneticHeading * Mathf.Deg2Rad * 100)/100;
+
+        currentAcceleration = Vector3.Lerp(currentAcceleration, Input.acceleration - initialAcceleration, Time.deltaTime / smooth);
+
+        newRotation = Mathf.Clamp(currentAcceleration.x * sensitivity, -1, 1);
+        //transform.Rotate(0, 0, -newRotation);
+        rotation = newRotation;
+
+
         if (m_Gyro.userAcceleration.x >= shakeThreshold)
         {
             shakeAmount += m_Gyro.userAcceleration.x * Time.deltaTime;
