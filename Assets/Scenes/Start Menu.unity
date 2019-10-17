@@ -268,6 +268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
+      propertyPath: m_SpawnPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
       propertyPath: m_OfflineScene
       value: Start Menu
       objectReference: {fileID: 0}
@@ -285,7 +290,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PlayerPrefab
       value: 
-      objectReference: {fileID: 6666219149575221201, guid: caf3f9d9c947f36458dae6a542a27854,
+      objectReference: {fileID: 7351761154885657863, guid: 2158bce6b384f10409f998702397e32c,
         type: 3}
     - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
@@ -297,6 +302,12 @@ PrefabInstance:
       propertyPath: m_Channels.Array.data[0]
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d79eabb0688205e4785ee84b4a8d76f2, type: 3}
 --- !u!1 &1598914384

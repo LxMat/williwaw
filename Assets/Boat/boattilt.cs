@@ -54,7 +54,8 @@ public class boattilt : MonoBehaviour
         return Vector3.Cross(u,v).normalized;
     }
 
-    void Update()
+
+    void AlignToWaveNormal()
     {
 
         setHeight(boat);
@@ -62,10 +63,14 @@ public class boattilt : MonoBehaviour
         setHeight(s2);
         setHeight(s3);
         setHeight(s4);
-        
 
+        //note that the order of the spheres changes if the normal points up or down
         Vector3 normal = getNormal(s1.position, s3.position, s2.position);
         Vector3 normal2 = getNormal(s4.position, s3.position, s2.position);
-        boat.rotation = Quaternion.FromToRotation(Vector3.up, ((normal + normal2) / 2)) * transform.rotation ;
+        boat.rotation = Quaternion.FromToRotation(Vector3.up, ((normal + normal2) / 2)) * transform.rotation;
+    }
+    void Update()
+    {
+        AlignToWaveNormal();
     }
 }
