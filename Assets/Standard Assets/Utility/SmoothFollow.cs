@@ -13,7 +13,7 @@ namespace UnityStandardAssets.Utility
 		public float distance = 10.0f;
 		// the height we want the camera to be above the target
 		[SerializeField]
-		private float height = 5.0f;
+		public float height = 5.0f;
 
 		[SerializeField]
 		private float rotationDamping;
