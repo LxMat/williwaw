@@ -11,6 +11,8 @@ public class Boat : NetworkBehaviour
     public GameObject follow;
     public GameObject micObject;
     public GameObject gyroObject;
+    public GameObject CannonBallPrefab;
+    public float CannonBallSpeed;
     private float force;
     private float rotation;
     private Vector3 forceVector = Vector3.up;
@@ -23,6 +25,9 @@ public class Boat : NetworkBehaviour
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
+    private int health = 1;
+    private float cooldown = 2f;
+    private float nextAttack;
     private float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
     private void Start()
@@ -42,7 +47,41 @@ public class Boat : NetworkBehaviour
         cameraHeightInit = Camera.main.GetComponent<SmoothFollow>().height;
         Debug.Log("height: "+ cameraHeightInit);
 
+    }
 
+    private void KillPlayer()
+    {
+        Destroy(gameObject);
+        Debug.Log("You are dead");
+    }
+
+    private void ShootLaser()
+    {
+        nextAttack = Time.time + cooldown;
+        CmdShoot();
+        Debug.Log("BOOM");
+    }
+
+    [Command] void CmdShoot()
+    {
+        GameObject cannonBall = Instantiate(CannonBallPrefab, transform.position + transform.right * -10, transform.rotation);
+        cannonBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(-CannonBallSpeed, 75, 0));
+        NetworkServer.Spawn(cannonBall);
+        Debug.Log("BOOM");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            health--;
+            Debug.Log("Health left: " + health);
+            if (health == 0)
+            {
+                KillPlayer();
+            }
+        }
     }
 
     //Awake is called after all objects are initialized.
@@ -95,18 +134,24 @@ public class Boat : NetworkBehaviour
             {
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance,200f,Time.deltaTime/10);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit + 5, Time.deltaTime);
-            }
             else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit)
+            }
             {
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance, cameraDistanceInit, Time.deltaTime);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit, Time.deltaTime);
             }
 
-                    //boat.AddTorque(direction);
+            //boat.AddTorque(direction);
 
-                    //transform.Rotate(direction, Space.Self);
+            //transform.Rotate(direction, Space.Self);
 
-                    if (Input.GetKey(KeyCode.O))
+            if (Input.GetKey(KeyCode.Space) && nextAttack < Time.time)
+            {
+                ShootLaser();
+            }
+
+
+            if (Input.GetKey(KeyCode.O))
             {
                 development = !development;
             }
@@ -114,22 +159,23 @@ public class Boat : NetworkBehaviour
             {
                 if (Input.GetKey(KeyCode.W))
                 {
-                        boat.AddRelativeForce(-Vector3.right);
-                    
+                    boat.AddRelativeForce(-Vector3.right);
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
                     transform.Rotate(-Vector3.up);
                 }
-               if (Input.GetKey(KeyCode.D))
+                if (Input.GetKey(KeyCode.D))
                 {
                     transform.Rotate(Vector3.up);
                 }
-               if (Input.GetKey(KeyCode.S))
+                if (Input.GetKey(KeyCode.S))
                 {
                     boat.AddRelativeForce(Vector3.right);
                 }
                
+               
+                    boat.velocity = boat.velocity * 0.995f;
                
             }
             else

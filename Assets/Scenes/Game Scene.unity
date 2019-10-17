@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -196,7 +196,12 @@ PrefabInstance:
     - target: {fileID: 2564403448866279628, guid: 6adde00be464ea84dab0085fab934651,
         type: 3}
       propertyPath: height
-      value: 10
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564403448866279628, guid: 6adde00be464ea84dab0085fab934651,
+        type: 3}
+      value: 25
+      propertyPath: distance
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6adde00be464ea84dab0085fab934651, type: 3}
@@ -347,6 +352,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Texture: {fileID: 2800000, guid: 4424fe5e9bb181e4cb21232928e55f58, type: 3}
   m_UVRect:
     serializedVersion: 2
@@ -387,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
@@ -454,11 +461,16 @@ PrefabInstance:
       propertyPath: m_EnableTreeColliders
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6021241876287420814, guid: 0f594e6ba632642cb83e4099e41278ba,
+    - target: {fileID: 6021241876287420815, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -10
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
+      objectReference: {fileID: 0}
+      value: -10
+      propertyPath: m_LocalPosition.y
+        type: 3}
+    - target: {fileID: 6021241876287420814, guid: 0f594e6ba632642cb83e4099e41278ba,
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f594e6ba632642cb83e4099e41278ba, type: 3}
 --- !u!1 &534669902
@@ -651,6 +663,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Texture: {fileID: 0}
   m_UVRect:
     serializedVersion: 2
@@ -1247,6 +1261,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Texture: {fileID: 2800000, guid: 226eeef84986ed74ab3cd8f3ca9475a1, type: 3}
   m_UVRect:
     serializedVersion: 2
@@ -1577,20 +1593,53 @@ MonoBehaviour:
   WaveDirection: {x: 0, y: 0}
   Wave1:
     direction: {x: 1, y: 0}
-    Steepness: 0.2
-    WaveLength: 50
+    Steepness: 0.1
+    WaveLength: 20
   Wave2:
     direction: {x: 1, y: 1}
-    Steepness: 0.3
-    WaveLength: 100
+    Steepness: 0.2
+    WaveLength: 40
   Wave3:
     direction: {x: 0.707, y: 0.303}
-    Steepness: 0.2
-    WaveLength: 37
+    Steepness: 0.15
+    WaveLength: 25
   Wave4:
     direction: {x: -1, y: 0.5}
-    Steepness: 0.5
-    WaveLength: 60
+    Steepness: 0.3
+    WaveLength: 35
+--- !u!114 &1427392316010857860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427392316010857858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 198
+    i1: 236
+    i2: 219
+    i3: 102
+    i4: 18
+    i5: 19
+    i6: 201
+    i7: 196
+    i8: 139
+    i9: 22
+    i10: 2
+    i11: 102
+    i12: 175
+    i13: 176
+    i14: 51
+    i15: 196
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &1585532085797020195
 PrefabInstance:
   m_ObjectHideFlags: 0
