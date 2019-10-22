@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b6aac8149d114438acefe92bf27aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wind: {fileID: 6231843100839761332, guid: 1d6029527dc1f064e87721fa5874abfd, type: 3}
 --- !u!1001 &8743839872665563759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21,7 +22,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 420bde364644a314396dc8ed24ee99d6, type: 3}
       propertyPath: m_Name
-      value: Cloud_prefab Variant
+      value: cloud_Prime
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 420bde364644a314396dc8ed24ee99d6, type: 3}
       propertyPath: m_LocalPosition.x
