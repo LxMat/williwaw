@@ -2,8 +2,7 @@
 using UnityEngine.UI; //for accessing Sliders and Dropdown
 using UnityEngine.Audio;
 using System.Collections.Generic; // So we can use List<>
-using System.Diagnostics;
-using System;
+
 
 //using Pitch;
 
@@ -40,8 +39,8 @@ public class MicrophoneInput : MonoBehaviour
     private float timer = 0.0f;
     private float waitTime = 5.0f;
 
-    public int n = 1;
-    public float accu = 0.0f;
+    private int n = 1;
+    private float accu = 0.0f;
 
     private void Start()
     {
@@ -86,15 +85,14 @@ public class MicrophoneInput : MonoBehaviour
 
         for (int i = 1; i < spectrum.Length - 1; i++)
         {
-            UnityEngine.Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
-            UnityEngine.Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
-            UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
-            UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
+            Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
+            Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
+            Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
+            Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
         }
 
-        //pitchTracker.ProcessBuffer(spectrum);
-        //pitch = pitchTracker.CurrentPitchRecord;
-        //Debug.Log(pitch.ToString());
+        
+
 
         float s = 0.0f;
         int k = 0;
