@@ -37,9 +37,6 @@ public class Boat : NetworkBehaviour
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
-    private int health = 1;
-    private float cooldown = 2f;
-    private float nextAttack;
     private float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
     private Transform cylinder;
@@ -63,41 +60,6 @@ public class Boat : NetworkBehaviour
         cameraHeightInit = Camera.main.GetComponent<SmoothFollow>().height;
         Debug.Log("height: "+ cameraHeightInit);
 
-    }
-
-    private void KillPlayer()
-    {
-        Destroy(gameObject);
-        Debug.Log("You are dead");
-    }
-
-    private void ShootLaser()
-    {
-        nextAttack = Time.time + cooldown;
-        CmdShoot();
-        Debug.Log("BOOM");
-    }
-
-    [Command] void CmdShoot()
-    {
-        GameObject cannonBall = Instantiate(CannonBallPrefab, transform.position + transform.right * -10, transform.rotation);
-        cannonBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(-CannonBallSpeed, 75, 0));
-        NetworkServer.Spawn(cannonBall);
-        Debug.Log("BOOM");
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.tag == "Enemy")
-        {
-            health--;
-            Debug.Log("Health left: " + health);
-            if (health == 0)
-            {
-                KillPlayer();
-            }
-        }
     }
 
     //Awake is called after all objects are initialized.
@@ -177,11 +139,6 @@ public class Boat : NetworkBehaviour
             //boat.AddTorque(direction);
 
             //transform.Rotate(direction, Space.Self);
-
-            if (Input.GetKey(KeyCode.Space) && nextAttack < Time.time)
-            {
-                ShootLaser();
-            }
 
 
             if (Input.GetKey(KeyCode.O))

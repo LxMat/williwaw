@@ -351,9 +351,11 @@ GameObject:
   - component: {fileID: 7142517078616903119}
   - component: {fileID: 1123638093256771249}
   - component: {fileID: -1332042697958553351}
+  - component: {fileID: 1405664038766276771}
+  - component: {fileID: -8027657914312729760}
   m_Layer: 0
   m_Name: PirateShip 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,7 +397,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!114 &-3712095649316754419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +500,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 12, y: 8, z: 6}
   m_Center: {x: 0, y: 4, z: 0}
+--- !u!114 &1405664038766276771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351761154885657863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b0c767726dc3f498340511249c715c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 2
+  firePower: 500
+  fireAngle: 0.33
+  projectile: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
+    type: 3}
+--- !u!114 &-8027657914312729760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351761154885657863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9242cd3a951c4c46a2ff2350b5f06ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
 --- !u!1 &7653058350565933302
 GameObject:
   m_ObjectHideFlags: 0
