@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -196,7 +196,7 @@ PrefabInstance:
     - target: {fileID: 2564403448866279628, guid: 6adde00be464ea84dab0085fab934651,
         type: 3}
       propertyPath: height
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2564403448866279628, guid: 6adde00be464ea84dab0085fab934651,
         type: 3}
@@ -1413,28 +1413,13 @@ MonoBehaviour:
   boundsZ: 1000
   resolutionX: 100
   resolutionZ: 100
+  Waves: []
   Steepness: 0
   WaveLength: 10
   material: {fileID: 2100000, guid: 5cabf7eb0f70282439c93b5e5c161470, type: 2}
   micObject: {fileID: 1429151306}
   gyroObject: {fileID: 1273902058}
   WaveDirection: {x: 0, y: 0}
-  Wave1:
-    direction: {x: 1, y: 0}
-    Steepness: 0.1
-    WaveLength: 20
-  Wave2:
-    direction: {x: 1, y: 1}
-    Steepness: 0.2
-    WaveLength: 40
-  Wave3:
-    direction: {x: 0.707, y: 0.303}
-    Steepness: 0.15
-    WaveLength: 25
-  Wave4:
-    direction: {x: -1, y: 0.5}
-    Steepness: 0.3
-    WaveLength: 35
 --- !u!114 &1427392316010857860
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine.Networking;
+﻿using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
 [System.Obsolete]
@@ -10,6 +11,7 @@ public class WaterPlane : NetworkBehaviour
     public int resolutionX = 100;
     public int resolutionZ = 100;
 
+    public List<Vector4> Waves;
 
     [Range(0f, 0.9f)]
     public float Steepness;
@@ -22,15 +24,14 @@ public class WaterPlane : NetworkBehaviour
     private Canvas canvas;
     public Vector2 WaveDirection; 
     private Mesh _mesh;
-    
-    private WaveProperty[] waveProps;
-    private Vector4[] Waves2Shader;
+
 
     private float scaleX;
     private float scaleZ;
 
     private void Start()
     {
+        Debug.Log(material.name);
         scaleX = boundsX / resolutionX;
         scaleZ = boundsZ / resolutionZ;
 
@@ -42,28 +43,13 @@ public class WaterPlane : NetworkBehaviour
         meshObject.AddComponent<MeshRenderer>();
         meshObject.AddComponent<MeshCollider>();
 
-        //update shader properties
-        Waves2Shader = new Vector4[4];
-        Waves2Shader[0] = new Vector4(Wave1.direction.x, Wave1.direction.y, Wave1.Steepness, Wave1.WaveLength);
-        Waves2Shader[1] = new Vector4(Wave2.direction.x, Wave2.direction.y, Wave2.Steepness, Wave2.WaveLength);
-        Waves2Shader[2] = new Vector4(Wave3.direction.x, Wave3.direction.y, Wave3.Steepness, Wave3.WaveLength);
-        Waves2Shader[3] = new Vector4(Wave4.direction.x, Wave4.direction.y, Wave4.Steepness, Wave4.WaveLength);
-
-        material.SetVector("_Wave1", Waves2Shader[0]);
-        material.SetVector("_Wave2", Waves2Shader[1]);
-        material.SetVector("_Wave3", Waves2Shader[2]);
-        material.SetVector("_Wave4", Waves2Shader[3]);
-
         meshObject.GetComponent<Renderer>().material = material;
         
-        //the array is used for updating waveHeight
-        waveProps = new WaveProperty[4];
-        waveProps[0] = Wave1;
-        waveProps[1] = Wave2;
-        waveProps[2] = Wave3;
-        waveProps[3] = Wave4;
 
-
+        for(int i = 1; i<= 5; i++)
+        {
+            Waves.Add(material.GetVector("_Wave" + i));
+        }
 
 
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
@@ -136,11 +122,11 @@ public class WaterPlane : NetworkBehaviour
         Vector4 time = Shader.GetGlobalVector("_Time");
         Vector2 posXZ = new Vector3(pos.x, pos.z);
 
-        foreach (WaveProperty wave in waveProps){
-            float k = 2 * Mathf.PI / wave.WaveLength;
+        foreach (Vector4 wave in Waves){
+            float k = 2 * Mathf.PI / wave.w;
             float c = Mathf.Sqrt(9.8f / k);
-            Vector2 d = wave.direction.normalized;
-            float a = wave.Steepness / k;
+            Vector2 d = new Vector2(wave.x,wave.y).normalized;
+            float a = wave.z / k;
             float f = k * (Vector2.Dot(d, posXZ) - c * time.y);
             ypos += a * Mathf.Sin(f);
 
@@ -209,23 +195,6 @@ public class WaterPlane : NetworkBehaviour
         return p;
     }
 
-    /*
-    * HLSL code... delete comment whenever
-    * 
-      half3 p = v.vertex;
-
-    //Gerstner Wave offset
-    float k = 2 * UNITY_PI / _Wavelength;
-    float c = sqrt(9.8 / k);
-    float2 d = normalize(_Direction);
-    float f = k * (dot(d, p.xz) - c * _Time.y);
-    float a = _Steepness / k;
-
-    p.x += d.x * ((_Steepness / k) * cos(f));
-    p.y += (_Steepness / k) * sin(f);
-    p.z += d.y * ((_Steepness / k) * cos(f));
-
-        */
 
 
 
@@ -255,7 +224,6 @@ public class WaterPlane : NetworkBehaviour
 
         Steepness = micObject.GetComponent<MicrophoneInput>().waves;
 
-
         if (debugOnComputer)
         {
             Steepness = 0.6f;
@@ -263,37 +231,6 @@ public class WaterPlane : NetworkBehaviour
             Vector3[] verts = smesh.vertices;
             // Debug.Log(verts[20].y);
         }
-
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(-1f, 0f, 0, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, 1f, 0, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(1f, 0f, 0, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            meshObject.GetComponent<Renderer>().material.SetVector("_Direction", new Vector4(0f, -1f, 0, 0));
-        }
     }
-
-
-    [System.Serializable]
-    public struct WaveProperty
-    {
-        public Vector2 direction;
-        public float Steepness;
-        public float WaveLength;
-    }
-    public WaveProperty Wave1;
-    public WaveProperty Wave2;
-    public WaveProperty Wave3;
-    public WaveProperty Wave4;
 
 }
