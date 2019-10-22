@@ -77,7 +77,7 @@ Material:
     - _Wavelength: 10
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 0.7254901, b: 1, a: 1}
+    - _Color: {r: 0, g: 0.7265787, b: 1, a: 1}
     - _DepthGradientDeep: {r: 0.086, g: 0.407, b: 1, a: 0.749}
     - _DepthGradientShallow: {r: 0.325, g: 0.807, b: 0.971, a: 0.725}
     - _Direction: {r: 1, g: 0, b: 0, a: 0}

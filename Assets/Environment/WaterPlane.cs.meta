@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - material: {instanceID: 0}
+  - material: {fileID: 2100000, guid: 5cabf7eb0f70282439c93b5e5c161470, type: 2}
   - micObject: {instanceID: 0}
   - gyroObject: {instanceID: 0}
   executionOrder: 0
