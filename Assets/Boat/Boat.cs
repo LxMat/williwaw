@@ -30,6 +30,7 @@ public class Boat : NetworkBehaviour
     private float nextAttack;
     private float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
+    private Transform cylinder;
     private void Start()
     {
         boat = GetComponent<Rigidbody>();
@@ -38,6 +39,9 @@ public class Boat : NetworkBehaviour
         transform.rotation = Quaternion.identity; //for some reason the boat spawns sideways...
         boatCamera = Camera.main.GetComponent<SmoothFollow>();
         cameraDistanceInit = boatCamera.distance;
+
+
+        cylinder = transform.GetChild(7);
     }
 
     public override void OnStartLocalPlayer()
@@ -72,7 +76,7 @@ public class Boat : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
+        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "Enemy")
         {
             health--;
@@ -120,13 +124,14 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
+
             forceVector = -Vector3.right * force;
 
             if (boat.velocity.magnitude < 50)
             {
                 boat.AddRelativeForce(forceVector);
+                
             }
-
 
 
             //if the boat speeds up the camera moves further away and as is slows down the camera gets closer.
@@ -135,7 +140,8 @@ public class Boat : NetworkBehaviour
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance, 200f, Time.deltaTime / 10);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit + 5, Time.deltaTime);
             }
-            else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit) {
+            else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit)
+            {
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance, cameraDistanceInit, Time.deltaTime);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit, Time.deltaTime);
             }
@@ -154,7 +160,7 @@ public class Boat : NetworkBehaviour
             {
                 development = !development;
             }
-            if (development)
+            if (development) 
             {
                 if (Input.GetKey(KeyCode.W))
                 {
@@ -182,9 +188,11 @@ public class Boat : NetworkBehaviour
             }
             else
             {
+                gyroTest(); 
+                
                 if (Mathf.Abs(rotation) >0.5f)
                 {
-                    transform.Rotate(0,0, rotation);
+                    transform.Rotate(0, rotation, 0);
                 }
                 //if (rotation > 0.2f)
                 //{
@@ -193,4 +201,14 @@ public class Boat : NetworkBehaviour
             }
         }
     }
+
+
+
+    void gyroTest()
+    {
+        Gyroscope gyro = Input.gyro;
+        if (gyro == null) { return; }
+        cylinder.rotation = gyro.attitude;
+    }
+
 }

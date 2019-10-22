@@ -35,7 +35,6 @@ public class WaterPlane : NetworkBehaviour
         scaleZ = boundsZ / resolutionZ;
 
         Mesh mesh = generateGrid();
-        MeshCollider meshcol = gameObject.AddComponent<MeshCollider>();
         meshObject = new GameObject("Water");
         meshObject.name = "waterWaves";
 
@@ -70,7 +69,7 @@ public class WaterPlane : NetworkBehaviour
         meshObject.GetComponent<MeshFilter>().mesh = mesh;
         _mesh = mesh;
 
-        meshcol.sharedMesh = mesh;
+
         meshObject.transform.position = this.transform.position;
     }
 

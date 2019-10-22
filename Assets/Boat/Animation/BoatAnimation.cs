@@ -29,13 +29,5 @@ public class BoatAnimation : MonoBehaviour
         anim.SetTrigger("deathTrigger");
     }
     // Update is called once per frame
-    void Update()
-    {
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Debug.Log("Active triggered");
-            boatDead();
-        }
-    }
 }
