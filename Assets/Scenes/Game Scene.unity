@@ -278,7 +278,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 3.59e-43, z: 3.59e-43, w: 0}
+  m_BoundingSphereOverride: {x: 1.753e-42, y: 1.05e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1176,6 +1176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TerrainGroup
       objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1229,6 +1234,11 @@ PrefabInstance:
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241876287420809, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_EnableTreeColliders
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1632,6 +1642,10 @@ MonoBehaviour:
     direction: {x: -1, y: 0.5}
     Steepness: 0.3
     WaveLength: 35
+  Wave5:
+    direction: {x: 0, y: 0}
+    Steepness: 0
+    WaveLength: 0
 --- !u!114 &1427392316010857860
 MonoBehaviour:
   m_ObjectHideFlags: 0
