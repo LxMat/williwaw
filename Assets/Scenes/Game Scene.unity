@@ -278,7 +278,11 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+<<<<<<< HEAD
+  m_BoundingSphereOverride: {x: 1.753e-42, y: 1.05e-43, z: 0, w: 0}
+=======
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-45}
+>>>>>>> master
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1036,6 +1040,88 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7c12f54c78377d4995e975b18eb9028, type: 3}
+<<<<<<< HEAD
+--- !u!1001 &1646492865
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_Name
+      value: TerrainGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241876287420809, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f594e6ba632642cb83e4099e41278ba, type: 3}
+=======
+>>>>>>> master
 --- !u!1 &1709729333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,9 +1499,10 @@ MonoBehaviour:
   boundsZ: 1000
   resolutionX: 100
   resolutionZ: 100
+  Waves: []
   Steepness: 0
   WaveLength: 10
-  material: {fileID: 2100000, guid: 5cabf7eb0f70282439c93b5e5c161470, type: 2}
+  material: {fileID: 2100000, guid: cc4412b545820df4fa0472ae16bc072b, type: 2}
   micObject: {fileID: 1429151306}
   gyroObject: {fileID: 1273902058}
   WaveDirection: {x: 0, y: 0}
@@ -1435,6 +1522,10 @@ MonoBehaviour:
     direction: {x: -1, y: 0.5}
     Steepness: 0.3
     WaveLength: 35
+  Wave5:
+    direction: {x: 0, y: 0}
+    Steepness: 0
+    WaveLength: 0
 --- !u!114 &1427392316010857860
 MonoBehaviour:
   m_ObjectHideFlags: 0
