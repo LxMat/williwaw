@@ -1620,9 +1620,10 @@ MonoBehaviour:
   boundsZ: 1000
   resolutionX: 100
   resolutionZ: 100
+  Waves: []
   Steepness: 0
   WaveLength: 10
-  material: {fileID: 2100000, guid: 5cabf7eb0f70282439c93b5e5c161470, type: 2}
+  material: {fileID: 2100000, guid: cc4412b545820df4fa0472ae16bc072b, type: 2}
   micObject: {fileID: 1429151306}
   gyroObject: {fileID: 1273902058}
   WaveDirection: {x: 0, y: 0}

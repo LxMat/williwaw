@@ -4,7 +4,6 @@
 	{
 		_LightColor("Water Color Highlight", Color) = (1,1,1,1)
 		_DarkColor("Water Color Shadow",Color) = (1,1,1,1)
-		_GradientSensitivity("Gradien Sensitivity",Range(0,1)) = 0.5
 		_GradientRange("Gradient Range",Range(0,5)) = 2.5
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
@@ -105,7 +104,7 @@
 	{
 
 
-		fixed4 test = lerp(_DarkColor, _LightColor, IN.WorldPos.y/2);
+		fixed4 test = lerp(_DarkColor, _LightColor, IN.WorldPos.y * _GradientRange);
 
 		// Albedo comes from a texture tinted by color
 		fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * test;
