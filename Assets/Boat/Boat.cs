@@ -11,14 +11,18 @@ public class Boat : NetworkBehaviour
     public GameObject follow;
     public GameObject micObject;
     public GameObject gyroObject;
+    private WindController windController;
     public GameObject CannonBallPrefab;
     public float CannonBallSpeed;
     private float force;
     private float rotation;
+    
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
     private bool development = false;
     private WaterPlane waves;
+
+    private float windAngle;
 
     //variables used for the camera
     private float cameraDistanceInit,cameraHeightInit;
@@ -94,6 +98,7 @@ public class Boat : NetworkBehaviour
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
         micObject = GameObject.Find("Microphone");
         gyroObject = GameObject.Find("Gyroscope");
+        windController = GameObject.Find("Wind").GetComponent<WindController>();
     }
 
     Vector3 getNormal(Vector3 p0, Vector3 p1, Vector3 p2)
@@ -124,12 +129,13 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
+            windAngle = 1 - (Vector3.Angle(-transform.right, windController.direction) / 180.0f);
+            Debug.Log(windAngle);
+            forceVector = -transform.right * windAngle;
 
-            forceVector = -transform.right * force;
-
-            if (boat.velocity.magnitude < 50)
+            if (boat.velocity.magnitude < 20)
             {
-                boat.velocity = forceVector *100;
+                boat.velocity = forceVector *20;
                 
             }
 
@@ -166,7 +172,7 @@ public class Boat : NetworkBehaviour
                 {
                     if (boat.velocity.magnitude < 50)
                     {
-                        boat.AddRelativeForce(-Vector3.right * 2);
+                        boat.AddRelativeForce(-Vector3.right * 2 * windAngle);
                     }
                 }
                 if (Input.GetKey(KeyCode.A))
