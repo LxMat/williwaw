@@ -120,23 +120,22 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
-            forceVector = -Vector3.right * force * 2.0f;
+            forceVector = -Vector3.right * force;
 
             if (boat.velocity.magnitude < 50)
-            {   
+            {
                 boat.AddRelativeForce(forceVector);
             }
 
 
 
             //if the boat speeds up the camera moves further away and as is slows down the camera gets closer.
-            if (boat.velocity.magnitude > cameraSpeedThreshold && boatCamera.distance < (cameraDistanceSpeedUp)) 
+            if (boat.velocity.magnitude > cameraSpeedThreshold && boatCamera.distance < (cameraDistanceSpeedUp))
             {
-                boatCamera.distance = Mathf.Lerp(boatCamera.distance,200f,Time.deltaTime/10);
+                boatCamera.distance = Mathf.Lerp(boatCamera.distance, 200f, Time.deltaTime / 10);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit + 5, Time.deltaTime);
-            else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit)
             }
-            {
+            else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit) {
                 boatCamera.distance = Mathf.Lerp(boatCamera.distance, cameraDistanceInit, Time.deltaTime);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit, Time.deltaTime);
             }
@@ -161,7 +160,7 @@ public class Boat : NetworkBehaviour
                 {
                     if (boat.velocity.magnitude < 50)
                     {
-                        boat.AddRelativeForce(Vector3.up * 2);
+                        boat.AddRelativeForce(-Vector3.right * 2);
                     }
                 }
                 if (Input.GetKey(KeyCode.A))

@@ -27,7 +27,7 @@ public class MicrophoneInput : MonoBehaviour
     public float loudness = 0.0f;
     public float force = 0.0f;
     public float waves = 0.1f;
-    public float threshold = 0.1f;
+    public float threshold = 0.0f;
     private AudioSource audioSource;
 
     public AudioMixerGroup audioMixMic;
@@ -40,8 +40,8 @@ public class MicrophoneInput : MonoBehaviour
     private float timer = 0.0f;
     private float waitTime = 5.0f;
 
-    private int n = 1;
-    private float accu = 0.0f;
+    public int n = 1;
+    public float accu = 0.0f;
 
     private void Start()
     {
@@ -84,18 +84,18 @@ public class MicrophoneInput : MonoBehaviour
 
         audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
-        //for (int i = 1; i < spectrum.Length - 1; i++)
-        //{
-        //    Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
-        //    Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
-        //    Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
-        //    Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
-        //}
+        for (int i = 1; i < spectrum.Length - 1; i++)
+        {
+            UnityEngine.Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
+            UnityEngine.Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
+            UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
+            UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
+        }
 
         //pitchTracker.ProcessBuffer(spectrum);
         //pitch = pitchTracker.CurrentPitchRecord;
         //Debug.Log(pitch.ToString());
-        
+
         float s = 0.0f;
         int k = 0;
         for (int j = 1; j < 256; j++)
@@ -112,10 +112,13 @@ public class MicrophoneInput : MonoBehaviour
 
         if (timer < waitTime)
         {
-            accu += s;
-            n += 1;
+            if (s > 0)
+            {
+                accu += s;
+                n += 1;
+            }
 
-            if (timer + Time.deltaTime > waitTime) ;
+            if (timer + Time.deltaTime > waitTime)
             {
                 threshold = accu / n;
             }
@@ -124,18 +127,18 @@ public class MicrophoneInput : MonoBehaviour
         
 
 
-        loudness = s * 10;
+        loudness = s*10;
         force += loudness * Time.deltaTime;
-        force = force - force * 0.003f;
+        force = force - force * 0.03f;
         waves += loudness * Time.deltaTime * 0.1f;
-        waves = waves - waves * 0.0002f;
+        waves = waves - waves * 0.002f;
         if (force > 1.0f)
         {
             force = 1.0f;
         }
-        if (force <= 0.1f)
+        if (force <= 0.0f)
         {
-            force = 0.1f;
+            force = 0.0f;
         }
         if (waves > 1.0f)
         {

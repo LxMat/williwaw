@@ -5,6 +5,7 @@ using UnityEngine;
 public class Deploy_Clouds : MonoBehaviour
 {
     public GameObject CloudPrefab;
+    public GameObject oWind;
     public int nClouds = 10;
     private List<GameObject> cloudList;
     // Start is called before the first frame update
