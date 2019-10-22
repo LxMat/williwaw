@@ -278,7 +278,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-45}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -599,6 +599,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908911511}
   m_CullTransparentMesh: 0
+--- !u!1001 &1088506665
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_Name
+      value: TerrainGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241876287420814, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -18.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021241876287420809, guid: 0f594e6ba632642cb83e4099e41278ba,
+        type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f594e6ba632642cb83e4099e41278ba, type: 3}
 --- !u!1 &1187234782
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1268135870
 GameObject:
@@ -2113,7 +2192,7 @@ PrefabInstance:
     - target: {fileID: 6760738332434926303, guid: 1d6029527dc1f064e87721fa5874abfd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6760738332434926303, guid: 1d6029527dc1f064e87721fa5874abfd,
         type: 3}
