@@ -513,8 +513,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 2
-  firePower: 500
-  fireAngle: 0.33
+  firePower: 600
+  fireAngle: 10
   projectile: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
     type: 3}
 --- !u!114 &-8027657914312729760
