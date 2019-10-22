@@ -129,9 +129,9 @@ public class MicrophoneInput : MonoBehaviour
 
         loudness = s*10;
         force += loudness * Time.deltaTime;
-        force = force - force * 0.03f;
+        force = force - force * 0.003f;
         waves += loudness * Time.deltaTime * 0.1f;
-        waves = waves - waves * 0.002f;
+        waves = waves - waves * 0.0002f;
         if (force > 1.0f)
         {
             force = 1.0f;
