@@ -52,7 +52,7 @@ public class Boat : NetworkBehaviour
         boatCamera = Camera.main.GetComponent<SmoothFollow>();
         cameraDistanceInit = boatCamera.distance;
 
-        
+        //InvokeRepeating("TestClouds", 2.0f, 1.0f); Just to test the spawning of clouds. 
         cylinder = transform.GetChild(7);
     }
 
@@ -151,7 +151,7 @@ public class Boat : NetworkBehaviour
             {
                 deployClouds.SpawnCloudsOnPlayer(transform.position);
             }
-
+           
             windAngle = 1 - (Vector3.Angle(-transform.right, windController.direction) / 180.0f);
             forceVector = -transform.right * windAngle;
 
@@ -237,6 +237,11 @@ public class Boat : NetworkBehaviour
         UnityEngine.Gyroscope gyro = Input.gyro;
         if (gyro == null) { return; }
         cylinder.rotation = gyro.attitude;
+    }
+
+    void TestClouds()
+    {
+        deployClouds.SpawnCloudsOnPlayer(transform.position);
     }
 
 
