@@ -5,7 +5,7 @@ using UnityEngine;
 public class Deploy_Clouds : MonoBehaviour
 {
     public GameObject CloudPrefab;
-    public GameObject oWind;
+
     public int nClouds = 10;
     private List<GameObject> cloudList;
     // Start is called before the first frame update
@@ -21,4 +21,14 @@ public class Deploy_Clouds : MonoBehaviour
         cloud = Instantiate(CloudPrefab, new Vector3(Random.Range(50, 950), 200, Random.Range(50,950)), Quaternion.identity);
         cloud.transform.parent = transform;
     }
+
+    public void SpawnCloudsOnPlayer(Vector3 pos)
+    {
+        nClouds += 1;
+        Debug.Log("Spawnedcloud");
+        GameObject cloud;
+        cloud = Instantiate(CloudPrefab, new Vector3(pos.x, 200, pos.z), Quaternion.identity);
+        cloud.transform.parent = transform;
+    }
+  
 }
