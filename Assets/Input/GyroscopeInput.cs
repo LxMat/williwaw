@@ -21,7 +21,7 @@ public class GyroscopeInput : MonoBehaviour
     public float smooth = 0.2f;
     public Text inputValue;
     public float newRotation;
-    public float sensitivity = 6;
+    public float sensitivity = 3;
     private Vector3 currentAcceleration, initialAcceleration;
 
 

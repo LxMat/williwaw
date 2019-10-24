@@ -344,8 +344,11 @@ MonoBehaviour:
   loudness: 0
   force: 0
   waves: 0.1
+  threshold: 0
   audioMixMic: {fileID: 3889658610879256321, guid: 16b60fddd4bf3b64ca43e24157aa7474,
     type: 2}
+  n: 1
+  accu: 0
 --- !u!82 &1598914386
 AudioSource:
   m_ObjectHideFlags: 0
