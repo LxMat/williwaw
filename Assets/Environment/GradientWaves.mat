@@ -63,7 +63,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GradientRange: 0.75
+    - _GradientRange: 0
     - _GradientSensitivity: 0.094
     - _Metallic: 0
     - _Mode: 0
