@@ -446,6 +446,8 @@ MonoBehaviour:
     type: 3}
   gyroObject: {fileID: 8081437802821684877, guid: 7df56e9d5f891c94fbd397ccfe2d9073,
     type: 3}
+  lightSensor: {fileID: 7160577353089958081, guid: 27bc20fabdfc9824fa4994a8b30c6f4e,
+    type: 3}
   CannonBallPrefab: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
     type: 3}
   CannonBallSpeed: 300

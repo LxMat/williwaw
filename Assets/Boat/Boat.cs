@@ -1,21 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityStandardAssets.Utility;
+using UnityEngine.InputSystem;
 
 [System.Obsolete]
 public class Boat : NetworkBehaviour
 {
 
 
+    private int value;
+
+
+
     private Rigidbody boat;
     public GameObject follow;
     public GameObject micObject;
     public GameObject gyroObject;
+    public LightSensorInput lightSensor;
+    private Deploy_Clouds deployClouds;
     private WindController windController;
     public GameObject CannonBallPrefab;
     public float CannonBallSpeed;
     private float force;
     private float rotation;
+    private bool cloudSpawn;
     
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
@@ -44,7 +52,7 @@ public class Boat : NetworkBehaviour
         boatCamera = Camera.main.GetComponent<SmoothFollow>();
         cameraDistanceInit = boatCamera.distance;
 
-
+        //InvokeRepeating("TestClouds", 2.0f, 1.0f); Just to test the spawning of clouds. 
         cylinder = transform.GetChild(7);
     }
 
@@ -99,6 +107,8 @@ public class Boat : NetworkBehaviour
         micObject = GameObject.Find("Microphone");
         gyroObject = GameObject.Find("Gyroscope");
         windController = GameObject.Find("Wind").GetComponent<WindController>();
+        lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
+        deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
     }
 
     Vector3 getNormal(Vector3 p0, Vector3 p1, Vector3 p2)
@@ -126,11 +136,23 @@ public class Boat : NetworkBehaviour
             setHeight(transform);
             force = micObject.GetComponent<MicrophoneInput>().force;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
+           
+
+
+
+
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
+
+
+            cloudSpawn = lightSensor.spawnCloud;
+            if (cloudSpawn)
+            {
+                deployClouds.SpawnCloudsOnPlayer(transform.position);
+            }
+           
             windAngle = 1 - (Vector3.Angle(-transform.right, windController.direction) / 180.0f);
-            Debug.Log(windAngle);
             forceVector = -transform.right * windAngle;
 
             if (boat.velocity.magnitude < 20)
@@ -212,9 +234,15 @@ public class Boat : NetworkBehaviour
 
     void gyroTest()
     {
-        Gyroscope gyro = Input.gyro;
+        UnityEngine.Gyroscope gyro = Input.gyro;
         if (gyro == null) { return; }
         cylinder.rotation = gyro.attitude;
     }
+
+    void TestClouds()
+    {
+        deployClouds.SpawnCloudsOnPlayer(transform.position);
+    }
+
 
 }
