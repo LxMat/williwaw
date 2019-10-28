@@ -201,10 +201,82 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Channels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SpawnPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_OfflineScene
+      value: Start Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_OnlineScene
+      value: Game Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseWebSockets
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_PlayerPrefab
+      value: 
+      objectReference: {fileID: 7351761154885657863, guid: 2158bce6b384f10409f998702397e32c,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_PlayerSpawnMethod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Channels.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SpawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1367306121841414247, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
       propertyPath: m_Name
       value: Networking
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_Channels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_AutoCreatePlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_PlayerSpawnMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_UseSimulator
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_ServerBindToIP
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_Channels.Array.data[0]
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7451912980075734081, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
@@ -261,53 +333,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_Channels.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_SpawnPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_OfflineScene
-      value: Start Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_OnlineScene
-      value: Game Scene
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_UseWebSockets
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_PlayerPrefab
-      value: 
-      objectReference: {fileID: 7351761154885657863, guid: 2158bce6b384f10409f998702397e32c,
-        type: 3}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_PlayerSpawnMethod
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_Channels.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4972649609368258198, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_SpawnPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d79eabb0688205e4785ee84b4a8d76f2, type: 3}
 --- !u!1 &1598914384
@@ -349,6 +374,9 @@ MonoBehaviour:
     type: 2}
   n: 1
   accu: 0
+  RmsValue: 0
+  DbValue: 0
+  PitchValue: 0
 --- !u!82 &1598914386
 AudioSource:
   m_ObjectHideFlags: 0
