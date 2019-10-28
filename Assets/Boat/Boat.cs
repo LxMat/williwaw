@@ -182,6 +182,10 @@ public class Boat : NetworkBehaviour
                     windController.direction = -transform.right;
                     windController.power = force;
                 }
+
+                //TODO waves?
+
+                //Ammo?
             }
            
             //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
