@@ -133,11 +133,12 @@ public class MicrophoneInput : MonoBehaviour
         }
         PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
                                                         //float fundamentalFrequency = 0.0f;
-                                                        //float[] spectrum = new float[256];
-        force = maxV;
+                                                          //float[] spectrum = new float[256];
+        
+        force += loudness * Time.deltaTime;
+        force = force - force * 0.003f;
         force = Mathf.Clamp(maxV, 0.1f, 1f);
-     
-        UnityEngine.Debug.Log(force);
+ 
         
 
         //audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);

@@ -309,8 +309,10 @@ public class Boat : NetworkBehaviour
     {
 
         pitch = accu / n;
+        Debug.Log(pitch);
+        
+        pitch = 1000 - pitch;
         pitch = Mathf.Clamp(pitch, 1, 1000);
-        pitch = 1000 / pitch;
         waveVector.x = -transform.right.x;
         waveVector.y = -transform.right.z;
         waveVector.z = force;
