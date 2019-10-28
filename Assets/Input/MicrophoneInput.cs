@@ -43,6 +43,22 @@ public class MicrophoneInput : MonoBehaviour
     public int n = 1;
     public float accu = 0.0f;
 
+
+
+
+
+    public float RmsValue;
+    public float DbValue;
+    public float PitchValue;
+
+    private const int QSamples = 1024;
+    private const float RefValue = 0.1f;
+    private const float Threshold = 0.003f;
+
+    float[] _samples;
+    private float[] _spectrum;
+    private float _fSample;
+
     private void Start()
     {
 
@@ -66,6 +82,12 @@ public class MicrophoneInput : MonoBehaviour
         audioSource.Play();
 
 
+        //https://answers.unity.com/questions/157940/getoutputdata-and-getspectrumdata-they-represent-t.html
+        _samples = new float[QSamples];
+        _spectrum = new float[QSamples];
+        _fSample = AudioSettings.outputSampleRate;
+
+
 
 
     }
@@ -76,13 +98,49 @@ public class MicrophoneInput : MonoBehaviour
 
         timer += Time.deltaTime;
 
-       
 
 
-        float fundamentalFrequency = 0.0f;
-        float[] spectrum = new float[256];
 
-        audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+        audioSource.GetOutputData(_samples, 0); // fill array with samples
+        int i;
+        float sum = 0;
+        for (i = 0; i < QSamples; i++)
+        {
+            sum += _samples[i] * _samples[i]; // sum squared samples
+        }
+        RmsValue = Mathf.Sqrt(sum / QSamples); // rms = square root of average
+        DbValue = 20 * Mathf.Log10(RmsValue / RefValue); // calculate dB
+        if (DbValue < -160) DbValue = -160; // clamp it to -160dB min
+                                            // get sound spectrum
+
+        audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
+        float maxV = 0;
+        var maxN = 0;
+        for (i = 0; i < QSamples; i++)
+        { // find max 
+            if (!(_spectrum[i] > maxV) || !(_spectrum[i] > Threshold))
+                continue;
+
+            maxV = _spectrum[i];
+            maxN = i; // maxN is the index of max
+        }
+        float freqN = maxN; // pass the index to a float variable
+        if (maxN > 0 && maxN < QSamples - 1)
+        { // interpolate index using neighbours
+            var dL = _spectrum[maxN - 1] / _spectrum[maxN];
+            var dR = _spectrum[maxN + 1] / _spectrum[maxN];
+            freqN += 0.5f * (dR * dR - dL * dL);
+        }
+        PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
+                                                        //float fundamentalFrequency = 0.0f;
+                                                        //float[] spectrum = new float[256];
+        force = maxV;
+        force = Mathf.Clamp(maxV, 0.1f, 1f);
+     
+        UnityEngine.Debug.Log(force);
+        
+
+        //audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
         //for (int i = 1; i < spectrum.Length - 1; i++)
         //{
@@ -96,60 +154,60 @@ public class MicrophoneInput : MonoBehaviour
         //pitch = pitchTracker.CurrentPitchRecord;
         //Debug.Log(pitch.ToString());
 
-        float s = 0.0f;
-        int k = 0;
-        for (int j = 1; j < 256; j++)
-        {
-            if (spectrum[j] > threshold) // volumn must meet minimum threshold
-            {
-                if (s < spectrum[j])
-                {
-                    s = spectrum[j];
-                    k = j;
-                }
-            }
-        }
+        //float s = 0.0f;
+        //int k = 0;
+        //for (int j = 1; j < 256; j++)
+        //{
+        //    if (spectrum[j] > threshold) // volumn must meet minimum threshold
+        //    {
+        //        if (s < spectrum[j])
+        //        {
+        //            s = spectrum[j];
+        //            k = j;
+        //        }
+        //    }
+        //}
 
-        if (timer < waitTime)
-        {
-            if (s > 0)
-            {
-                accu += s;
-                n += 1;
-            }
+        //if (timer < waitTime)
+        //{
+        //    if (s > 0)
+        //    {
+        //        accu += s;
+        //        n += 1;
+        //    }
 
-            if (timer + Time.deltaTime > waitTime)
-            {
-                threshold = accu / n;
-            }
+        //    if (timer + Time.deltaTime > waitTime)
+        //    {
+        //        threshold = accu / n;
+        //    }
 
-        }
-        
+        //}
 
 
-        loudness = s*10;
-        force += loudness * Time.deltaTime;
-        force = force - force * 0.003f;
-        waves += loudness * Time.deltaTime * 0.1f;
-        waves = waves - waves * 0.0002f;
-        if (force > 1.0f)
-        {
-            force = 1.0f;
-        }
-        if (force <= 0.0f)
-        {
-            force = 0.0f;
-        }
-        if (waves > 1.0f)
-        {
-            waves = 1.0f;
-        }
-        if (waves <= 0.1f)
-        {
-            waves = 0.1f;
-        }
 
-        fundamentalFrequency = k * audioSampleRate / 256;
+        //loudness = s*10;
+        //force += loudness * Time.deltaTime;
+        //force = force - force * 0.003f;
+        //waves += loudness * Time.deltaTime * 0.1f;
+        //waves = waves - waves * 0.0002f;
+        //if (force > 1.0f)
+        //{
+        //    force = 1.0f;
+        //}
+        //if (force <= 0.0f)
+        //{
+        //    force = 0.0f;
+        //}
+        //if (waves > 1.0f)
+        //{
+        //    waves = 1.0f;
+        //}
+        //if (waves <= 0.1f)
+        //{
+        //    waves = 0.1f;
+        //}
+
+        //fundamentalFrequency = k * audioSampleRate / 256;
         //if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
     }
 
