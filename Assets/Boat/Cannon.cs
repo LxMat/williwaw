@@ -46,6 +46,4 @@ public class Cannon : NetworkBehaviour
         NetworkServer.Spawn(cannonBall);
         Debug.Log("BOOM");
     }
-
-
 }
