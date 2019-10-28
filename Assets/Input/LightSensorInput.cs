@@ -18,37 +18,43 @@ public class LightSensorInput : MonoBehaviour
     {
         //var lightSensor = new LightSensor();
         //InputSystem.AddDevice(lightSensor);
+        if(Application.platform == RuntimePlatform.Android)
+        {
+            InputSystem.EnableDevice(LightSensor.current);
+        }
         
-        InputSystem.EnableDevice(LightSensor.current);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        lux = LightSensor.current.lightLevel.ReadValue();
-        timer += Time.deltaTime;
-        if (timer < waitTime)
+        if (LightSensor.current != null)
         {
-            accu += lux;
-            n += 1;
-            
-            threshold = accu / (2*n);
-            
-
-        }
-        else
-        {
-            if (lux < threshold)
+            lux = LightSensor.current.lightLevel.ReadValue();
+            timer += Time.deltaTime;
+            if (timer < waitTime)
             {
-                spawnCloud = true;
+                accu += lux;
+                n += 1;
+
+                threshold = accu / (2 * n);
+
+
             }
             else
             {
-                spawnCloud = false;
+                if (lux < threshold)
+                {
+                    spawnCloud = true;
+                }
+                else
+                {
+                    spawnCloud = false;
+                }
             }
         }
+
     }
 
     void OnGUI()
