@@ -19,29 +19,25 @@ public class Boat : NetworkBehaviour
     public LightSensorInput lightSensor;
     private Deploy_Clouds deployClouds;
     private WindController windController;
-    public GameObject CannonBallPrefab;
-    public float CannonBallSpeed;
     private float force;
     private float rotation;
     private bool cloudSpawn;
 
 
     private string powerType;
-    
+
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
-    private bool development = false;
+    private bool development;
     private WaterPlane waves;
 
     private float windAngle;
 
     //variables used for the camera
-    private float cameraDistanceInit,cameraHeightInit;
+    private float cameraDistanceInit, cameraHeightInit;
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
-    private int health = 1;
-    private float cooldown = 2f;
     private float cloudCooldown = 0.5f;
     private float nextAttack;
     private float nextCloud;
@@ -57,7 +53,7 @@ public class Boat : NetworkBehaviour
         boatCamera = Camera.main.GetComponent<SmoothFollow>();
         cameraDistanceInit = boatCamera.distance;
 
-        
+
         cylinder = transform.GetChild(7);
     }
 
@@ -66,49 +62,18 @@ public class Boat : NetworkBehaviour
         Camera.main.GetComponent<SmoothFollow>().target = follow.transform;
         cameraDistanceInit = currentCameraDistance = Camera.main.GetComponent<SmoothFollow>().distance;
         cameraHeightInit = Camera.main.GetComponent<SmoothFollow>().height;
-        Debug.Log("height: "+ cameraHeightInit);
+        Debug.Log("height: " + cameraHeightInit);
 
-    }
-
-    private void KillPlayer()
-    {
-        Destroy(gameObject);
-        Debug.Log("You are dead");
-    }
-
-    private void ShootLaser()
-    {
-        nextAttack = Time.time + cooldown;
-        CmdShoot();
-        Debug.Log("BOOM");
-    }
-
-    [Command] void CmdShoot()
-    {
-        GameObject cannonBall = Instantiate(CannonBallPrefab, transform.position + transform.right * -10, transform.rotation);
-        cannonBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(-CannonBallSpeed, 75, 0));
-        NetworkServer.Spawn(cannonBall);
-        Debug.Log("BOOM");
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.tag == "Enemy")
-        {
-            health--;
-            Debug.Log("Health left: " + health);
-            if (health == 0)
-            {
-                KillPlayer();
-            }
-        }
-
         if (collision.gameObject.CompareTag("Objective"))
         {
 
             //if we have a power when we pick up a new one, just switch. 
-            if(powerType != null){
+            if (powerType != null)
+            {
                 ResetPower();
             }
 
@@ -119,7 +84,7 @@ public class Boat : NetworkBehaviour
         }
     }
 
-   
+
 
     //Awake is called after all objects are initialized.
     void Awake()
@@ -139,7 +104,7 @@ public class Boat : NetworkBehaviour
         return Vector3.Cross(u, v).normalized;
     }
 
-    private void setHeight(Transform gameObj)
+    private void SetHeight(Transform gameObj)
     {
         Vector3 current = gameObj.position;
         gameObj.position = new Vector3(current.x, waves.getHeight(gameObj.position), current.z);
@@ -154,10 +119,10 @@ public class Boat : NetworkBehaviour
 
             Vector3 currentRot = transform.rotation.eulerAngles;
             Vector3 currentPos = transform.position;
-            setHeight(transform);
+            SetHeight(transform);
             force = micObject.GetComponent<MicrophoneInput>().force;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
-           
+
 
 
 
@@ -165,7 +130,7 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
-            
+
             if (powerType != null)
             {
                 if (powerType == "Cloud" && nextCloud < Time.time)
@@ -177,7 +142,7 @@ public class Boat : NetworkBehaviour
                         deployClouds.SpawnCloudsOnPlayer(transform.position);
                     }
                 }
-                if (powerType == "Wind" )
+                if (powerType == "Wind")
                 {
                     windController.direction = -transform.right;
                     windController.power = force;
@@ -187,16 +152,16 @@ public class Boat : NetworkBehaviour
 
                 //Ammo?
             }
-           
+
             //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
             windAngle = 1 - (Vector3.Angle(-transform.right, windController.direction) / 180.0f);
             forceVector = -transform.right * windAngle;
 
             if (boat.velocity.magnitude < 20)
             {
-                boat.velocity = forceVector *20;
-                
-                
+                boat.velocity = forceVector * 20;
+
+
             }
 
 
@@ -221,7 +186,7 @@ public class Boat : NetworkBehaviour
             {
                 development = !development;
             }
-            if (development) 
+            if (development)
             {
                 if (Input.GetKey(KeyCode.W))
                 {
@@ -242,16 +207,16 @@ public class Boat : NetworkBehaviour
                 {
                     boat.AddRelativeForce(Vector3.right);
                 }
-               
-               
-                    boat.velocity = boat.velocity * 0.995f;
-               
+
+
+                boat.velocity *= 0.995f;
+
             }
             else
             {
-                gyroTest(); 
-                
-                if (Mathf.Abs(rotation) >0.5f)
+                gyroTest();
+
+                if (Mathf.Abs(rotation) > 0.5f)
                 {
                     transform.Rotate(0, rotation, 0);
                 }
@@ -272,7 +237,7 @@ public class Boat : NetworkBehaviour
         cylinder.rotation = gyro.attitude;
     }
 
-   
+
 
     void ResetPower()
     {
