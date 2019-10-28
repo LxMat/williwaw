@@ -15,7 +15,12 @@ public class Boat : NetworkBehaviour
     private WindController windController;
     private float force;
     private float rotation;
+    private float pitch;
     private bool cloudSpawn;
+
+
+    private float accu;
+    private int n;
 
 
     private string powerType;
@@ -24,6 +29,8 @@ public class Boat : NetworkBehaviour
     private Vector3 direction;
     private bool development;
     private WaterPlane waves;
+    private Material waterShader;
+    private Vector4 waveVector = new Vector4();
 
     private float windAngle;
 
@@ -72,8 +79,14 @@ public class Boat : NetworkBehaviour
 
             powerType = collision.gameObject.GetComponent<Objective>().objectiveType;
             Debug.Log(powerType);
+            if(powerType == "Wave")
+            {
+                accu = 0.0f;
+                n = 0;
+                Invoke("SetWaves", 5.0f);
+            }
             Invoke("ResetPower", 5.0f); //Alternativeley get differrent lengths from different powers. 
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 
@@ -83,6 +96,7 @@ public class Boat : NetworkBehaviour
     void Awake()
     {
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
+        waterShader = waves.material;
         micObject = GameObject.Find("Microphone");
         gyroObject = GameObject.Find("Gyroscope");
         windController = GameObject.Find("Wind").GetComponent<WindController>();
@@ -114,6 +128,7 @@ public class Boat : NetworkBehaviour
             Vector3 currentPos = transform.position;
             SetHeight(transform);
             force = micObject.GetComponent<MicrophoneInput>().force;
+            pitch = micObject.GetComponent<MicrophoneInput>().PitchValue;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
 
 
@@ -142,6 +157,18 @@ public class Boat : NetworkBehaviour
                 }
 
                 //TODO waves?
+                if (powerType == "Wave")
+                {
+
+                    if(pitch != 0)
+                    {
+                        accu += pitch;
+                        n += 1;
+                    }
+                    
+                    
+               
+                }
 
                 //Ammo?
             }
@@ -230,6 +257,23 @@ public class Boat : NetworkBehaviour
         cylinder.rotation = gyro.attitude;
     }
 
+
+    void SetWaves()
+    {
+
+        pitch = accu / n;
+        Debug.Log(pitch);
+        
+        pitch = 1000 - pitch;
+        pitch = Mathf.Clamp(pitch, 1, 1000);
+        waveVector.x = -transform.right.x;
+        waveVector.y = -transform.right.z;
+        waveVector.z = force;
+        waveVector.w = pitch;
+        waterShader.SetVector("_Wave1", waveVector);
+        waves.Waves[0] = waveVector;
+
+    }
 
 
     void ResetPower()

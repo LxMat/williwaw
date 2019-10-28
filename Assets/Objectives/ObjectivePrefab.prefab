@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2084862512675912194}
   - component: {fileID: 6455270333069630900}
   - component: {fileID: 8099037837430400868}
-  - component: {fileID: 6794837736011164843}
+  - component: {fileID: -7819574644032167104}
   m_Layer: 0
   m_Name: ObjectivePrefab
   m_TagString: Objective
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4339189891728808645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 234.93037, y: 529.96716, z: 189.1602}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 20, y: 20, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a52542079ec109049af3fab395690f0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +93,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6794837736011164843
+--- !u!114 &-7819574644032167104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,3 +106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveType: 
+  cloudMaterial: {fileID: 2100000, guid: 6652079f513267c46ae9567c45aac1eb, type: 2}
+  windMaterial: {fileID: 2100000, guid: a52542079ec109049af3fab395690f0f, type: 2}
+  waveMaterial: {fileID: 2100000, guid: ee686056cb5022a43a180dbc5f9f4bc6, type: 2}
