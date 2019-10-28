@@ -13,6 +13,9 @@ public class Cannon : NetworkBehaviour
     private float forward;
     private float fireAngleRad;
 
+    private Transform smallExplosion;
+    private ParticleSystem explosion;
+
     // Update is called once per frame
     private void Start()
     {
@@ -21,6 +24,11 @@ public class Cannon : NetworkBehaviour
         forward = Mathf.Cos(fireAngleRad) * firePower;
         Debug.Log("up" + up);
         Debug.Log("forward" + forward);
+
+        smallExplosion = transform.GetChild(8);
+        explosion = smallExplosion.GetComponent<ParticleSystem>();
+        explosion.Pause(true);
+
     }
 
     private void Update()
@@ -35,6 +43,7 @@ public class Cannon : NetworkBehaviour
     {
         nextAttack = Time.time + cooldown;
         CmdFire();
+        explosion.Play();
         Debug.Log("BOOM");
     }
 
