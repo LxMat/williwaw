@@ -12,6 +12,7 @@ public class Cannon : NetworkBehaviour
     private float up;
     private float forward;
     private float fireAngleRad;
+    private float touchStart;
 
     // Update is called once per frame
     private void Start()
@@ -25,17 +26,32 @@ public class Cannon : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && nextAttack < Time.time)
+        if (Input.GetKey(KeyCode.Space))
         {
             FireCannon();
+        }
+
+        if (Input.touchCount > 0)
+        {
+            for (int i = 0; i < Input.touchCount; ++i)
+            {
+                if (Input.GetTouch(i).phase == TouchPhase.Began)
+                {
+
+                    FireCannon();
+                }
+            }
         }
     }
 
     private void FireCannon()
     {
-        nextAttack = Time.time + cooldown;
-        CmdFire();
-        Debug.Log("BOOM");
+        if (nextAttack < Time.time)
+        {
+            nextAttack = Time.time + cooldown;
+            CmdFire();
+            Debug.Log("BOOM");
+        }
     }
 
     [Command]
