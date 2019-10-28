@@ -24,6 +24,9 @@ public class Boat : NetworkBehaviour
     private float force;
     private float rotation;
     private bool cloudSpawn;
+
+
+    private string powerType;
     
     private Vector3 forceVector = Vector3.up;
     private Vector3 direction;
@@ -37,6 +40,11 @@ public class Boat : NetworkBehaviour
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
+    private int health = 1;
+    private float cooldown = 2f;
+    private float cloudCooldown = 0.5f;
+    private float nextAttack;
+    private float nextCloud;
     private float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
     private Transform cylinder;
@@ -49,7 +57,7 @@ public class Boat : NetworkBehaviour
         boatCamera = Camera.main.GetComponent<SmoothFollow>();
         cameraDistanceInit = boatCamera.distance;
 
-        //InvokeRepeating("TestClouds", 2.0f, 1.0f); Just to test the spawning of clouds. 
+        
         cylinder = transform.GetChild(7);
     }
 
@@ -61,6 +69,57 @@ public class Boat : NetworkBehaviour
         Debug.Log("height: "+ cameraHeightInit);
 
     }
+
+    private void KillPlayer()
+    {
+        Destroy(gameObject);
+        Debug.Log("You are dead");
+    }
+
+    private void ShootLaser()
+    {
+        nextAttack = Time.time + cooldown;
+        CmdShoot();
+        Debug.Log("BOOM");
+    }
+
+    [Command] void CmdShoot()
+    {
+        GameObject cannonBall = Instantiate(CannonBallPrefab, transform.position + transform.right * -10, transform.rotation);
+        cannonBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(-CannonBallSpeed, 75, 0));
+        NetworkServer.Spawn(cannonBall);
+        Debug.Log("BOOM");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.tag == "Enemy")
+        {
+            health--;
+            Debug.Log("Health left: " + health);
+            if (health == 0)
+            {
+                KillPlayer();
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Objective"))
+        {
+
+            //if we have a power when we pick up a new one, just switch. 
+            if(powerType != null){
+                ResetPower();
+            }
+
+            powerType = collision.gameObject.GetComponent<Objective>().objectiveType;
+            Debug.Log(powerType);
+            Invoke("ResetPower", 5.0f); //Alternativeley get differrent lengths from different powers. 
+            collision.gameObject.SetActive(false);
+        }
+    }
+
+   
 
     //Awake is called after all objects are initialized.
     void Awake()
@@ -106,20 +165,37 @@ public class Boat : NetworkBehaviour
             direction.z = -rotation;//Mathf.Sin(rotation);
                                     // direction.z = Mathf.Cos(rotation);
 
-
-
-            cloudSpawn = lightSensor.spawnCloud;
-            if (cloudSpawn)
+            
+            if (powerType != null)
             {
-                deployClouds.SpawnCloudsOnPlayer(transform.position);
+                if (powerType == "Cloud" && nextCloud < Time.time)
+                {
+                    cloudSpawn = lightSensor.spawnCloud;
+                    if (cloudSpawn)
+                    {
+                        nextCloud = Time.time + cloudCooldown;
+                        deployClouds.SpawnCloudsOnPlayer(transform.position);
+                    }
+                }
+                if (powerType == "Wind" )
+                {
+                    windController.direction = -transform.right;
+                    windController.power = force;
+                }
+
+                //TODO waves?
+
+                //Ammo?
             }
            
+            //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
             windAngle = 1 - (Vector3.Angle(-transform.right, windController.direction) / 180.0f);
             forceVector = -transform.right * windAngle;
 
             if (boat.velocity.magnitude < 20)
             {
                 boat.velocity = forceVector *20;
+                
                 
             }
 
@@ -196,9 +272,11 @@ public class Boat : NetworkBehaviour
         cylinder.rotation = gyro.attitude;
     }
 
-    void TestClouds()
+   
+
+    void ResetPower()
     {
-        deployClouds.SpawnCloudsOnPlayer(transform.position);
+        powerType = null;
     }
 
 
