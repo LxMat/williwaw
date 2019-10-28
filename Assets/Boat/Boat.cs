@@ -115,7 +115,7 @@ public class Boat : NetworkBehaviour
             powerType = collision.gameObject.GetComponent<Objective>().objectiveType;
             Debug.Log(powerType);
             Invoke("ResetPower", 5.0f); //Alternativeley get differrent lengths from different powers. 
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 
