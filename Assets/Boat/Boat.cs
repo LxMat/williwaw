@@ -6,12 +6,6 @@ using UnityEngine.InputSystem;
 [System.Obsolete]
 public class Boat : NetworkBehaviour
 {
-
-
-    private int value;
-
-
-
     private Rigidbody boat;
     public GameObject follow;
     public GameObject micObject;
@@ -38,10 +32,9 @@ public class Boat : NetworkBehaviour
     private float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
-    private float cloudCooldown = 0.5f;
-    private float nextAttack;
+    private readonly float cloudCooldown = 0.5f;
     private float nextCloud;
-    private float cameraSpeedThreshold = 20f;
+    private readonly float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
     private Transform cylinder;
     private void Start()
@@ -97,7 +90,7 @@ public class Boat : NetworkBehaviour
         deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
     }
 
-    Vector3 getNormal(Vector3 p0, Vector3 p1, Vector3 p2)
+    Vector3 GetNormal(Vector3 p0, Vector3 p1, Vector3 p2)
     {
         Vector3 u = p1 - p0;
         Vector3 v = p2 - p1;
