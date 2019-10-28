@@ -30,8 +30,18 @@ public class ObjectiveManager : MonoBehaviour
         boundsZ = waves.boundsZ;
     }
 
+    private void Update()
+    {
+        if(transform.childCount < 5)
+        {
+            SpawnObjective();
+            Debug.Log("Spawned New Objective");
+        }
+    }
+
     void SpawnObjective()
     {
+
         GameObject objective;
         objective = Instantiate(objectivePrefab, new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)), Quaternion.identity);
         objective.transform.parent = transform;
