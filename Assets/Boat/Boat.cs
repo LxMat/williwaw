@@ -130,10 +130,7 @@ public class Boat : NetworkBehaviour
             force = micObject.GetComponent<MicrophoneInput>().force;
             pitch = micObject.GetComponent<MicrophoneInput>().PitchValue;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 
 
 
@@ -146,10 +143,6 @@ public class Boat : NetworkBehaviour
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
             if (powerType != null)
             {
                 if (powerType == "Cloud" && nextCloud < Time.time)
