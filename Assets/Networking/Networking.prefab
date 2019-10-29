@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7451912980075734081}
-  - component: {fileID: 4972649609368258198}
-  - component: {fileID: 405969855806213367}
+  - component: {fileID: 2858931624243631524}
+  - component: {fileID: 4492038260494706594}
   m_Layer: 0
   m_Name: Networking
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4972649609368258198
+--- !u!114 &2858931624243631524
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1367306121841414247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10c2fd873b12541b392f10ecc4846574, type: 3}
+  m_Script: {fileID: 11500000, guid: c02d80ff30ba9ec47b4e2f406650702e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -53,12 +53,14 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 0}
+  m_PlayerPrefab: {fileID: 7351761154885657863, guid: 2158bce6b384f10409f998702397e32c,
+    type: 3}
   m_AutoCreatePlayer: 1
-  m_PlayerSpawnMethod: 0
-  m_OfflineScene: 
-  m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_PlayerSpawnMethod: 1
+  m_OfflineScene: Start Menu
+  m_OnlineScene: Game Scene
+  m_SpawnPrefabs:
+  - {fileID: 7257517065000910371, guid: ceb24f8b8f9197744be330228b66ac51, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -111,10 +113,10 @@ MonoBehaviour:
   m_MatchHost: mm.unet.unity3d.com
   m_MatchPort: 443
   matchName: default
-  matchSize: 5
+  matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
---- !u!114 &405969855806213367
+--- !u!114 &4492038260494706594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,11 +125,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1367306121841414247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4394a3eef724546f896557197e2d6c44, type: 3}
+  m_Script: {fileID: 11500000, guid: 14f4a06c8bbbe1d4989a4ad7cf2e3939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
-  showGUI: 1
-  offsetX: 0
-  offsetY: 0
-  GUIScale: 3

@@ -6,8 +6,8 @@ using UnityEngine;
 [System.Obsolete]
 public class MapMarker : NetworkBehaviour
 {
-
     public GameObject Marker;
+    public Color color;
 
     // Update is called once per frame
 
@@ -18,9 +18,10 @@ public class MapMarker : NetworkBehaviour
 
     private void Start()
     {
-        Material material = new Material(Shader.Find("Standard"));
-        Color color = new Color(200, 50, 50, 1);
-        material.color = color;
+        Material material = new Material(Shader.Find("Standard"))
+        {
+            color = color
+        };
         Marker.GetComponent<MeshRenderer>().material = material;
     }
 }
