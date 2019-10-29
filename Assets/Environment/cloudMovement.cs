@@ -15,9 +15,9 @@ public class cloudMovement : MonoBehaviour
     {
         windController = GameObject.Find("Wind").GetComponent<WindController>();
         updateTarget();
-        
+
         StartCoroutine(moveCloud());
-        speed = Random.Range(0.2f, 0.5f) ;
+        speed = Random.Range(0.2f, 0.5f);
     }
     private void Update()
     {
@@ -43,7 +43,7 @@ public class cloudMovement : MonoBehaviour
             //    updateTarget();
             //    speed = Random.Range(0.2f, 0.5f);
             //}
-        
+
             if (transform.position.x < 0 ||
                 transform.position.z < 0 ||
                 transform.position.x > 1100 ||
@@ -53,7 +53,7 @@ public class cloudMovement : MonoBehaviour
             }
 
 
-            transform.Translate(dir*speed*pwr,Space.Self);
+            transform.Translate(dir * speed * pwr, Space.Self);
             yield return null;
         }
     }

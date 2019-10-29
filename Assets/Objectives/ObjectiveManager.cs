@@ -1,55 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
 [System.Obsolete]
-public class ObjectiveManager : MonoBehaviour
+public class ObjectiveManager : NetworkBehaviour
 {
 
     private int nObjectives = 5;
     private WaterPlane waves;
     public GameObject objectivePrefab;
-    private int boundsX;
-    private int boundsZ;
     // Start is called before the first frame update
     void Start()
     {
-
-        
-        
-        for (int i = 0; i<nObjectives; i++)
-        {
-            SpawnObjective();
-        }
-    }
-
-    void Awake()
-    {
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
-        boundsX = waves.boundsX;
-        boundsZ = waves.boundsZ;
+        for (int i = 0; i < nObjectives; i++)
+        {
+            if (isServer)
+            {
+                SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+            }
+            else
+            {
+                CmdObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+            }
+        }
+
+
     }
 
     private void Update()
     {
-        if(transform.childCount < 5)
+
+
+        if (transform.childCount < 5)
         {
-            SpawnObjective();
-            Debug.Log("Spawned New Objective");
+            if (isServer)
+            {
+                SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+            }
+            else
+            {
+                CmdObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+            }
+
         }
+
     }
 
-    void SpawnObjective()
+    void SpawnObjective(Vector3 position)
     {
-
-        GameObject objective;
-        objective = Instantiate(objectivePrefab, new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)), Quaternion.identity);
+        GameObject objective = Instantiate(objectivePrefab, position, Quaternion.identity);
+        NetworkServer.Spawn(objective);
         objective.transform.parent = transform;
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
+    [Command]
+    void CmdObjective(Vector3 position)
+    {
+        GameObject objective = Instantiate(objectivePrefab, position, Quaternion.identity);
+        objective.transform.parent = transform;
+        NetworkServer.Spawn(objective);
+    }
 }

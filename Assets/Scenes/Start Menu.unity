@@ -248,36 +248,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Networking
       objectReference: {fileID: 0}
-    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_Channels.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_AutoCreatePlayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_PlayerSpawnMethod
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_UseSimulator
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_ServerBindToIP
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
-        type: 3}
-      propertyPath: m_Channels.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7451912980075734081, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -333,6 +303,47 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_Channels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_AutoCreatePlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_PlayerSpawnMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_UseSimulator
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_ServerBindToIP
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_Channels.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8743839872665597135, guid: 2745f32487692b64da9f9af2529cb75a,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d79eabb0688205e4785ee84b4a8d76f2, type: 3}
 --- !u!1 &1598914384

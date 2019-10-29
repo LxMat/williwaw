@@ -1,34 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class Deploy_Clouds : MonoBehaviour
+[System.Obsolete]
+public class Deploy_Clouds : NetworkBehaviour
 {
     public GameObject CloudPrefab;
+    private int cloudHeight = 100;
 
     public int nClouds = 10;
-    private List<GameObject> cloudList;
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < nClouds; i++)
         {
-            spawnCloud();       
+            spawnCloud();
         }
     }
-    void spawnCloud() {
-        GameObject cloud;
-        cloud = Instantiate(CloudPrefab, new Vector3(Random.Range(50, 950), 200, Random.Range(50,950)), Quaternion.identity);
-        cloud.transform.parent = transform;
+    void spawnCloud()
+    {
+        if (isServer)
+        {
+            GameObject cloud = Instantiate(CloudPrefab, new Vector3(Random.Range(50, 950), cloudHeight, Random.Range(50, 950)), Quaternion.identity);
+            NetworkServer.Spawn(cloud);
+            cloud.transform.parent = transform;
+        }
+        else
+        {
+            CmdCloud(new Vector3(Random.Range(50, 950), cloudHeight, Random.Range(50, 950)));
+        }
     }
 
     public void SpawnCloudsOnPlayer(Vector3 pos)
     {
         nClouds += 1;
-        Debug.Log("Spawnedcloud");
-        GameObject cloud;
-        cloud = Instantiate(CloudPrefab, new Vector3(pos.x, 200, pos.z), Quaternion.identity);
-        cloud.transform.parent = transform;
+        if (isServer)
+        {
+            GameObject cloud = Instantiate(CloudPrefab, new Vector3(pos.x, cloudHeight, pos.z), Quaternion.identity);
+            NetworkServer.Spawn(cloud);
+            cloud.transform.parent = transform;
+        }
+        else
+        {
+            CmdCloud(new Vector3(pos.x, cloudHeight, pos.z));
+        }
     }
-  
+
+    [Command]
+    void CmdCloud(Vector3 position)
+    {
+        GameObject cloud = Instantiate(CloudPrefab, position, Quaternion.identity);
+        cloud.transform.parent = transform;
+        NetworkServer.Spawn(cloud);
+    }
+
 }
