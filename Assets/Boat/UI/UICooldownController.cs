@@ -2,28 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class UICooldownController : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Image ImageCooldown;
-    public float CooldownTime = 2.5f;
-    bool isCooldown;
-    // Update is called once per frame
-    void Update()
+    public float CooldownTime = 2.0f; //cooldowntime is assigned in Cannon script in Boat prefab, 
+    private bool isCooldown = false;
+
+    public void startCooldown()
     {
-        if (Input.GetKeyUp(KeyCode.B) && !isCooldown)
-        {
-            isCooldown = true;
-            ImageCooldown.fillAmount = 1;
-        }
+        //if cooldown is still running
         if (isCooldown)
         {
-            Debug.Log("test");
+            return;
+        }
+        Debug.Log("start cooldown is called");
+        isCooldown = true;
+        ImageCooldown.fillAmount = 1;
+    }
+
+    void Update()
+    {
+        if (!isCooldown)
+        {
+            if (Input.GetKey(KeyCode.Space) || Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                ImageCooldown.fillAmount = 1;
+                isCooldown = true;
+            }
+        }
+        
+
+        if (isCooldown)
+        {
             ImageCooldown.fillAmount -= 1 / CooldownTime * Time.deltaTime;
+            Debug.Log(ImageCooldown.fillAmount);
         }
         if(ImageCooldown.fillAmount == 0)
         {
             isCooldown = false;
+
         }
     }
 
