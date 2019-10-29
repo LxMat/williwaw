@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.78198934, g: 0.6151514, b: 0.72510713, a: 1}
+  m_IndirectSpecularColor: {r: 0.78003806, g: 0.61384785, b: 0.7237628, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -527,7 +527,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 0
+  m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
 --- !u!1 &858156962 stripped
 GameObject:
@@ -566,7 +566,7 @@ MonoBehaviour:
     i13: 60
     i14: 213
     i15: 82
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!1 &908911511
 GameObject:
@@ -654,7 +654,7 @@ PrefabInstance:
     - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}

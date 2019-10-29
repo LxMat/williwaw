@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityStandardAssets.Utility;
-using UnityEngine.InputSystem;
 
 [System.Obsolete]
 public class Boat : NetworkBehaviour
@@ -36,7 +35,7 @@ public class Boat : NetworkBehaviour
 
     //variables used for the camera
     private float cameraDistanceInit, cameraHeightInit;
-    private float cameraDistanceSpeedUp = 1000f;
+    private readonly float cameraDistanceSpeedUp = 1000f;
     private SmoothFollow boatCamera;
     private float currentCameraDistance;
     private readonly float cloudCooldown = 0.5f;
@@ -79,7 +78,7 @@ public class Boat : NetworkBehaviour
 
             powerType = collision.gameObject.GetComponent<Objective>().objectiveType;
             Debug.Log(powerType);
-            if(powerType == "Wave")
+            if (powerType == "Wave")
             {
                 accu = 0.0f;
                 n = 0;
@@ -164,14 +163,14 @@ public class Boat : NetworkBehaviour
                 if (powerType == "Wave")
                 {
 
-                    if(pitch != 0)
+                    if (pitch != 0)
                     {
                         accu += pitch;
                         n += 1;
                     }
-                    
-                    
-               
+
+
+
                 }
 
                 //Ammo?
@@ -267,7 +266,7 @@ public class Boat : NetworkBehaviour
 
         pitch = accu / n;
         Debug.Log(pitch);
-        
+
         pitch = 1000 - pitch;
         pitch = Mathf.Clamp(pitch, 1, 1000);
         waveVector.x = -transform.right.x;
