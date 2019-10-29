@@ -20,10 +20,7 @@ public class ObjectiveManager : NetworkBehaviour
             {
                 SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
             }
-            else
-            {
-                CmdObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
-            }
+
         }
 
 
@@ -39,10 +36,7 @@ public class ObjectiveManager : NetworkBehaviour
             {
                 SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
             }
-            else
-            {
-                CmdObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
-            }
+
 
         }
 
