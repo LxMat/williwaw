@@ -24,7 +24,8 @@ public class Boat : NetworkBehaviour
 
     private string powerType;
 
-    private Vector3 forceVector = Vector3.up;
+    private Vector3 forceVector;
+    private Vector3 windVector;
     private Vector3 direction;
     private bool development;
     private WaterPlane waves;
@@ -43,6 +44,16 @@ public class Boat : NetworkBehaviour
     private readonly float cameraSpeedThreshold = 20f;
     // Start is called before the first frame update
     private Transform cylinder;
+
+
+    private Transform cloudTransform;
+    private ParticleSystem cloudSystem;
+
+
+
+    private WindZone windZone;
+
+
     private void Start()
     {
         boat = GetComponent<Rigidbody>();
@@ -52,6 +63,12 @@ public class Boat : NetworkBehaviour
         boatCamera = Camera.main.GetComponent<SmoothFollow>();
         cameraDistanceInit = boatCamera.distance;
 
+        cloudTransform = transform.FindChild("Cloud");
+        cloudSystem = cloudTransform.GetComponent<ParticleSystem>();
+        cloudSystem.enableEmission = false;
+
+
+        windZone = transform.FindChild("WindZone").GetComponent<WindZone>();
 
         cylinder = transform.GetChild(7);
     }
@@ -126,33 +143,60 @@ public class Boat : NetworkBehaviour
             Vector3 currentRot = transform.rotation.eulerAngles;
             Vector3 currentPos = transform.position;
             SetHeight(transform);
+
+
             force = micObject.GetComponent<MicrophoneInput>().force;
             pitch = micObject.GetComponent<MicrophoneInput>().PitchValue;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
 
+            windZone.windMain = force * 10; //SEts the force of the windzone on the boat. 
+
+            //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
+            windAngle = (1- (Vector3.Angle(-transform.right, windController.direction) / 150.0f)) ; //0 degrees is -1, 30 degrees is 0 force, 180 degrees is 5. Normalised
+            windVector = -transform.right * windAngle; //Force in the forward direction of the ship depending on windangle. Important! Can be negative
+            windVector = windVector * windController.power; //power is between 0 and 1;
+            forceVector = -transform.right * force; //The force in the forward direction as measured by the users blowing on the microphone. 
+
+       
+
+            //if (Mathf.Abs(rotation) > 0.2f)
+            //{
+                
+            //    direction.z = -rotation;//Mathf.Sin(rotation);
+            //                            // direction.z = Mathf.Cos(rotation);
+            //}
 
 
 
+          
+           boat.velocity = Vector3.ClampMagnitude((forceVector + windVector )* 30, 30);
+                
+                //boat.AddRelativeForce(-Vector3.right * windAngle);
 
-            if (Mathf.Abs(rotation) > 0.2f)
-            {
-                direction.z = -rotation;//Mathf.Sin(rotation);
-                                        // direction.z = Mathf.Cos(rotation);
-            }
+                //boat.AddRelativeForce(-Vector3.right * force);
 
+        
 
 
             if (powerType != null)
             {
-                if (powerType == "Cloud" && nextCloud < Time.time)
+                if (powerType == "Cloud")
                 {
+                   
                     cloudSpawn = lightSensor.spawnCloud;
-                    if (cloudSpawn)
+                    if (cloudSpawn && nextCloud < Time.time)
                     {
+                        cloudSystem.enableEmission = true;
                         nextCloud = Time.time + cloudCooldown;
                         deployClouds.SpawnCloudsOnPlayer(transform.position);
                     }
+                    else if (nextCloud + 0.2f < Time.time)
+                    {
+                        cloudSystem.enableEmission = false;
+                    }
                 }
+              
+                
                 if (powerType == "Wind")
                 {
                     windController.direction = -transform.right;
@@ -175,23 +219,24 @@ public class Boat : NetworkBehaviour
 
                 //Ammo?
             }
-
-            //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
-            windAngle = 1 - (Vector3.Angle(-transform.right, windController.direction) / 180.0f);
-            forceVector = -transform.right * windAngle;
-
-            if (boat.velocity.magnitude < 20)
+            else
             {
-                boat.velocity = forceVector * 20;
-
-
+                cloudSystem.enableEmission = false;
             }
+
+
+
+
+
+
+
+
 
 
             //if the boat speeds up the camera moves further away and as is slows down the camera gets closer.
             if (boat.velocity.magnitude > cameraSpeedThreshold && boatCamera.distance < (cameraDistanceSpeedUp))
             {
-                boatCamera.distance = Mathf.Lerp(boatCamera.distance, 200f, Time.deltaTime / 10);
+                boatCamera.distance = Mathf.Lerp(boatCamera.distance, 100f, Time.deltaTime / 10);
                 boatCamera.height = Mathf.Lerp(boatCamera.height, cameraHeightInit + 5, Time.deltaTime);
             }
             else if (boat.velocity.magnitude <= cameraSpeedThreshold && boatCamera.distance != cameraDistanceInit)
@@ -205,19 +250,19 @@ public class Boat : NetworkBehaviour
             //transform.Rotate(direction, Space.Self);
 
 
-            if (Input.GetKey(KeyCode.O))
+            if (Input.GetKeyDown(KeyCode.O))
             {
                 development = !development;
             }
             if (development)
             {
-                if (Input.GetKey(KeyCode.W))
-                {
-                    if (boat.velocity.magnitude < 50)
-                    {
-                        boat.AddRelativeForce(-Vector3.right * 2 * windAngle);
-                    }
-                }
+                //if (Input.GetKey(KeyCode.W))
+                //{
+                //    if (boat.velocity.magnitude < 50)
+                //    {
+                //        boat.AddRelativeForce(-Vector3.right * 2 * windAngle);
+                //    }
+                //}
                 if (Input.GetKey(KeyCode.A))
                 {
                     transform.Rotate(-Vector3.up);
@@ -237,11 +282,11 @@ public class Boat : NetworkBehaviour
             }
             else
             {
-                gyroTest();
+                //gyroTest();
 
-                if (Mathf.Abs(rotation) > 0.5f)
+                if (Mathf.Abs(rotation) > 0.2f)
                 {
-                    transform.Rotate(0, rotation, 0);
+                    transform.Rotate(Vector3.up*(rotation-0.2f));
                 }
                 //if (rotation > 0.2f)
                 //{
@@ -253,12 +298,12 @@ public class Boat : NetworkBehaviour
 
 
 
-    void gyroTest()
-    {
-        UnityEngine.Gyroscope gyro = Input.gyro;
-        if (gyro == null) { return; }
-        cylinder.rotation = gyro.attitude;
-    }
+    //void gyroTest()
+    //{
+    //    UnityEngine.Gyroscope gyro = Input.gyro;
+    //    if (gyro == null) { return; }
+    //    cylinder.rotation = gyro.attitude;
+    //}
 
 
     void SetWaves()
@@ -267,8 +312,14 @@ public class Boat : NetworkBehaviour
         pitch = accu / n;
         Debug.Log(pitch);
 
-        pitch = 1000 - pitch;
-        pitch = Mathf.Clamp(pitch, 1, 1000);
+        if (float.IsNaN(pitch))
+        {
+            Debug.Log("Pitch is NaN!!!");
+            pitch = 500;
+        }
+        pitch = 500 - pitch;
+        pitch = Mathf.Clamp(pitch, 30, 600);
+
         waveVector.x = -transform.right.x;
         waveVector.y = -transform.right.z;
         waveVector.z = force;
@@ -276,11 +327,35 @@ public class Boat : NetworkBehaviour
         waterShader.SetVector("_Wave1", waveVector);
         waves.Waves[0] = waveVector;
 
+
+        Vector4 w2 = waves.Waves[1];
+        Vector4 w3 = waves.Waves[2];
+        Vector4 w4 = waves.Waves[3];
+
+        w2.w = Mathf.Clamp(pitch / 2, 30, 600);
+        w3.w = Mathf.Clamp(pitch * 2, 30, 600);
+        w4.w = Mathf.Clamp(100 + pitch, 30, 600);
+
+
+        waterShader.SetVector("_Wave2", w2);
+        waves.Waves[1] = w2;
+
+        waterShader.SetVector("_Wave3", w3);
+        waves.Waves[2] = w3;
+
+        waterShader.SetVector("_Wave4", w4);
+        waves.Waves[3] = w4;
+
+
+
+
+
     }
 
 
     void ResetPower()
     {
+        
         powerType = null;
     }
 
