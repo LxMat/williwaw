@@ -130,15 +130,26 @@ public class Boat : NetworkBehaviour
             force = micObject.GetComponent<MicrophoneInput>().force;
             pitch = micObject.GetComponent<MicrophoneInput>().PitchValue;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
 
 
 
 
+            if (Mathf.Abs(rotation) > 0.2f)
+            {
+                direction.z = -rotation;//Mathf.Sin(rotation);
+                                        // direction.z = Mathf.Cos(rotation);
+            }
 
-            direction.z = -rotation;//Mathf.Sin(rotation);
-                                    // direction.z = Mathf.Cos(rotation);
 
 
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
             if (powerType != null)
             {
                 if (powerType == "Cloud" && nextCloud < Time.time)

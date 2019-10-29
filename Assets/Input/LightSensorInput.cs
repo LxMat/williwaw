@@ -57,9 +57,9 @@ public class LightSensorInput : MonoBehaviour
 
     }
 
-    void OnGUI()
-    {
-        GUI.Label(new Rect(600, 500, 300, 40), "LUX: " + lux);
-        GUI.Label(new Rect(700, 500, 300, 40), "Threshold: " + threshold);
-    }
+    //void OnGUI()
+    //{
+    //    GUI.Label(new Rect(600, 500, 300, 40), "LUX: " + lux);
+    //    GUI.Label(new Rect(700, 500, 300, 40), "Threshold: " + threshold);
+    //}
 }

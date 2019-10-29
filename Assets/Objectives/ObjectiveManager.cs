@@ -15,8 +15,10 @@ public class ObjectiveManager : MonoBehaviour
     void Start()
     {
 
-        
-        
+        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
+        boundsX = waves.boundsX;
+        boundsZ = waves.boundsZ;
+
         for (int i = 0; i<nObjectives; i++)
         {
             SpawnObjective();
@@ -25,9 +27,7 @@ public class ObjectiveManager : MonoBehaviour
 
     void Awake()
     {
-        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
-        boundsX = waves.boundsX;
-        boundsZ = waves.boundsZ;
+        
     }
 
     private void Update()
@@ -47,9 +47,8 @@ public class ObjectiveManager : MonoBehaviour
         objective.transform.parent = transform;
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
+    private void OnGUI()
+    {
         
-    //}
+    }
 }

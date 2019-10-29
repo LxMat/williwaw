@@ -26,6 +26,12 @@ public class GyroscopeInput : MonoBehaviour
 
 
 
+    private float accu = 0.0f;
+    private int n = 0;
+
+
+
+
     private void Start()
     {
         //Set up and enable the gyroscope (check your device has one)
@@ -61,6 +67,11 @@ public class GyroscopeInput : MonoBehaviour
         newRotation = Mathf.Clamp(currentAcceleration.x * sensitivity, -1, 1);
         //transform.Rotate(0, 0, -newRotation);
         rotation = newRotation;
+
+        //while (Time.time < 5.0f)
+        //{
+        //    accu = 
+        //}
 
 
         if (m_Gyro.userAcceleration.x >= shakeThreshold)
