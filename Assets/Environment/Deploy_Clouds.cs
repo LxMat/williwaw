@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class Deploy_Clouds : NetworkBehaviour
 {
     public GameObject CloudPrefab;
-    private int cloudHeight = 100;
+    private readonly int cloudHeight = 100;
 
     public int nClouds = 10;
     // Start is called before the first frame update

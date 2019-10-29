@@ -13,10 +13,8 @@ public class ObjectiveManager : NetworkBehaviour
     {
 
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
-        boundsX = waves.boundsX;
-        boundsZ = waves.boundsZ;
 
-        for (int i = 0; i<nObjectives; i++)
+        for (int i = 0; i < nObjectives; i++)
         {
             if (isServer)
             {
