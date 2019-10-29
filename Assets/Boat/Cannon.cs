@@ -12,7 +12,6 @@ public class Cannon : NetworkBehaviour
     private float up;
     private float forward;
     private float fireAngleRad;
-    private float touchStart;
 
     private Transform smallExplosion;
     private ParticleSystem explosion;
@@ -58,8 +57,8 @@ public class Cannon : NetworkBehaviour
         {
             nextAttack = Time.time + cooldown;
             CmdFire();
-        explosion.Play();
-        Debug.Log("BOOM");
+            explosion.Play();
+            Debug.Log("BOOM");
         }
     }
 
