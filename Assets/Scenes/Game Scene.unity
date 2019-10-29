@@ -203,6 +203,11 @@ PrefabInstance:
       propertyPath: distance
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 2564403448866279628, guid: 6adde00be464ea84dab0085fab934651,
+        type: 3}
+      propertyPath: rotationDamping
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6adde00be464ea84dab0085fab934651, type: 3}
 --- !u!1 &170076733
@@ -654,7 +659,7 @@ PrefabInstance:
     - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
@@ -1405,7 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2f3360363f6914fac037f935e8c8f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 0.3
+  power: 0.6
   direction: {x: 1, y: 0, z: 1}
 --- !u!199 &7721495956548434948
 ParticleSystemRenderer:
@@ -1638,7 +1643,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2335,7 +2340,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 50
       minScalar: 10
       maxCurve:
         serializedVersion: 2

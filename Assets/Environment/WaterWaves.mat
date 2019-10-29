@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5457c53bc3fdbfb4aaf622cfeb7d3a88, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7dbbe097a909494bb1fac344b132ca9, type: 3}
         m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -88,8 +88,8 @@ Material:
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 0.6832948, g: 0.7830189, b: 0.7766444, a: 1}
     - _WaterColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Wave1: {r: 0.8191452, g: 0.5735863, b: 0.1, a: 1}
-    - _Wave2: {r: 1, g: 1, b: 0.2, a: 50}
-    - _Wave3: {r: -0.2, g: -1, b: 0.15, a: 100}
-    - _Wave4: {r: -1, g: 0, b: 0.15, a: 200}
+    - _Wave1: {r: 0.22495139, g: -0.97436994, b: 0.23722231, a: 219.97821}
+    - _Wave2: {r: 0, g: 1, b: 0.2, a: 109.989105}
+    - _Wave3: {r: -0.2, g: -1, b: 0.03, a: 439.95642}
+    - _Wave4: {r: -1, g: 0, b: 0.05, a: 319.9782}
     - _Wave5: {r: 1, g: 0, b: 0.01, a: 500}

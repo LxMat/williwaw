@@ -53,11 +53,13 @@ public class MicrophoneInput : MonoBehaviour
 
     private const int QSamples = 1024;
     private const float RefValue = 0.1f;
-    private const float Threshold = 0.003f;
+    private float Threshold = 0.003f;
 
     float[] _samples;
     private float[] _spectrum;
     private float _fSample;
+
+    private int nT;
 
     private void Start()
     {
@@ -96,7 +98,7 @@ public class MicrophoneInput : MonoBehaviour
     {
 
 
-        timer += Time.deltaTime;
+        
 
 
 
@@ -115,9 +117,9 @@ public class MicrophoneInput : MonoBehaviour
         if (DbValue < -160)
         {
             DbValue = -160; // clamp it to -160dB min
-                            // get sound spectrum
+                           
         }
-
+        // get sound spectrum
         audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
         float maxV = 0;
         var maxN = 0;
@@ -143,18 +145,25 @@ public class MicrophoneInput : MonoBehaviour
                                                         //float fundamentalFrequency = 0.0f;
                                                         //float[] spectrum = new float[256];
 
-        force += loudness * Time.deltaTime;
+        force += maxV *10* Time.deltaTime;
         force = force - force * 0.003f;
-        force = Mathf.Clamp(maxV, 0.1f, 1f);
+        force = Mathf.Clamp(force, 0.01f, 0.5f);
+
+
         
+        if(Time.time < 5.0f)
+        {
+            nT += 1;
+            Threshold = maxV/nT;
+        }
 
     }
 
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(600, 500, 300, 40), "pitch: " + PitchValue);
-        GUI.Label(new Rect(700, 500, 300, 40), "force: " + force);
-    }
+    //private void OnGUI()
+    //{
+    //    GUI.Label(new Rect(600, 500, 300, 40), "pitch: " + PitchValue);
+    //    GUI.Label(new Rect(700, 500, 300, 40), "force: " + force);
+    //}
 
     //audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
