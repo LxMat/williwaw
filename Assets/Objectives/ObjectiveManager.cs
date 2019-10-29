@@ -11,8 +11,12 @@ public class ObjectiveManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
-        for (int i = 0; i < nObjectives; i++)
+        boundsX = waves.boundsX;
+        boundsZ = waves.boundsZ;
+
+        for (int i = 0; i<nObjectives; i++)
         {
             if (isServer)
             {

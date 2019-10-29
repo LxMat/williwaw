@@ -134,8 +134,12 @@ public class Boat : NetworkBehaviour
 
 
 
-            direction.z = -rotation;//Mathf.Sin(rotation);
-                                    // direction.z = Mathf.Cos(rotation);
+            if (Mathf.Abs(rotation) > 0.2f)
+            {
+                direction.z = -rotation;//Mathf.Sin(rotation);
+                                        // direction.z = Mathf.Cos(rotation);
+            }
+
 
 
             if (powerType != null)

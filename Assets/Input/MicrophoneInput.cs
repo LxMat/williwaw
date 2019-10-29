@@ -73,7 +73,7 @@ public class MicrophoneInput : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         //pitchTracker = new PitchTracker();
         //pitchTracker.SampleRate = 44100.0;
-        
+
 
         audioSource.clip = Microphone.Start(mic, true, 10, 44100);
         audioSource.outputAudioMixerGroup = audioMixMic;
@@ -104,14 +104,19 @@ public class MicrophoneInput : MonoBehaviour
         audioSource.GetOutputData(_samples, 0); // fill array with samples
         int i;
         float sum = 0;
+
         for (i = 0; i < QSamples; i++)
         {
             sum += _samples[i] * _samples[i]; // sum squared samples
         }
+
         RmsValue = Mathf.Sqrt(sum / QSamples); // rms = square root of average
         DbValue = 20 * Mathf.Log10(RmsValue / RefValue); // calculate dB
-        if (DbValue < -160) DbValue = -160; // clamp it to -160dB min
-                                            // get sound spectrum
+        if (DbValue < -160)
+        {
+            DbValue = -160; // clamp it to -160dB min
+                            // get sound spectrum
+        }
 
         audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
         float maxV = 0;
@@ -119,7 +124,10 @@ public class MicrophoneInput : MonoBehaviour
         for (i = 0; i < QSamples; i++)
         { // find max 
             if (!(_spectrum[i] > maxV) || !(_spectrum[i] > Threshold))
+            {
                 continue;
+            }
+              
 
             maxV = _spectrum[i];
             maxN = i; // maxN is the index of max
@@ -133,87 +141,94 @@ public class MicrophoneInput : MonoBehaviour
         }
         PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
                                                         //float fundamentalFrequency = 0.0f;
-                                                          //float[] spectrum = new float[256];
-        
+                                                        //float[] spectrum = new float[256];
+
         force += loudness * Time.deltaTime;
         force = force - force * 0.003f;
         force = Mathf.Clamp(maxV, 0.1f, 1f);
- 
         
 
-        //audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
-
-        //for (int i = 1; i < spectrum.Length - 1; i++)
-        //{
-        //    UnityEngine.Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
-        //    UnityEngine.Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
-        //    UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
-        //    UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
-        //}
-
-        //pitchTracker.ProcessBuffer(spectrum);
-        //pitch = pitchTracker.CurrentPitchRecord;
-        //Debug.Log(pitch.ToString());
-
-        //float s = 0.0f;
-        //int k = 0;
-        //for (int j = 1; j < 256; j++)
-        //{
-        //    if (spectrum[j] > threshold) // volumn must meet minimum threshold
-        //    {
-        //        if (s < spectrum[j])
-        //        {
-        //            s = spectrum[j];
-        //            k = j;
-        //        }
-        //    }
-        //}
-
-        //if (timer < waitTime)
-        //{
-        //    if (s > 0)
-        //    {
-        //        accu += s;
-        //        n += 1;
-        //    }
-
-        //    if (timer + Time.deltaTime > waitTime)
-        //    {
-        //        threshold = accu / n;
-        //    }
-
-        //}
-
-
-
-        //loudness = s*10;
-        //force += loudness * Time.deltaTime;
-        //force = force - force * 0.003f;
-        //waves += loudness * Time.deltaTime * 0.1f;
-        //waves = waves - waves * 0.0002f;
-        //if (force > 1.0f)
-        //{
-        //    force = 1.0f;
-        //}
-        //if (force <= 0.0f)
-        //{
-        //    force = 0.0f;
-        //}
-        //if (waves > 1.0f)
-        //{
-        //    waves = 1.0f;
-        //}
-        //if (waves <= 0.1f)
-        //{
-        //    waves = 0.1f;
-        //}
-
-        //fundamentalFrequency = k * audioSampleRate / 256;
-        //if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
     }
 
- 
-    
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(600, 500, 300, 40), "pitch: " + PitchValue);
+        GUI.Label(new Rect(700, 500, 300, 40), "force: " + force);
+    }
+
+    //audioSource.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+
+    //for (int i = 1; i < spectrum.Length - 1; i++)
+    //{
+    //    UnityEngine.Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
+    //    UnityEngine.Debug.DrawLine(new Vector3(i - 1, Mathf.Log(spectrum[i - 1]) + 10, 2), new Vector3(i, Mathf.Log(spectrum[i]) + 10, 2), Color.cyan);
+    //    UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), spectrum[i - 1] - 10, 1), new Vector3(Mathf.Log(i), spectrum[i] - 10, 1), Color.green);
+    //    UnityEngine.Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
+    //}
+
+    //pitchTracker.ProcessBuffer(spectrum);
+    //pitch = pitchTracker.CurrentPitchRecord;
+    //Debug.Log(pitch.ToString());
+
+    //float s = 0.0f;
+    //int k = 0;
+    //for (int j = 1; j < 256; j++)
+    //{
+    //    if (spectrum[j] > threshold) // volumn must meet minimum threshold
+    //    {
+    //        if (s < spectrum[j])
+    //        {
+    //            s = spectrum[j];
+    //            k = j;
+    //        }
+    //    }
+    //}
+
+    //if (timer < waitTime)
+    //{
+    //    if (s > 0)
+    //    {
+    //        accu += s;
+    //        n += 1;
+    //    }
+
+    //    if (timer + Time.deltaTime > waitTime)
+    //    {
+    //        threshold = accu / n;
+    //    }
+
+    //}
+
+
+
+    //loudness = s*10;
+    //force += loudness * Time.deltaTime;
+    //force = force - force * 0.003f;
+    //waves += loudness * Time.deltaTime * 0.1f;
+    //waves = waves - waves * 0.0002f;
+    //if (force > 1.0f)
+    //{
+    //    force = 1.0f;
+    //}
+    //if (force <= 0.0f)
+    //{
+    //    force = 0.0f;
+    //}
+    //if (waves > 1.0f)
+    //{
+    //    waves = 1.0f;
+    //}
+    //if (waves <= 0.1f)
+    //{
+    //    waves = 0.1f;
+    //}
+
+    //fundamentalFrequency = k * audioSampleRate / 256;
+    //if (fundamentalFrequency != 0) { Debug.Log(fundamentalFrequency); }
+
+
+
+
 
     //{
 
@@ -321,5 +336,6 @@ public class MicrophoneInput : MonoBehaviour
     //    fundamentalFrequency = i * audioSampleRate / samples;
     //    frequency = fundamentalFrequency;
     //    return fundamentalFrequency;
-    //}
+    //
+    //}   
 }
