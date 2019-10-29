@@ -11,6 +11,8 @@ public class GyroscopeInput : MonoBehaviour
    
     public float rotation;
 
+    private float correction = 0.0f; //I experience drifting, so i add a correction to the accelerometer which is fetched for the first start of the project. 
+
     private float shakeThreshold = 0.1f;
     public float shakeAmount;
 
@@ -25,9 +27,7 @@ public class GyroscopeInput : MonoBehaviour
     private Vector3 currentAcceleration, initialAcceleration;
 
 
-
-    private float accu = 0.0f;
-    private int n = 0;
+    
 
 
 
@@ -66,13 +66,9 @@ public class GyroscopeInput : MonoBehaviour
 
         newRotation = Mathf.Clamp(currentAcceleration.x * sensitivity, -1, 1);
         //transform.Rotate(0, 0, -newRotation);
-        rotation = newRotation;
+        rotation = newRotation - correction;
 
-        //while (Time.time < 5.0f)
-        //{
-        //    accu = 
-        //}
-
+       
 
         if (m_Gyro.userAcceleration.x >= shakeThreshold)
         {
