@@ -60,15 +60,15 @@ public class Boat : NetworkBehaviour
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
         waterShader = waves.material;
 
-        
+
         micObject = GameObject.Find("Microphone");
         gyroObject = GameObject.Find("Gyroscope");
-        windController = GameObject.Find("Wind").GetComponent<WindController>();
-        
+        windController = GameObject.Find("Wind(Clone)").GetComponent<WindController>();
+
         lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
         Debug.Log("Light");
         deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
-        
+
 
         boat = GetComponent<Rigidbody>();
         direction = new Vector3();
@@ -160,37 +160,37 @@ public class Boat : NetworkBehaviour
             windZone.windMain = force * 10; //SEts the force of the windzone on the boat. 
 
             //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
-            windAngle = (1- (Vector3.Angle(-transform.right, windController.direction) / 150.0f)) ; //0 degrees is -1, 30 degrees is 0 force, 180 degrees is 5. Normalised
+            windAngle = (1 - (Vector3.Angle(-transform.right, windController.direction) / 150.0f)); //0 degrees is -1, 30 degrees is 0 force, 180 degrees is 5. Normalised
             windVector = -transform.right * windAngle; //Force in the forward direction of the ship depending on windangle. Important! Can be negative
             windVector = windVector * windController.power; //power is between 0 and 1;
             forceVector = -transform.right * force; //The force in the forward direction as measured by the users blowing on the microphone. 
 
-       
+
 
             //if (Mathf.Abs(rotation) > 0.2f)
             //{
-                
+
             //    direction.z = -rotation;//Mathf.Sin(rotation);
             //                            // direction.z = Mathf.Cos(rotation);
             //}
 
 
 
-          
-           boat.velocity = Vector3.ClampMagnitude((forceVector + windVector )* 30, 30);
-                
-                //boat.AddRelativeForce(-Vector3.right * windAngle);
 
-                //boat.AddRelativeForce(-Vector3.right * force);
+            boat.velocity = Vector3.ClampMagnitude((forceVector + windVector) * 30, 30);
 
-        
+            //boat.AddRelativeForce(-Vector3.right * windAngle);
+
+            //boat.AddRelativeForce(-Vector3.right * force);
+
+
 
 
             if (powerType != null)
             {
                 if (powerType == "Cloud")
                 {
-                   
+
                     cloudSpawn = lightSensor.spawnCloud;
                     if (cloudSpawn && nextCloud < Time.time)
                     {
@@ -198,17 +198,15 @@ public class Boat : NetworkBehaviour
                         nextCloud = Time.time + cloudCooldown;
                         deployClouds.SpawnCloudsOnPlayer(transform.position);
                     }
-                    else if (nextCloud + 0.2f < Time.time)
-                    {
-                        cloudSystem.enableEmission = false;
-                    }
+                    else cloudSystem.enableEmission &= nextCloud + 0.2f >= Time.time;
                 }
-              
-                
+
+
                 if (powerType == "Wind")
                 {
-                    windController.direction = -transform.right;
-                    windController.power = force;
+                    // windController.direction = -transform.right;
+                    // windController.power = force;
+                    windController.CmdSetWind(-transform.right, force);
                 }
 
                 //TODO waves?
@@ -294,7 +292,7 @@ public class Boat : NetworkBehaviour
 
                 if (Mathf.Abs(rotation) > 0.2f)
                 {
-                    transform.Rotate(Vector3.up*(rotation-0.2f));
+                    transform.Rotate(Vector3.up * (rotation - 0.2f));
                 }
                 //if (rotation > 0.2f)
                 //{
@@ -363,7 +361,7 @@ public class Boat : NetworkBehaviour
 
     void ResetPower()
     {
-        
+
         powerType = null;
     }
 

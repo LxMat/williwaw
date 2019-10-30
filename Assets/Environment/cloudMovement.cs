@@ -14,7 +14,7 @@ public class cloudMovement : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        windController = GameObject.Find("Wind").GetComponent<WindController>();
+        windController = GameObject.Find("Wind(Clone)").GetComponent<WindController>();
         updateTarget();
 
         StartCoroutine(moveCloud());
