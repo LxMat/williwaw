@@ -154,7 +154,9 @@ public class MicrophoneInput : MonoBehaviour
         if(Time.time < 5.0f)
         {
             nT += 1;
+            
             Threshold = maxV/nT;
+            Debug.log(Threshold);
         }
 
     }
