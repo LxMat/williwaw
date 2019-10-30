@@ -92,7 +92,7 @@ public class MicrophoneInput : MonoBehaviour
 
     private void Update()
     {
-        UnityEngine.Debug.Log(run);
+       
 
        
         audioSource.GetOutputData(_samples, 0); // fill array with samples
@@ -112,43 +112,43 @@ public class MicrophoneInput : MonoBehaviour
 
         }
         //get sound spectrum
-        if (run){
-            audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
-            float maxV = 0;
-            var maxN = 0;
-            for (i = 0; i < QSamples; i++)
-            { // find max 
-                if (!(_spectrum[i] > maxV) || !(_spectrum[i] > Threshold))
-                {
-                    continue;
-                }
+        
+        audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
+        float maxV = 0;
+        var maxN = 0;
+        for (i = 0; i < QSamples; i++)
+        { // find max 
+            if (!(_spectrum[i] > maxV) || !(_spectrum[i] > Threshold))
+            {
+                continue;
+            }
 
 
-                maxV = _spectrum[i];
-                maxN = i; // maxN is the index of max
-            }
-            float freqN = maxN; // pass the index to a float variable
-            if (maxN > 0 && maxN < QSamples - 1)
-            { // interpolate index using neighbours
-                var dL = _spectrum[maxN - 1] / _spectrum[maxN];
-                var dR = _spectrum[maxN + 1] / _spectrum[maxN];
-                freqN += 0.5f * (dR * dR - dL * dL);
-            }
-            PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
-                                                            //float fundamentalFrequency = 0.0f;
-                                                            //float[] spectrum = new float[256];
+            maxV = _spectrum[i];
+            maxN = i; // maxN is the index of max
         }
+        float freqN = maxN; // pass the index to a float variable
+        if (maxN > 0 && maxN < QSamples - 1)
+        { // interpolate index using neighbours
+            var dL = _spectrum[maxN - 1] / _spectrum[maxN];
+            var dR = _spectrum[maxN + 1] / _spectrum[maxN];
+            freqN += 0.5f * (dR * dR - dL * dL);
+        }
+        PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
+                                                        //float fundamentalFrequency = 0.0f;
+                                                        //float[] spectrum = new float[256];
+        
 
 
-        force += RmsValue* 10 * Time.deltaTime;
+        force += maxV* 10 * Time.deltaTime;
         force = force - force * 0.003f;
-        force = Mathf.Clamp(force, 0.01f, 0.5f);
+        force = Mathf.Clamp(force, 0.01f, 0.4f);
 
 
         timer += Time.deltaTime;
         if (timer < waitTime)
         {
-            accu += RmsValue;
+            accu += maxV;
             n += 1;
 
             Threshold = accu * 10 / n;
@@ -159,7 +159,7 @@ public class MicrophoneInput : MonoBehaviour
 
 
         }
-           
+        UnityEngine.Debug.Log(Threshold);
         
 
 

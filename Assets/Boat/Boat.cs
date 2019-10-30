@@ -211,7 +211,7 @@ public class Boat : NetworkBehaviour
                 
                 if (powerType == "Wind")
                 {
-                    micObject.GetComponent<MicrophoneInput>().run = true;
+       
                     windController.direction = -transform.right;
                     windController.power = force;
                 }
@@ -219,7 +219,7 @@ public class Boat : NetworkBehaviour
                 //TODO waves?
                 if (powerType == "Wave")
                 {
-                    micObject.GetComponent<MicrophoneInput>().run = true;
+                
                     if (pitch != 0 && !float.IsNaN(pitch))
                     {
                         accu += pitch;
@@ -234,7 +234,7 @@ public class Boat : NetworkBehaviour
             }
             else
             {
-                micObject.GetComponent<MicrophoneInput>().run = false;
+
                 cloudSystem.enableEmission = false;
             }
 
@@ -329,10 +329,10 @@ public class Boat : NetworkBehaviour
         if (float.IsNaN(pitch))
         {
             Debug.Log("Pitch is NaN!!!");
-            pitch = 500;
+            pitch = 350;
         }
-        pitch = 500 - pitch;
-        pitch = Mathf.Clamp(pitch, 20, 500);
+        pitch = 350 - pitch;
+        pitch = Mathf.Clamp(pitch, 20, 300);
 
         waveVector.x = -transform.right.x;
         waveVector.y = -transform.right.z;
@@ -346,9 +346,9 @@ public class Boat : NetworkBehaviour
         Vector4 w3 = waves.Waves[2];
         Vector4 w4 = waves.Waves[3];
 
-        w2.w = Mathf.Clamp(pitch / 2, 20, 500);
-        w3.w = Mathf.Clamp(pitch * 2, 20, 500);
-        w4.w = Mathf.Clamp(100 + pitch, 20, 500);
+        w2.w = Mathf.Clamp(pitch / 2, 20, 300);
+        w3.w = Mathf.Clamp(pitch * 2, 20, 300);
+        w4.w = Mathf.Clamp(100 + pitch, 20,300);
 
 
         waterShader.SetVector("_Wave2", w2);
