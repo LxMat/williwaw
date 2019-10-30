@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.78120583, g: 0.6127001, b: 0.72135675, a: 1}
+  m_IndirectSpecularColor: {r: 0.77867204, g: 0.61136633, b: 0.7199791, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -283,7 +283,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.818327e+20, y: 0.2240121, z: 223.42578, w: 7.44087e+28}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -502,8 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77ecfe88b7098b4181d4a5e81e4dd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UICannon: {fileID: 2288029588426410758, guid: 09849f3f4727bfc4280c11b836d4a1fe,
-    type: 3}
 --- !u!4 &709277189
 Transform:
   m_ObjectHideFlags: 0
@@ -722,7 +720,7 @@ PrefabInstance:
     - target: {fileID: 6021241877655561624, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6021241877655561626, guid: 0f594e6ba632642cb83e4099e41278ba,
         type: 3}
