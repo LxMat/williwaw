@@ -222,7 +222,7 @@ public class WaterPlane : NetworkBehaviour
 
         //updateVerts();
 
-        Steepness = micObject.GetComponent<MicrophoneInput>().waves;
+        //Steepness = micObject.GetComponent<MicrophoneInput>().waves;
 
         if (debugOnComputer)
         {

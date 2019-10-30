@@ -54,6 +54,8 @@ public class Boat : NetworkBehaviour
     private WindZone windZone;
 
 
+    private Transform perl;
+
     private void Start()
     {
 
@@ -66,9 +68,11 @@ public class Boat : NetworkBehaviour
         windController = GameObject.Find("Wind").GetComponent<WindController>();
         
         lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
-        Debug.Log("Light");
+      
         deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
-        
+
+
+        perl = transform.FindChild("black_perl");
 
         boat = GetComponent<Rigidbody>();
         direction = new Vector3();
@@ -82,7 +86,7 @@ public class Boat : NetworkBehaviour
         cloudSystem.enableEmission = false;
 
 
-        windZone = transform.FindChild("WindZone").GetComponent<WindZone>();
+        //windZone = transform.FindChild("WindZone").GetComponent<WindZone>();
 
         cylinder = transform.GetChild(7);
     }
@@ -151,19 +155,19 @@ public class Boat : NetworkBehaviour
             Vector3 currentRot = transform.rotation.eulerAngles;
             Vector3 currentPos = transform.position;
             SetHeight(transform);
-
-
+           
+            
             force = micObject.GetComponent<MicrophoneInput>().force;
             pitch = micObject.GetComponent<MicrophoneInput>().PitchValue;
             rotation = gyroObject.GetComponent<GyroscopeInput>().rotation;
 
-            windZone.windMain = force * 10; //SEts the force of the windzone on the boat. 
+            //windZone.windMain = force * 10; //SEts the force of the windzone on the boat. 
 
             //Calculate wind angle and resulting velocity. Maybe have a minimum velocity, and not just 0. 
             windAngle = (1- (Vector3.Angle(-transform.right, windController.direction) / 150.0f)) ; //0 degrees is -1, 30 degrees is 0 force, 180 degrees is 5. Normalised
-            windVector = -transform.right * windAngle; //Force in the forward direction of the ship depending on windangle. Important! Can be negative
+            windVector = -perl.right * windAngle; //Force in the forward direction of the ship depending on windangle. Important! Can be negative
             windVector = windVector * windController.power; //power is between 0 and 1;
-            forceVector = -transform.right * force; //The force in the forward direction as measured by the users blowing on the microphone. 
+            forceVector = -perl.right * force; //The force in the forward direction as measured by the users blowing on the microphone. 
 
        
 
@@ -207,6 +211,7 @@ public class Boat : NetworkBehaviour
                 
                 if (powerType == "Wind")
                 {
+                    micObject.GetComponent<MicrophoneInput>().run = true;
                     windController.direction = -transform.right;
                     windController.power = force;
                 }
@@ -214,8 +219,8 @@ public class Boat : NetworkBehaviour
                 //TODO waves?
                 if (powerType == "Wave")
                 {
-
-                    if (pitch != 0)
+                    micObject.GetComponent<MicrophoneInput>().run = true;
+                    if (pitch != 0 && !float.IsNaN(pitch))
                     {
                         accu += pitch;
                         n += 1;
@@ -229,6 +234,7 @@ public class Boat : NetworkBehaviour
             }
             else
             {
+                micObject.GetComponent<MicrophoneInput>().run = false;
                 cloudSystem.enableEmission = false;
             }
 
@@ -326,7 +332,7 @@ public class Boat : NetworkBehaviour
             pitch = 500;
         }
         pitch = 500 - pitch;
-        pitch = Mathf.Clamp(pitch, 30, 600);
+        pitch = Mathf.Clamp(pitch, 20, 500);
 
         waveVector.x = -transform.right.x;
         waveVector.y = -transform.right.z;
@@ -340,9 +346,9 @@ public class Boat : NetworkBehaviour
         Vector4 w3 = waves.Waves[2];
         Vector4 w4 = waves.Waves[3];
 
-        w2.w = Mathf.Clamp(pitch / 2, 30, 600);
-        w3.w = Mathf.Clamp(pitch * 2, 30, 600);
-        w4.w = Mathf.Clamp(100 + pitch, 30, 600);
+        w2.w = Mathf.Clamp(pitch / 2, 20, 500);
+        w3.w = Mathf.Clamp(pitch * 2, 20, 500);
+        w4.w = Mathf.Clamp(100 + pitch, 20, 500);
 
 
         waterShader.SetVector("_Wave2", w2);
