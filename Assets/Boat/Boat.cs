@@ -57,6 +57,20 @@ public class Boat : NetworkBehaviour
 
     private void Start()
     {
+
+        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
+        waterShader = waves.material;
+
+        
+        micObject = GameObject.Find("Microphone");
+        gyroObject = GameObject.Find("Gyroscope");
+        windController = GameObject.Find("Wind").GetComponent<WindController>();
+        
+        lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
+        Debug.Log("Light");
+        deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
+        
+
         boat = GetComponent<Rigidbody>();
         direction = new Vector3();
         development = false;
@@ -112,13 +126,7 @@ public class Boat : NetworkBehaviour
     //Awake is called after all objects are initialized.
     void Awake()
     {
-        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
-        waterShader = waves.material;
-        micObject = GameObject.Find("Microphone");
-        gyroObject = GameObject.Find("Gyroscope");
-        windController = GameObject.Find("Wind").GetComponent<WindController>();
-        lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
-        deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
+
     }
 
     Vector3 GetNormal(Vector3 p0, Vector3 p1, Vector3 p2)
