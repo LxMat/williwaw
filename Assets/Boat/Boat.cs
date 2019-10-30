@@ -258,7 +258,7 @@ public class Boat : NetworkBehaviour
             //transform.Rotate(direction, Space.Self);
 
 
-            if (Input.GetKeyDown(KeyCode.O))
+            if (Input.GetKeyUp(KeyCode.O))
             {
                 development = !development;
             }
