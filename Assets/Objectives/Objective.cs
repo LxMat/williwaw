@@ -22,11 +22,11 @@ public class Objective : MonoBehaviour
     void Start()
     {
         list = new List<string> { "Wind", "Cloud", "Wave" };
-      
-        
+
+
         //Assign a string as the type
         objectiveType = list[Random.Range(0, list.Count)];
-        
+
         switch (objectiveType)
         {
             case "Wind":
@@ -57,7 +57,7 @@ public class Objective : MonoBehaviour
     {
         transform.Rotate(0, 50 * Time.deltaTime, 0);
         temp = transform.position;
-        temp.y = waves.getHeight(temp) + 5.0f;
+        // temp.y = waves.getHeight(temp) + 5.0f;
         transform.position = temp;
     }
 }

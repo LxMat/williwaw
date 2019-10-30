@@ -5267,7 +5267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 3
-  m_SendInterval: 0.1
+  m_SendInterval: 0.04
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -10292,11 +10292,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8129759360989635288}
     m_Modifications:
-    - target: {fileID: 3786730031947247142, guid: cd46b5638c0e424458e56d009c59600b,
-        type: 3}
-      propertyPath: m_Name
-      value: Wake
-      objectReference: {fileID: 0}
     - target: {fileID: 1290398717038487162, guid: cd46b5638c0e424458e56d009c59600b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10352,6 +10347,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 89.99999
       objectReference: {fileID: 0}
+    - target: {fileID: 3786730031947247142, guid: cd46b5638c0e424458e56d009c59600b,
+        type: 3}
+      propertyPath: m_Name
+      value: Wake
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd46b5638c0e424458e56d009c59600b, type: 3}
 --- !u!4 &3023957634250408801 stripped
@@ -10367,10 +10367,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8129759360989635288}
     m_Modifications:
-    - target: {fileID: 100000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
-      propertyPath: m_Name
-      value: black_perl
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10422,6 +10418,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.010000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
+      propertyPath: m_Name
+      value: black_perl
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 2425a87628df6b14db6676e5fc92466d, type: 3}
       propertyPath: m_Materials.Array.data[0]

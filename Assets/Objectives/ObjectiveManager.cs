@@ -18,7 +18,7 @@ public class ObjectiveManager : NetworkBehaviour
         {
             if (isServer)
             {
-                SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+                SpawnObjective(new Vector3(Random.Range(50, 950), 0, Random.Range(50, 950)));
             }
 
         }
@@ -34,7 +34,7 @@ public class ObjectiveManager : NetworkBehaviour
         {
             if (isServer)
             {
-                SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+                SpawnObjective(new Vector3(Random.Range(50, 950), 0, Random.Range(50, 950)));
             }
 
 
@@ -47,13 +47,5 @@ public class ObjectiveManager : NetworkBehaviour
         GameObject objective = Instantiate(objectivePrefab, position, Quaternion.identity);
         NetworkServer.Spawn(objective);
         objective.transform.parent = transform;
-    }
-
-    [Command]
-    void CmdObjective(Vector3 position)
-    {
-        GameObject objective = Instantiate(objectivePrefab, position, Quaternion.identity);
-        objective.transform.parent = transform;
-        NetworkServer.Spawn(objective);
     }
 }

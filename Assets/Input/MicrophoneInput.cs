@@ -98,7 +98,7 @@ public class MicrophoneInput : MonoBehaviour
     {
 
 
-        
+
 
 
 
@@ -117,7 +117,7 @@ public class MicrophoneInput : MonoBehaviour
         if (DbValue < -160)
         {
             DbValue = -160; // clamp it to -160dB min
-                           
+
         }
         // get sound spectrum
         audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
@@ -129,7 +129,7 @@ public class MicrophoneInput : MonoBehaviour
             {
                 continue;
             }
-              
+
 
             maxV = _spectrum[i];
             maxN = i; // maxN is the index of max
@@ -145,17 +145,17 @@ public class MicrophoneInput : MonoBehaviour
                                                         //float fundamentalFrequency = 0.0f;
                                                         //float[] spectrum = new float[256];
 
-        force += maxV *10* Time.deltaTime;
+        force += maxV * 10 * Time.deltaTime;
         force = force - force * 0.003f;
         force = Mathf.Clamp(force, 0.01f, 0.5f);
 
 
-        
-        if(Time.time < 5.0f)
+
+        if (Time.time < 5.0f)
         {
             nT += 1;
-            
-            Threshold = maxV/nT;
+
+            Threshold = maxV / nT;
             UnityEngine.Debug.Log(Threshold);
         }
 

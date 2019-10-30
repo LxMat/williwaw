@@ -24,25 +24,15 @@ public class Deploy_Clouds : NetworkBehaviour
             NetworkServer.Spawn(cloud);
             cloud.transform.parent = transform;
         }
-        else
-        {
-            CmdCloud(new Vector3(Random.Range(50, 950), cloudHeight, Random.Range(50, 950)));
-        }
     }
 
     public void SpawnCloudsOnPlayer(Vector3 pos)
     {
         nClouds += 1;
-        if (isServer)
-        {
-            GameObject cloud = Instantiate(CloudPrefab, new Vector3(pos.x, cloudHeight, pos.z), Quaternion.identity);
-            NetworkServer.Spawn(cloud);
-            cloud.transform.parent = transform;
-        }
-        else
-        {
-            CmdCloud(new Vector3(pos.x, cloudHeight, pos.z));
-        }
+
+
+        CmdCloud(new Vector3(pos.x, cloudHeight, pos.z));
+
     }
 
     [Command]
