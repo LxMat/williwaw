@@ -7,7 +7,7 @@ public class UICooldownController : MonoBehaviour
 {
     public Image ImageCooldown;
     public float CooldownTime = 2.0f; //cooldowntime is assigned in Cannon script in Boat prefab, 
-    private bool isCooldown = false;
+    private bool isCooldown;
 
     public void startCooldown()
     {
@@ -25,24 +25,28 @@ public class UICooldownController : MonoBehaviour
     {
         if (!isCooldown)
         {
-            if (Input.GetKey(KeyCode.Space) || Input.GetTouch(0).phase == TouchPhase.Began)
+            if (Input.GetKey(KeyCode.Space))
             {
                 ImageCooldown.fillAmount = 1;
                 isCooldown = true;
             }
+            if (Input.touchCount > 0)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    ImageCooldown.fillAmount = 1;
+                    isCooldown = true;
+                }
+            }
         }
-        
+
 
         if (isCooldown)
         {
             ImageCooldown.fillAmount -= 1 / CooldownTime * Time.deltaTime;
             Debug.Log(ImageCooldown.fillAmount);
         }
-        if(ImageCooldown.fillAmount == 0)
-        {
-            isCooldown = false;
-
-        }
+        isCooldown &= ImageCooldown.fillAmount != 0;
     }
 
 }
