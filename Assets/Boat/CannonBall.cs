@@ -6,7 +6,7 @@ public class CannonBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -2)
+        if (transform.position.y < -20)
         {
             Destroy(gameObject);
         }
