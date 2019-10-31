@@ -142,7 +142,7 @@ public class MicrophoneInput : MonoBehaviour
 
         force += maxV* 10 * Time.deltaTime;
         force = force - force * 0.003f;
-        force = Mathf.Clamp(force, 0.01f, 0.4f);
+        force = Mathf.Clamp(force, 0.01f, 0.5f);
 
 
         timer += Time.deltaTime;
