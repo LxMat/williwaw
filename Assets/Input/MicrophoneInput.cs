@@ -61,7 +61,7 @@ public class MicrophoneInput : MonoBehaviour
 
     private void Start()
     {
-        
+
         foreach (var device in Microphone.devices)
         {
             UnityEngine.Debug.Log("Name: " + device);
@@ -86,15 +86,15 @@ public class MicrophoneInput : MonoBehaviour
         _fSample = AudioSettings.outputSampleRate;
 
 
-        
+
 
     }
 
     private void Update()
     {
-       
 
-       
+
+
         audioSource.GetOutputData(_samples, 0); // fill array with samples
         int i;
         float sum = 0;
@@ -112,12 +112,12 @@ public class MicrophoneInput : MonoBehaviour
 
         }
         //get sound spectrum
-        
+
         audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
         float maxV = 0;
         var maxN = 0;
         for (i = 0; i < QSamples; i++)
-        { // find max 
+        { // find max
             if (!(_spectrum[i] > maxV) || !(_spectrum[i] > Threshold))
             {
                 continue;
@@ -137,7 +137,7 @@ public class MicrophoneInput : MonoBehaviour
         PitchValue = freqN * (_fSample / 2) / QSamples; // convert index to frequency
                                                         //float fundamentalFrequency = 0.0f;
                                                         //float[] spectrum = new float[256];
-        
+
 
 
         force += maxV* 10 * Time.deltaTime;
@@ -288,7 +288,7 @@ public class MicrophoneInput : MonoBehaviour
     //    { //check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
     //        while (!(Microphone.GetPosition(microphone) > 0))
     //        {
-    //        } // Wait until the recording has started. 
+    //        } // Wait until the recording has started.
 
     //        Debug.Log("recording started with " + microphone);
 
@@ -350,5 +350,5 @@ public class MicrophoneInput : MonoBehaviour
     //    frequency = fundamentalFrequency;
     //    return fundamentalFrequency;
     //
-    //}   
+    //}
 }
