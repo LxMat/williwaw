@@ -29,7 +29,6 @@ public class WindController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(direction);
         windZone.windMain = power * 10;
         transform.rotation = Quaternion.LookRotation(direction);
     }

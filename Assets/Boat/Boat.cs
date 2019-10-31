@@ -65,7 +65,7 @@ public class Boat : NetworkBehaviour
 
         micObject = GameObject.Find("Microphone");
         gyroObject = GameObject.Find("Gyroscope");
-        windController = GameObject.Find("Wind(Clone)").GetComponent<WindController>();
+        windController = GameObject.Find("Wind").GetComponent<WindController>();
 
         lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
       
@@ -117,11 +117,7 @@ public class Boat : NetworkBehaviour
             {
                 accu = 0.0f;
                 n = 0;
-                Invoke("CmdSetWaves", 5.0f);
-            }
-            if (powerType == "Wind")
-            {
-                CmdSetWind();
+                Invoke("SetWaves", 5.0f);
             }
             Invoke("ResetPower", 5.0f); //Alternativeley get differrent lengths from different powers. 
             Destroy(collision.gameObject);
@@ -212,8 +208,8 @@ public class Boat : NetworkBehaviour
 
                 if (powerType == "Wind")
                 {
-                    // windController.direction = -transform.right;
-                    // windController.power = force;
+                    windController.direction = -transform.right;
+                    windController.power = force;
                     // CmdSetWind();
                 }
 
@@ -326,14 +322,14 @@ public class Boat : NetworkBehaviour
         deployClouds.spawnCloud(transform.position);
     }
 
-    [Command]
-    void CmdSetWind()
-    {
-        windController.setWind(-transform.right, force);
-    }
+    // [Command]
+    // void CmdSetWind()
+    // {
+    //     windController.setWind(-transform.right, force);
+    // }
 
-    [Command]
-    void CmdSetWaves()
+    // [Command]
+    void SetWaves()
     {
 
         pitch = accu / n;

@@ -17,7 +17,7 @@ public class UiWindDirectionController : MonoBehaviour
     [System.Obsolete]
     void Start()
     {
-        windController = GameObject.Find("Wind(Clone)").GetComponent<WindController>();
+        windController = GameObject.Find("Wind").GetComponent<WindController>();
         arrow = transform.Find("WindDirIcon").GetComponent<Image>();
         boatIcon = transform.Find("BoatIcon").GetComponent<Image>();
 

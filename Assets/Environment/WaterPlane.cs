@@ -19,7 +19,6 @@ public class WaterPlane : NetworkBehaviour
 
     public Material material;
     private GameObject meshObject;
-    public GameObject waterPrefab;
     public GameObject micObject;
     public GameObject gyroObject;
     private Canvas canvas;
@@ -37,7 +36,7 @@ public class WaterPlane : NetworkBehaviour
         scaleZ = boundsZ / resolutionZ;
 
         Mesh mesh = generateGrid();
-        meshObject = Instantiate(waterPrefab);
+        meshObject = new GameObject("Water");
         meshObject.name = "waterWaves";
 
         meshObject.AddComponent<MeshFilter>();
@@ -58,7 +57,6 @@ public class WaterPlane : NetworkBehaviour
 
 
         meshObject.transform.position = this.transform.position;
-        NetworkServer.Spawn(meshObject);
     }
 
     private Mesh generateGrid()
