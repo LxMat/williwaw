@@ -60,4 +60,5 @@ public class Objective : MonoBehaviour
         temp.y = waves.getHeight(temp) + 5.0f;
         transform.position = temp;
     }
+ 
 }

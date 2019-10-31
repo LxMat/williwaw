@@ -20,7 +20,7 @@ public class WindController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        windZone.windMain = power * 10;
+        windZone.windMain = power * 20;
         transform.rotation = Quaternion.LookRotation(direction);
     }
 }
