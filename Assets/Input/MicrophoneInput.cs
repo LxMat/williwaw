@@ -26,8 +26,8 @@ public class MicrophoneInput : MonoBehaviour
 
     public float loudness = 0.0f;
     public float force = 0.0f;
-    public float waves = 0.1f;
-    public float threshold = 0.0f;
+    //public float waves = 0.1f;
+    //public float threshold = 0.0f;
     private AudioSource audioSource;
 
     public AudioMixerGroup audioMixMic;
@@ -36,22 +36,20 @@ public class MicrophoneInput : MonoBehaviour
     //public PitchTracker.PitchRecord pitch;
 
 
-
     private float timer = 0.0f;
     private float waitTime = 5.0f;
-
-    public int n = 1;
-    public float accu = 0.0f;
-
+    private float accu = 0.0f;
+    private int n = 0;
 
 
 
+    public bool run;
 
     public float RmsValue;
     public float DbValue;
     public float PitchValue;
 
-    private const int QSamples = 1024;
+    private const int QSamples = 512;
     private const float RefValue = 0.1f;
     private float Threshold = 0.003f;
 
@@ -63,8 +61,6 @@ public class MicrophoneInput : MonoBehaviour
 
     private void Start()
     {
-
-
 
         foreach (var device in Microphone.devices)
         {
@@ -98,10 +94,6 @@ public class MicrophoneInput : MonoBehaviour
     {
 
 
-        
-
-
-
 
         audioSource.GetOutputData(_samples, 0); // fill array with samples
         int i;
@@ -117,19 +109,20 @@ public class MicrophoneInput : MonoBehaviour
         if (DbValue < -160)
         {
             DbValue = -160; // clamp it to -160dB min
-                           
+
         }
-        // get sound spectrum
+        //get sound spectrum
+
         audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
         float maxV = 0;
         var maxN = 0;
         for (i = 0; i < QSamples; i++)
-        { // find max 
+        { // find max
             if (!(_spectrum[i] > maxV) || !(_spectrum[i] > Threshold))
             {
                 continue;
             }
-              
+
 
             maxV = _spectrum[i];
             maxN = i; // maxN is the index of max
@@ -145,21 +138,35 @@ public class MicrophoneInput : MonoBehaviour
                                                         //float fundamentalFrequency = 0.0f;
                                                         //float[] spectrum = new float[256];
 
-        force += maxV *10* Time.deltaTime;
+
+
+        force += maxV* 10 * Time.deltaTime;
         force = force - force * 0.003f;
-        force = Mathf.Clamp(force, 0.01f, 0.5f);
+        force = Mathf.Clamp(force, 0.01f, 0.4f);
 
 
-        
-        if(Time.time < 5.0f)
+        timer += Time.deltaTime;
+        if (timer < waitTime)
         {
-            nT += 1;
-            
-            Threshold = maxV/nT;
-            // UnityEngine.Debug.log(Threshold);
+            accu += maxV;
+            n += 1;
+
+            Threshold = accu * 10 / n;
+            if (Threshold < 0.003f)
+            {
+                Threshold = 0.003f;
+            }
+
+
         }
+        UnityEngine.Debug.Log(Threshold);
+
+
+
 
     }
+
+
 
     //private void OnGUI()
     //{
@@ -286,7 +293,7 @@ public class MicrophoneInput : MonoBehaviour
     //    { //check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
     //        while (!(Microphone.GetPosition(microphone) > 0))
     //        {
-    //        } // Wait until the recording has started. 
+    //        } // Wait until the recording has started.
 
     //        Debug.Log("recording started with " + microphone);
 
@@ -348,5 +355,5 @@ public class MicrophoneInput : MonoBehaviour
     //    frequency = fundamentalFrequency;
     //    return fundamentalFrequency;
     //
-    //}   
+    //}
 }
