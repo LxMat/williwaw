@@ -117,7 +117,7 @@ public class Boat : NetworkBehaviour
             {
                 accu = 0.0f;
                 n = 0;
-                Invoke("SetWaves", 5.0f);
+                Invoke("CmdSetWaves", 5.0f);
             }
             Invoke("ResetPower", 5.0f); //Alternativeley get differrent lengths from different powers. 
             Destroy(collision.gameObject);
@@ -210,7 +210,7 @@ public class Boat : NetworkBehaviour
                 {
                     // windController.direction = -transform.right;
                     // windController.power = force;
-                    windController.CmdSetWind(-transform.right, force);
+                    CmdSetWind();
                 }
 
                 //TODO waves?
@@ -322,8 +322,14 @@ public class Boat : NetworkBehaviour
         deployClouds.spawnCloud(transform.position);
     }
 
+    [Command]
+    void CmdSetWind()
+    {
+        windController.setWind(-transform.right, force);
+    }
 
-    void SetWaves()
+    [Command]
+    void CmdSetWaves()
     {
 
         pitch = accu / n;
@@ -362,11 +368,6 @@ public class Boat : NetworkBehaviour
 
         waterShader.SetVector("_Wave4", w4);
         waves.Waves[3] = w4;
-
-
-
-
-
     }
 
 
