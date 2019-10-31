@@ -24,6 +24,7 @@ public class WindController : NetworkBehaviour
     [Command]
     public void CmdSetWind(Vector3 newDirection, float newPower)
     {
+        Debug.Log("CmdSetWind");
         direction = newDirection;
         power = newPower;
     }

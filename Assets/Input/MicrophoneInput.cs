@@ -159,11 +159,6 @@ public class MicrophoneInput : MonoBehaviour
 
 
         }
-        UnityEngine.Debug.Log(Threshold);
-        
-
-
-
     }
 
 

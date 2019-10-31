@@ -42,6 +42,7 @@ public class WaterPlane : NetworkBehaviour
         meshObject.AddComponent<MeshFilter>();
         meshObject.AddComponent<MeshRenderer>();
         meshObject.AddComponent<MeshCollider>();
+        meshObject.AddComponent<NetworkIdentity>();
 
         meshObject.GetComponent<Renderer>().material = material;
         
@@ -57,6 +58,7 @@ public class WaterPlane : NetworkBehaviour
 
 
         meshObject.transform.position = this.transform.position;
+        NetworkServer.Spawn(meshObject);
     }
 
     private Mesh generateGrid()

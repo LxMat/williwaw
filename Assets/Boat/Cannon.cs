@@ -22,8 +22,6 @@ public class Cannon : NetworkBehaviour
         fireAngleRad = (fireAngle * Mathf.PI) / 180;
         up = Mathf.Sin(fireAngleRad) * firePower;
         forward = Mathf.Cos(fireAngleRad) * firePower;
-        Debug.Log("up" + up);
-        Debug.Log("forward" + forward);
 
         smallExplosion = transform.GetChild(8);
         explosion = smallExplosion.GetComponent<ParticleSystem>();
@@ -44,7 +42,6 @@ public class Cannon : NetworkBehaviour
             {
                 if (Input.GetTouch(i).phase == TouchPhase.Began)
                 {
-
                     FireCannon();
                 }
             }
@@ -58,7 +55,6 @@ public class Cannon : NetworkBehaviour
             nextAttack = Time.time + cooldown;
             CmdFire();
             explosion.Play();
-            Debug.Log("BOOM");
         }
     }
 

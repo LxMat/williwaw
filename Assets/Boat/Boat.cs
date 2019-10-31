@@ -200,7 +200,7 @@ public class Boat : NetworkBehaviour
                     {
                         cloudSystem.enableEmission = true;
                         nextCloud = Time.time + cloudCooldown;
-                        deployClouds.SpawnCloudsOnPlayer(transform.position);
+                        CmdCloud();
                     }
                     else cloudSystem.enableEmission &= nextCloud + 0.2f >= Time.time;
                 }
@@ -315,6 +315,12 @@ public class Boat : NetworkBehaviour
     //    if (gyro == null) { return; }
     //    cylinder.rotation = gyro.attitude;
     //}
+
+    [Command]
+    void CmdCloud()
+    {
+        deployClouds.spawnCloud(transform.position);
+    }
 
 
     void SetWaves()
