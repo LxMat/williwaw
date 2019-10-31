@@ -156,7 +156,7 @@ public class MicrophoneInput : MonoBehaviour
             nT += 1;
             
             Threshold = maxV/nT;
-            Debug.log(Threshold);
+            // UnityEngine.Debug.log(Threshold);
         }
 
     }
