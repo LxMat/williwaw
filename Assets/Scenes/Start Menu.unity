@@ -311,7 +311,7 @@ PrefabInstance:
     - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
         type: 3}
@@ -360,6 +360,18 @@ PrefabInstance:
       propertyPath: m_UseWebSockets
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 6231843100839761332, guid: 1d6029527dc1f064e87721fa5874abfd,
+        type: 3}
+    - target: {fileID: 2858931624243631524, guid: d79eabb0688205e4785ee84b4a8d76f2,
+        type: 3}
+      propertyPath: m_SpawnPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 4080423251693398213, guid: dfd090d03bc4a7c4999e8f13a2279e6d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d79eabb0688205e4785ee84b4a8d76f2, type: 3}
 --- !u!1 &1598914384
@@ -395,12 +407,9 @@ MonoBehaviour:
   audioSampleRate: 44100
   loudness: 0
   force: 0
-  waves: 0.1
-  threshold: 0.1
   audioMixMic: {fileID: 3889658610879256321, guid: 16b60fddd4bf3b64ca43e24157aa7474,
     type: 2}
-  n: 1
-  accu: 0
+  run: 0
   RmsValue: 0
   DbValue: 0
   PitchValue: 0

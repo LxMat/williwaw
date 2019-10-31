@@ -7,13 +7,12 @@ using UnityEngine.Networking;
 public class WindController : NetworkBehaviour
 {
     // Start is called before the first frame update
-    [SyncVar]
     public float power = 0.3f;
 
-    [SyncVar]
     public Vector3 direction = new Vector3(0.0f, 0.0f, 1.0f);
 
     private WindZone windZone;
+
 
     void Start()
     {
@@ -30,6 +29,7 @@ public class WindController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(direction);
         windZone.windMain = power * 10;
         transform.rotation = Quaternion.LookRotation(direction);
     }

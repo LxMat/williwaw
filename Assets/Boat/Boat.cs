@@ -119,6 +119,10 @@ public class Boat : NetworkBehaviour
                 n = 0;
                 Invoke("CmdSetWaves", 5.0f);
             }
+            if (powerType == "Wind")
+            {
+                CmdSetWind();
+            }
             Invoke("ResetPower", 5.0f); //Alternativeley get differrent lengths from different powers. 
             Destroy(collision.gameObject);
         }
@@ -210,7 +214,7 @@ public class Boat : NetworkBehaviour
                 {
                     // windController.direction = -transform.right;
                     // windController.power = force;
-                    CmdSetWind();
+                    // CmdSetWind();
                 }
 
                 //TODO waves?

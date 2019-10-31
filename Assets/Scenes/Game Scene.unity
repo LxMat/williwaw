@@ -1727,6 +1727,8 @@ MonoBehaviour:
   Steepness: 0
   WaveLength: 10
   material: {fileID: 2100000, guid: 5cabf7eb0f70282439c93b5e5c161470, type: 2}
+  waterPrefab: {fileID: 4080423251693398213, guid: dfd090d03bc4a7c4999e8f13a2279e6d,
+    type: 3}
   micObject: {fileID: 1429151306}
   gyroObject: {fileID: 1273902058}
   WaveDirection: {x: 0, y: 0}

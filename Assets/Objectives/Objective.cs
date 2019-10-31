@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Objective : MonoBehaviour
+[System.Obsolete]
+public class Objective : NetworkBehaviour
 {
 
     private Material material;
 
     private WaterPlane waves;
     private Vector3 temp;
+
+    [SyncVar]
     public string objectiveType;
     private List<string> list;
 
@@ -45,10 +49,6 @@ public class Objective : MonoBehaviour
                     break;
                 }
         }
-    }
-    private void Awake()
-    {
-        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
     }
 
 
