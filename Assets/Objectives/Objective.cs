@@ -60,4 +60,5 @@ public class Objective : NetworkBehaviour
         // temp.y = waves.getHeight(temp) + 5.0f;
         transform.position = temp;
     }
+ 
 }
