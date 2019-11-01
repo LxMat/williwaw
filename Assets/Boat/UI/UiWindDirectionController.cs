@@ -5,13 +5,16 @@ using UnityEngine.UI;
 
 public class UiWindDirectionController : MonoBehaviour
 {
+    [System.Obsolete]
     private WindController windController;
     private Vector3 direction;
     private Image arrow;
     private Image boatIcon;
     private Vector3 rotationDiff;
     private Vector3 diff = new Vector3(0,0,0);
+
     // Start is called before the first frame update
+    [System.Obsolete]
     void Start()
     {
         windController = GameObject.Find("Wind").GetComponent<WindController>();

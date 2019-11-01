@@ -1,8 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class cloudMovement : MonoBehaviour
+[System.Obsolete]
+public class cloudMovement : NetworkBehaviour
 {
 
     private Vector3 target;

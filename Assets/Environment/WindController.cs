@@ -1,20 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class WindController : MonoBehaviour
+[System.Obsolete]
+public class WindController : NetworkBehaviour
 {
     // Start is called before the first frame update
-
     public float power = 0.3f;
+
     public Vector3 direction = new Vector3(0.0f, 0.0f, 1.0f);
 
     private WindZone windZone;
+
 
     void Start()
     {
         windZone = transform.GetComponent<WindZone>();
         transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    public void setWind(Vector3 newDirection, float newPower)
+    {
+        direction = newDirection;
+        power = newPower;
     }
 
     // Update is called once per frame

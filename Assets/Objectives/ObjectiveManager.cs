@@ -20,7 +20,7 @@ public class ObjectiveManager : NetworkBehaviour
         {
             if (isServer)
             {
-                SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+                SpawnObjective(new Vector3(Random.Range(50, 950), 0, Random.Range(50, 950)));
             }
 
         }
@@ -36,7 +36,7 @@ public class ObjectiveManager : NetworkBehaviour
         {
             if (isServer)
             {
-                SpawnObjective(new Vector3(Random.Range(50, 950), 200, Random.Range(50, 950)));
+                SpawnObjective(new Vector3(Random.Range(50, 950), 0, Random.Range(50, 950)));
             }
 
 
@@ -66,4 +66,5 @@ public class ObjectiveManager : NetworkBehaviour
         GUI.Label(new Rect(500, 100, 300, 40), "Score: " + score);
         GUI.skin.label.fontSize = 16;
     }
+
 }

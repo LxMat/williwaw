@@ -62,11 +62,11 @@ public class Boat : NetworkBehaviour
         waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
         waterShader = waves.material;
 
-        
+
         micObject = GameObject.Find("Microphone");
         gyroObject = GameObject.Find("Gyroscope");
         windController = GameObject.Find("Wind").GetComponent<WindController>();
-        
+
         lightSensor = GameObject.Find("LightSensor").GetComponent<LightSensorInput>();
       
         deployClouds = GameObject.Find("CloudManager").GetComponent<Deploy_Clouds>();
@@ -169,51 +169,48 @@ public class Boat : NetworkBehaviour
             windVector = windVector * windController.power; //power is between 0 and 1;
             forceVector = -perl.right * force; //The force in the forward direction as measured by the users blowing on the microphone. 
 
-       
+
 
             //if (Mathf.Abs(rotation) > 0.2f)
             //{
-                
+
             //    direction.z = -rotation;//Mathf.Sin(rotation);
             //                            // direction.z = Mathf.Cos(rotation);
             //}
 
 
 
-          
-           boat.velocity = Vector3.ClampMagnitude((forceVector + windVector )* 30, 30);
-                
-                //boat.AddRelativeForce(-Vector3.right * windAngle);
 
-                //boat.AddRelativeForce(-Vector3.right * force);
+            boat.velocity = Vector3.ClampMagnitude((forceVector + windVector) * 30, 30);
 
-        
+            //boat.AddRelativeForce(-Vector3.right * windAngle);
+
+            //boat.AddRelativeForce(-Vector3.right * force);
+
+
 
 
             if (powerType != null)
             {
                 if (powerType == "Cloud")
                 {
-                   
+
                     cloudSpawn = lightSensor.spawnCloud;
                     if (cloudSpawn && nextCloud < Time.time)
                     {
                         cloudSystem.enableEmission = true;
                         nextCloud = Time.time + cloudCooldown;
-                        deployClouds.SpawnCloudsOnPlayer(transform.position);
+                        CmdCloud();
                     }
-                    else if (nextCloud + 0.2f < Time.time)
-                    {
-                        cloudSystem.enableEmission = false;
-                    }
+                    else cloudSystem.enableEmission &= nextCloud + 0.2f >= Time.time;
                 }
-              
-                
+
+
                 if (powerType == "Wind")
                 {
-       
                     windController.direction = -transform.right;
                     windController.power = force;
+                    // CmdSetWind();
                 }
 
                 //TODO waves?
@@ -300,7 +297,7 @@ public class Boat : NetworkBehaviour
 
                 if (Mathf.Abs(rotation) > 0.2f)
                 {
-                    transform.Rotate(Vector3.up*(rotation-0.2f));
+                    transform.Rotate(Vector3.up * (rotation - 0.2f));
                 }
                 //if (rotation > 0.2f)
                 //{
@@ -319,7 +316,19 @@ public class Boat : NetworkBehaviour
     //    cylinder.rotation = gyro.attitude;
     //}
 
+    [Command]
+    void CmdCloud()
+    {
+        deployClouds.spawnCloud(transform.position);
+    }
 
+    // [Command]
+    // void CmdSetWind()
+    // {
+    //     windController.setWind(-transform.right, force);
+    // }
+
+    // [Command]
     void SetWaves()
     {
 
@@ -359,17 +368,12 @@ public class Boat : NetworkBehaviour
 
         waterShader.SetVector("_Wave4", w4);
         waves.Waves[3] = w4;
-
-
-
-
-
     }
 
 
     void ResetPower()
     {
-        
+
         powerType = null;
     }
 

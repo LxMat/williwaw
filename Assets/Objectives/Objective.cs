@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Objective : MonoBehaviour
+[System.Obsolete]
+public class Objective : NetworkBehaviour
 {
 
     private Material material;
 
     private WaterPlane waves;
     private Vector3 temp;
+
+    [SyncVar]
     public string objectiveType;
     private List<string> list;
 
@@ -22,11 +26,11 @@ public class Objective : MonoBehaviour
     void Start()
     {
         list = new List<string> { "Wind", "Cloud", "Wave" };
-      
-        
+
+
         //Assign a string as the type
         objectiveType = list[Random.Range(0, list.Count)];
-        
+
         switch (objectiveType)
         {
             case "Wind":
@@ -46,10 +50,6 @@ public class Objective : MonoBehaviour
                 }
         }
     }
-    private void Awake()
-    {
-        waves = GameObject.Find("Waves").GetComponent<WaterPlane>();
-    }
 
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class Objective : MonoBehaviour
     {
         transform.Rotate(0, 50 * Time.deltaTime, 0);
         temp = transform.position;
-        temp.y = waves.getHeight(temp) + 5.0f;
+        // temp.y = waves.getHeight(temp) + 5.0f;
         transform.position = temp;
     }
  
